@@ -31,7 +31,8 @@ Brand and performance in one person. Mahmoud builds the trust (positioning, 360Â
 
 ## Capabilities and Constraints
 
-- Single landing page. Sections in order: hero with typing "Growth board", experience stats bar, What I do (scroll spotlight), Performance (funnel), Method (5 stages), Sponsorships (3D car and goal showcase), Recommendations (twin marquee), brands bar, closing CTA.
+- Single landing page. Sections in order: hero with typing "Growth board", experience stats band, What I do (8 services in two groups: Brand and Performance), Performance & method (funnel with the Reach â†’ Revenue method stages laid over it), Sponsorships (3D car and goal showcase on a dark band), Recommendations (twin marquee), brands bar, closing CTA.
+- Light (cream) theme by default, per the brand book; the sponsorship stage is a local dark band.
 - All copy lives in `src/content.js`.
 - Stack: Vite, React 18, Tailwind, React Three Fiber/drei, Framer Motion, Lenis.
 - The performance funnel stage names are a working draft from Mahmoud's content doc ("6 stages, impression to revenue"); they await his confirmation.

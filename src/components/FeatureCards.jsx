@@ -1,95 +1,233 @@
-import { motion } from 'framer-motion'
-import { Fragment, useEffect, useRef, useState } from 'react'
+import { useMotionValueEvent, useScroll } from 'framer-motion'
+import { useEffect, useLayoutEffect, useRef, useState } from 'react'
 import { services } from '../content'
-import { useIsMobile } from '../hooks'
+import { useIsMobile, useReducedMotion } from '../hooks'
 import { SectionHead } from './ui/Reveal'
 import Icon from './ui/Icon'
 
-const ease = [0.22, 1, 0.36, 1]
-// One running index across both groups, so the spotlight walks Brand, then Performance.
-const items = services.groups.flatMap((g) => g.items.map((it) => ({ ...it, group: g.label })))
+const useIsoLayoutEffect = typeof window === 'undefined' ? useEffect : useLayoutEffect
 
-/*
- * Scroll spotlight in two groups (Brand, Performance): a sticky panel and a
- * list that lights up as you scroll.
- * Desktop: panel on the left, list on the right.
- * Phone: panel pinned under the nav, list scrolling beneath it.
+// One running list across both groups: Brand ads run by day, Performance ads after dusk.
+const items = services.groups.flatMap((g, gi) => g.items.map((it) => ({ ...it, group: g.label, night: gi > 0 })))
+const groupStart = services.groups.map((_, gi) => services.groups.slice(0, gi).reduce((t, g) => t + g.items.length, 0))
+
+const FLIP_MS = 700
+const STAGGER_MS = 38
+const AUTOPLAY_MS = 3600
+
+/**
+ * One billboard ad, sized in container units (cqw) of the board, so it scales with
+ * the board and renders correctly in the pre-built HTML. `w` (px) is only set when
+ * the face is drawn inside a slat and must keep the full board width.
  */
-function Spotlight() {
-  const isMobile = useIsMobile()
-  const [active, setActive] = useState(0)
-  const refs = useRef([])
-  useEffect(() => {
-    // The "reading line" an item must cross to become active: screen middle on
-    // desktop, just below the pinned panel on phones.
-    const io = new IntersectionObserver(
-      (es) => es.forEach((e) => e.isIntersecting && setActive(+e.target.dataset.i)),
-      { rootMargin: isMobile ? '-58% 0px -38% 0px' : '-48% 0px -48% 0px' },
-    )
-    refs.current.forEach((el) => el && io.observe(el))
-    return () => io.disconnect()
-  }, [isMobile])
-
-  const s = items[active]
-  let n = -1
+function AdFace({ it, w }) {
+  const dark = it.night
+  const small = { fontSize: 'max(10px, 1.9cqw)' }
   return (
-    // Phone: plain block flow so the panel can stay pinned across the whole list.
-    <div className="mt-12 md:mt-16 md:grid md:grid-cols-2 md:gap-16">
-      <div className="contents md:relative md:block" aria-hidden>
-        <div className="sticky top-[4.5rem] z-10 md:top-28">
-          <div className="relative overflow-hidden rounded-panel border border-hairline bg-card p-5 md:p-10">
-            {/* keyed remount = fresh fade-in per service; no exit wait, so fast scrolling never sticks */}
-            <motion.div key={active} initial={{ opacity: 0, y: 14 }} animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.4, ease }} className="relative min-h-[8.5rem] md:min-h-0">
-              <div className="flex items-center justify-between gap-4">
-                <span className="grid h-11 w-11 place-items-center rounded-card bg-teal-100 text-teal-700 md:h-16 md:w-16 md:rounded-panel">
-                  <Icon name={s.icon} size={isMobile ? 22 : 30} />
-                </span>
-                <span className="rounded-tag border border-hairline px-2.5 py-1 text-xs font-semibold text-teal-700">{s.group}</span>
-              </div>
-              <h3 className="mt-4 font-serif text-[1.75rem] font-semibold leading-tight text-ink md:mt-10 md:text-5xl md:leading-[1.05]">{s.title}</h3>
-              <p className="mt-2 text-base leading-6 text-muted md:mt-5 md:text-xl md:leading-8">{s.line}</p>
-            </motion.div>
-            {/* progress, split into the two groups */}
-            <div className="relative mt-4 flex gap-3 md:mt-10">
-              {services.groups.map((g, gi) => (
-                <div key={g.label} className="flex flex-1 gap-1">
-                  {g.items.map((_, i) => {
-                    const idx = services.groups.slice(0, gi).reduce((t, x) => t + x.items.length, 0) + i
-                    return <span key={i} className={`h-[3px] flex-1 rounded-full transition-colors duration-500 ${idx <= active ? 'bg-teal-500' : 'bg-hairline'}`} />
-                  })}
+    <div className={`absolute inset-y-0 left-0 flex flex-col justify-between ${dark ? 'bg-deep text-ondeep' : 'bg-[#F7F4EE] text-[#10221F]'}`}
+      style={{ width: w || '100%', padding: '4.5cqw 5.5cqw' }}>
+      <div className="flex items-center justify-between">
+        <span className={`rounded-tag border font-sans font-semibold ${dark ? 'border-ondeep/30 text-ondeep-muted' : 'border-[#0F5E5C]/30 text-[#0F5E5C]'}`}
+          style={{ fontSize: 'max(10px, 1.6cqw)', padding: '0.4cqw 1cqw' }}>{it.group}</span>
+        <span className={`block [&>svg]:h-full [&>svg]:w-full ${dark ? 'text-[#3FB5AC]' : 'text-[#0F5E5C]'}`} style={{ width: 'max(18px, 4.5cqw)', height: 'max(18px, 4.5cqw)' }}>
+          <Icon name={it.icon} size={24} />
+        </span>
+      </div>
+      <div>
+        <p className={`font-serif font-semibold leading-[1.02] ${dark ? 'text-ondeep' : 'text-[#0F5E5C]'}`} style={{ fontSize: '8.5cqw' }}>{it.title}</p>
+        <p className={`mt-[0.6em] max-w-[34ch] font-sans leading-snug ${dark ? 'text-ondeep-muted' : 'text-[#4C5F5C]'}`} style={{ fontSize: 'max(12px, 2.8cqw)' }}>{it.line}</p>
+      </div>
+      <div className="flex items-end justify-between">
+        <span className={`font-serif italic ${dark ? 'text-ondeep-muted' : 'text-[#4C5F5C]'}`} style={small}>From reach to revenue.</span>
+        <span className={`font-sans font-semibold ${dark ? 'text-ondeep' : 'text-[#10221F]'}`} style={small}>mahmoudbahaa.com</span>
+      </div>
+    </div>
+  )
+}
+
+/**
+ * Rotating billboard: the board is cut into vertical slats that turn one after another,
+ * like a tri-vision sign. Each slat is a two-sided card; the hidden side is loaded with the
+ * next ad, then every slat flips with a small stagger.
+ */
+function Billboard({ index, slats, reduced }) {
+  const ref = useRef(null)
+  const [w, setW] = useState(0)
+  // faces[0] is on the front of every slat, faces[1] on the back; `turned` says which shows.
+  const [faces, setFaces] = useState([index, index])
+  const [turned, setTurned] = useState(false)
+
+  useIsoLayoutEffect(() => {
+    const el = ref.current
+    const ro = new ResizeObserver(([e]) => setW(e.contentRect.width))
+    ro.observe(el)
+    return () => ro.disconnect()
+  }, [])
+
+  useEffect(() => {
+    const showing = faces[turned ? 1 : 0]
+    if (index === showing) return
+    if (reduced) { setFaces([index, index]); return }
+    // put the next ad on the side facing away and turn in the same render;
+    // the hidden side can change freely because no one can see it
+    setFaces((f) => (turned ? [index, f[1]] : [f[0], index]))
+    setTurned((x) => !x)
+  }, [index]) // eslint-disable-line react-hooks/exhaustive-deps
+
+  const sw = w / slats
+  const night = items[faces[turned ? 1 : 0]].night
+  const steel = `transition-colors duration-700 ${night ? 'bg-[#33524D]' : 'bg-[#10221F]'}`
+  return (
+    <div className="relative mx-auto w-full max-w-5xl md:max-w-[min(64rem,calc((100svh-21rem)*16/7))]">
+      {/* lamp bar */}
+      <div aria-hidden className="mx-[6%] flex justify-between">
+        {Array.from({ length: 5 }).map((_, i) => (
+          <span key={i} className="flex flex-col items-center">
+            <span className={`h-2 w-7 rounded-t-full transition-colors duration-700 md:h-2.5 md:w-10 ${night ? 'bg-[#EAF2F0]' : 'bg-[#10221F]'}`} />
+            <span className={`h-2 w-[2px] ${steel}`} />
+          </span>
+        ))}
+      </div>
+      {/* frame */}
+      <div className={`rounded-[6px] p-[6px] md:p-[10px] ${steel}`}>
+        <div ref={ref} className="relative aspect-[4/3] overflow-hidden rounded-[2px] bg-[#10221F] [container-type:inline-size] sm:aspect-[16/8] md:aspect-[16/7]" style={{ perspective: 1400 }}>
+          {w === 0 ? (
+            <AdFace it={items[index]} />
+          ) : (
+            Array.from({ length: slats }).map((_, i) => (
+              <div key={i} className="absolute inset-y-0" style={{ left: i * sw, width: sw + 0.5 }}>
+                <div className="relative h-full w-full"
+                  style={{
+                    transformStyle: 'preserve-3d',
+                    transform: `rotateY(${turned ? 180 : 0}deg)`,
+                    transition: reduced ? 'none' : `transform ${FLIP_MS}ms cubic-bezier(.65,0,.35,1) ${i * STAGGER_MS}ms`,
+                  }}>
+                  {[0, 1].map((side) => (
+                    <div key={side} className="absolute inset-0 overflow-hidden"
+                      style={{ backfaceVisibility: 'hidden', WebkitBackfaceVisibility: 'hidden', transform: side ? 'rotateY(180deg)' : undefined }}>
+                      <div className="absolute inset-y-0" style={{ left: -i * sw, width: w }}>
+                        <AdFace it={items[faces[side]]} w={w} />
+                      </div>
+                    </div>
+                  ))}
                 </div>
-              ))}
+              </div>
+            ))
+          )}
+          {/* slat seams */}
+          {w > 0 && (
+            <div aria-hidden className="pointer-events-none absolute inset-0"
+              style={{ backgroundImage: `repeating-linear-gradient(90deg, transparent 0 ${sw - 1}px, rgba(16,34,31,.18) ${sw - 1}px ${sw}px)` }} />
+          )}
+        </div>
+      </div>
+      {/* posts */}
+      <div aria-hidden className="flex justify-center gap-[28%]">
+        <span className={`h-10 w-3 md:h-16 md:w-4 ${steel}`} />
+        <span className={`h-10 w-3 md:h-16 md:w-4 ${steel}`} />
+      </div>
+    </div>
+  )
+}
+
+/** The two groups as a schedule under the board; tap or click to put any ad up. */
+function Schedule({ index, onPick }) {
+  return (
+    <div className="mx-auto mt-6 grid max-w-5xl gap-5 md:mt-6 md:grid-cols-2 md:gap-10">
+      {services.groups.map((g, gi) => (
+        <div key={g.label}>
+          <div className="flex items-baseline gap-3 border-b border-hairline pb-2">
+            <span className="font-serif text-lg font-semibold text-teal-700 md:text-xl">{g.label}</span>
+            <span className="text-sm text-muted">{g.line}</span>
+          </div>
+          <ul className="mt-3 flex flex-wrap gap-2">
+            {g.items.map((it, i) => {
+              const idx = groupStart[gi] + i
+              const on = idx === index
+              return (
+                <li key={it.title}>
+                  <button onClick={() => onPick(idx)} aria-pressed={on}
+                    className={`rounded-full border px-3 py-1.5 text-sm transition-colors ${on ? 'border-teal-700 bg-teal-700 text-card' : 'border-hairline text-ink hover:border-teal-500'}`}>
+                    {it.title}
+                  </button>
+                </li>
+              )
+            })}
+          </ul>
+        </div>
+      ))}
+    </div>
+  )
+}
+
+export default function FeatureCards() {
+  const isMobile = useIsMobile()
+  const reduced = useReducedMotion()
+  const stage = useRef(null)
+  const box = useRef(null)
+  const [index, setIndex] = useState(0)
+  const [paused, setPaused] = useState(false)
+  // read inside the scroll listener, which is subscribed once
+  const mobileRef = useRef(isMobile)
+  mobileRef.current = isMobile
+
+  // Desktop: the scroll through the section drives the board.
+  const { scrollYProgress } = useScroll({ target: stage, offset: ['start start', 'end end'] })
+  useMotionValueEvent(scrollYProgress, 'change', (v) => {
+    if (mobileRef.current || window.innerWidth < 768) return
+    setIndex(Math.min(items.length - 1, Math.max(0, Math.floor(v * items.length))))
+  })
+
+  // Phone: the board plays on its own while on screen; a tap moves it on.
+  useEffect(() => {
+    if (!isMobile || reduced || paused) return
+    const t = setInterval(() => {
+      // only advance while the board is actually on screen and the tab is visible
+      const r = box.current?.getBoundingClientRect()
+      if (!r || document.hidden || r.bottom < 0 || r.top > window.innerHeight) return
+      setIndex((i) => (i + 1) % items.length)
+    }, AUTOPLAY_MS)
+    return () => clearInterval(t)
+  }, [isMobile, reduced, paused])
+
+  const pick = (i) => {
+    if (isMobile) { setIndex(i); setPaused(true); return }
+    // desktop: scroll to the part of the section that shows that ad
+    const el = stage.current
+    const top = el.getBoundingClientRect().top + window.scrollY
+    const y = top + ((i + 0.5) / items.length) * (el.offsetHeight - window.innerHeight)
+    if (window.__lenis) window.__lenis.scrollTo(y, { duration: 0.9 })
+    else window.scrollTo({ top: y, behavior: 'smooth' })
+  }
+
+  const night = items[index].night
+  return (
+    <section id="services" className="relative">
+      <div className="wrap section !pb-10 md:!pb-12">
+        <SectionHead headline={services.headline} />
+      </div>
+
+      {/* Desktop: a tall stage with the scene pinned; phone: a normal block */}
+      <div ref={stage} className="relative md:h-[240vh]">
+        <div ref={box} className="md:sticky md:top-0 md:flex md:h-[100svh] md:items-center md:pt-16">
+          <div className={`relative w-full overflow-hidden py-10 transition-colors duration-700 md:py-14 ${night ? 'bg-[#0E1817]' : 'bg-teal-100'}`}>
+            {/* horizon */}
+            <div aria-hidden className={`absolute inset-x-0 bottom-0 h-16 transition-colors duration-700 md:h-24 ${night ? 'bg-[#152321]' : 'bg-[#E4DFD4]'}`} />
+            <div className="wrap relative" aria-hidden
+              onClick={() => isMobile && (setIndex((i) => (i + 1) % items.length), setPaused(true))}>
+              <Billboard index={index} slats={isMobile ? 9 : 16} reduced={reduced} />
+            </div>
+            <div className={`wrap relative ${night ? 'theme-dark' : ''}`}>
+              <Schedule index={index} onPick={pick} />
+              <p className={`mx-auto mt-4 max-w-5xl text-xs ${night ? 'text-[#9DB2AE]' : 'text-muted'}`}>
+                {isMobile ? 'Tap the board or a service to change the ad.' : 'Scroll to run the campaign, or pick a service.'}
+              </p>
             </div>
           </div>
-          {/* soft fade so the list slides under the pinned panel on phones */}
-          <div className="pointer-events-none h-8 bg-gradient-to-b from-ground to-transparent md:hidden" />
         </div>
       </div>
 
-      <div className="pb-[30vh] pt-[4vh] md:py-[16vh]" aria-hidden>
-        {services.groups.map((g, gi) => (
-          <Fragment key={g.label}>
-            <div className={`flex flex-wrap items-baseline gap-x-3 gap-y-1 border-b border-hairline pb-3 ${gi ? 'mt-14 md:mt-20' : ''}`}>
-              <span className="font-serif text-xl font-semibold text-teal-700 md:text-2xl">{g.label}</span>
-              <span className="text-sm text-muted">{g.line}</span>
-            </div>
-            <ol>
-              {g.items.map((it) => {
-                const i = ++n
-                return (
-                  <li key={it.title} ref={(el) => (refs.current[i] = el)} data-i={i}
-                    className={`flex min-h-[14vh] items-center transition-opacity duration-500 md:min-h-[20vh] ${i === active ? 'opacity-100' : 'opacity-50'}`}>
-                    <span className={`font-serif text-[1.6rem] font-semibold leading-tight text-ink transition-transform duration-500 md:text-4xl ${i === active ? 'translate-x-2' : ''}`}>{it.title}</span>
-                  </li>
-                )
-              })}
-            </ol>
-          </Fragment>
-        ))}
-      </div>
-
-      {/* The spotlight shows one service at a time; this is the full list for screen readers. */}
+      {/* The board shows one service at a time; this is the full list for screen readers. */}
       <div className="sr-only">
         {services.groups.map((g) => (
           <div key={g.label}>
@@ -97,17 +235,6 @@ function Spotlight() {
             <ul>{g.items.map((it) => <li key={it.title}>{it.title}: {it.line}</li>)}</ul>
           </div>
         ))}
-      </div>
-    </div>
-  )
-}
-
-export default function FeatureCards() {
-  return (
-    <section id="services" className="section overflow-x-clip">
-      <div className="wrap relative">
-        <SectionHead headline={services.headline} />
-        <Spotlight />
       </div>
     </section>
   )
