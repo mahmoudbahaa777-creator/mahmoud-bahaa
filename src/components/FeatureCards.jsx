@@ -219,9 +219,6 @@ export default function FeatureCards() {
             </div>
             <div className={`wrap relative ${night ? 'theme-dark' : ''}`}>
               <Schedule index={index} onPick={pick} />
-              <p className={`mx-auto mt-4 max-w-5xl text-xs ${night ? 'text-[#9DB2AE]' : 'text-muted'}`}>
-                {isMobile ? 'Tap the board or a service to change the ad.' : 'Scroll to run the campaign, or pick a service.'}
-              </p>
             </div>
           </div>
         </div>
