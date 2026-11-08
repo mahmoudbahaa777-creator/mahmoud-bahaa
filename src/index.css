@@ -1,0 +1,66 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Page ground is the brand's dark surface (#0E1817), not pure black. */
+/* clip (not hidden) so nothing can widen the page on phones, while sticky still works */
+html { background: var(--surface-100); overflow-x: clip; }
+body {
+  background: var(--surface-100);
+  color: var(--ink);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  overflow-x: clip;
+}
+::selection { background: var(--teal-500); color: var(--surface-100); }
+
+/* Lenis */
+html.lenis, html.lenis body { height: auto; }
+.lenis.lenis-smooth { scroll-behavior: auto !important; }
+.lenis.lenis-stopped { overflow: hidden; }
+
+@layer components {
+  .eyebrow {
+    @apply font-sans text-eyebrow font-semibold uppercase text-teal-700;
+  }
+  .wrap { @apply mx-auto w-full max-w-[1200px] px-4 sm:px-8 lg:px-16; }
+  .section { @apply relative py-24 md:py-32; }
+  .glass {
+    background: color-mix(in srgb, var(--surface-200) 62%, transparent);
+    backdrop-filter: blur(16px) saturate(1.2);
+    -webkit-backdrop-filter: blur(16px) saturate(1.2);
+    border: 1px solid var(--hairline);
+  }
+  .btn {
+    @apply inline-flex items-center gap-2 rounded-card px-6 py-3.5 font-sans text-[15px] font-semibold transition-[transform,background-color,color,border-color] duration-300;
+  }
+  .btn-primary { @apply btn bg-coral-500 text-[#10221F] hover:-translate-y-0.5; }
+  .btn-ghost { @apply btn border border-hairline text-ink hover:border-teal-500 hover:text-teal-700; }
+}
+
+/* Gradient-light border that travels round the card */
+@property --angle { syntax: '<angle>'; initial-value: 0deg; inherits: false; }
+.glow-border { position: relative; isolation: isolate; }
+.glow-border::before {
+  content: '';
+  position: absolute; inset: -1px; border-radius: inherit; padding: 1px;
+  background: conic-gradient(from var(--angle), transparent 0 55%, var(--teal-500) 72%, var(--on-deep-muted) 78%, transparent 92%);
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor; mask-composite: exclude;
+  opacity: .28; animation: angle-spin 6s linear infinite, pulse 3.2s ease-in-out infinite;
+  transition: opacity .4s; pointer-events: none; z-index: 1;
+}
+.glow-border:hover::before { opacity: 1; animation-duration: 2.4s, 3.2s; }
+@keyframes angle-spin { to { --angle: 360deg; } }
+@keyframes pulse { 50% { filter: brightness(1.6); } }
+
+@keyframes marquee { to { transform: translateX(-50%); } }
+.marquee { animation: marquee 38s linear infinite; }
+.marquee:hover { animation-play-state: paused; }
+@keyframes marquee-rev { from { transform: translateX(-50%); } to { transform: translateX(0); } }
+.marquee-reverse { animation: marquee-rev 45s linear infinite; }
+.marquee-reverse:hover { animation-play-state: paused; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
+}

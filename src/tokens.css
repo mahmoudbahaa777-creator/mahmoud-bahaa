@@ -1,0 +1,44 @@
+/* Mahmoud Bahaa — brand tokens (Ocean Teal). Load fonts:
+   https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;1,9..144,400&family=Inter:wght@400;500;600&family=IBM+Plex+Sans+Arabic:wght@400;600&display=swap */
+:root {
+  --surface-100: #f7f4ee;
+  --surface-200: #ffffff;
+  --surface-deep: #0b3b3c;
+  --teal-900: #0b3b3c;
+  --ink: #10221f;
+  --ink-muted: #4c5f5c;
+  --hairline: #d6dedc;
+  --teal-700: #0f5e5c;
+  --teal-500: #138a84;
+  --teal-100: #d8eeec;
+  --coral-500: #f2705a;
+  --coral-700: #b8442f;
+  --on-deep: #f7f4ee;
+  --on-deep-muted: #9fc9c4;
+
+  --font-serif: "Fraunces", Georgia, "Times New Roman", serif;
+  --font-sans: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-arabic: "IBM Plex Sans Arabic", "Noto Sans Arabic", Tahoma, sans-serif;
+
+  --space-1: 4px; --space-2: 8px; --space-3: 12px; --space-4: 16px;
+  --space-6: 24px; --space-8: 32px; --space-12: 48px; --space-16: 64px;
+
+  --radius-sm: 4px; --radius-md: 10px; --radius-lg: 16px; --radius-pill: 999px;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --surface-100: #0e1817; --surface-200: #152321;
+    --ink: #eaf2f0; --ink-muted: #9db2ae; --hairline: #27403c;
+    --teal-700: #3fb5ac; --teal-500: #3fb5ac; --teal-100: #17403d;
+    --coral-700: #f2836e;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --surface-100: #0e1817; --surface-200: #152321;
+  --ink: #eaf2f0; --ink-muted: #9db2ae; --hairline: #27403c;
+  --teal-700: #3fb5ac; --teal-500: #3fb5ac; --teal-100: #17403d;
+  --coral-700: #f2836e;
+  color-scheme: dark;
+}
