@@ -6,7 +6,7 @@ const initials = (n) => n.split(' ').filter(Boolean).slice(0, 2).map((w) => w[0]
 
 function Card({ it }) {
   return (
-    <figure className="glass w-[18.5rem] shrink-0 rounded-panel p-6 transition-colors duration-300 hover:border-teal-500/60 sm:w-[22rem] md:w-[26rem] md:p-7">
+    <figure className="w-[18.5rem] border border-hairline bg-card shrink-0 rounded-panel p-6 transition-colors duration-300 hover:border-teal-500/60 sm:w-[22rem] md:w-[26rem] md:p-7">
       <blockquote className="font-serif text-xl font-semibold leading-snug text-ink md:text-2xl">“{it.pull}”</blockquote>
       <figcaption className="mt-6 flex items-end justify-between gap-4">
         <div className="flex min-w-0 items-center gap-3">
@@ -34,7 +34,7 @@ export default function Reviews() {
   return (
     <section id="reviews" className="section overflow-x-clip">
       <div className="wrap">
-        <SectionHead eyebrow={r.eyebrow} headline={r.headline} />
+        <SectionHead headline={r.headline} />
       </div>
 
       <div aria-hidden className="mt-12 space-y-5 md:mt-14 [mask-image:linear-gradient(90deg,transparent,#000_6%,#000_94%,transparent)]">

@@ -14,6 +14,12 @@ body {
 }
 ::selection { background: var(--teal-500); color: var(--surface-100); }
 
+/* Browser surfaces in the brand palette */
+html { scrollbar-color: var(--hairline) var(--surface-100); accent-color: var(--teal-500); }
+:where(input, textarea) { caret-color: var(--teal-500); }
+:focus-visible { outline: 2px solid var(--teal-500); outline-offset: 3px; border-radius: 6px; }
+a { text-underline-offset: 4px; text-decoration-thickness: 1px; }
+
 /* Lenis */
 html.lenis, html.lenis body { height: auto; }
 .lenis.lenis-smooth { scroll-behavior: auto !important; }

@@ -6,7 +6,6 @@ import { SectionHead } from './ui/Reveal'
 import Icon from './ui/Icon'
 
 const ease = [0.22, 1, 0.36, 1]
-const pad = (i) => String(i + 1).padStart(2, '0')
 
 /*
  * Scroll spotlight: a sticky feature panel and a list that lights up as you scroll.
@@ -29,7 +28,6 @@ function Spotlight() {
   }, [isMobile])
 
   const s = services.items[active]
-  const total = pad(services.items.length - 1)
   return (
     // Phone: plain block flow so the panel can stay pinned across the whole list.
     <div className="mt-12 md:mt-16 md:grid md:grid-cols-2 md:gap-16">
@@ -40,11 +38,10 @@ function Spotlight() {
             {/* keyed remount = fresh fade-in per service; no exit wait, so fast scrolling never sticks */}
               <motion.div key={active} initial={{ opacity: 0, y: 14 }} animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.4, ease }} className="relative min-h-[8.5rem] md:min-h-0">
-                <div className="flex items-center justify-between">
+                <div className="flex items-center">
                   <span className="grid h-11 w-11 place-items-center rounded-card border border-hairline bg-teal-100 text-teal-700 md:h-16 md:w-16 md:rounded-panel">
                     <Icon name={s.icon} size={isMobile ? 22 : 30} />
                   </span>
-                  <span className="font-serif text-base tabular-nums text-muted md:text-lg">{pad(active)} / {total}</span>
                 </div>
                 <h3 className="mt-4 font-serif text-[1.75rem] font-semibold leading-tight text-ink md:mt-10 md:text-5xl md:leading-[1.05]">{s.title}</h3>
                 <p className="mt-2 text-base leading-6 text-muted md:mt-5 md:text-xl md:leading-8">{s.line}</p>
@@ -62,8 +59,7 @@ function Spotlight() {
       <ol className="pb-[34vh] pt-[6vh] md:py-[18vh]">
         {services.items.map((it, i) => (
           <li key={it.title} ref={(el) => (refs.current[i] = el)} data-i={i}
-            className={`flex min-h-[19vh] items-center gap-4 transition-opacity duration-500 md:min-h-[22vh] md:gap-6 ${i === active ? 'opacity-100' : 'opacity-30'}`}>
-            <span className="font-serif text-lg text-teal-500 md:text-xl">{pad(i)}</span>
+            className={`flex min-h-[19vh] items-center gap-4 transition-opacity duration-500 md:min-h-[22vh] md:gap-6 ${i === active ? 'opacity-100' : 'opacity-50'}`}>
             <span className={`font-serif text-[1.75rem] font-semibold leading-tight text-ink transition-transform duration-500 md:text-4xl ${i === active ? 'translate-x-2' : ''}`}>{it.title}</span>
           </li>
         ))}
@@ -82,7 +78,7 @@ export default function FeatureCards() {
       <motion.div aria-hidden style={{ y: y1 }} className="glow pointer-events-none absolute -left-64 top-0 h-[700px] w-[700px] [--c:color-mix(in_srgb,var(--teal-500)_20%,transparent)]" />
       <motion.div aria-hidden style={{ y: y2 }} className="glow pointer-events-none absolute -right-56 -bottom-10 h-[600px] w-[600px] [--c:color-mix(in_srgb,var(--teal-700)_25%,transparent)]" />
       <div className="wrap relative">
-        <SectionHead eyebrow={services.eyebrow} headline={services.headline} />
+        <SectionHead headline={services.headline} />
         <Spotlight />
       </div>
     </section>

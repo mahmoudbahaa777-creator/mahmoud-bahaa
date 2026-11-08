@@ -11,7 +11,7 @@ export default function Method() {
   return (
     <section id="method" className="section overflow-x-clip">
       <div className="wrap">
-        <SectionHead eyebrow={method.eyebrow} headline={method.headline} />
+        <SectionHead headline={method.headline} line={method.line} />
         <div ref={ref} className="relative mt-16 pl-10 md:pl-0">
           <div className="absolute bottom-0 left-[15px] top-0 w-px bg-hairline md:left-1/2" />
           <motion.div style={{ scaleY: draw, originY: 0 }} className="absolute bottom-0 left-[15px] top-0 w-px bg-teal-500 md:left-1/2" />

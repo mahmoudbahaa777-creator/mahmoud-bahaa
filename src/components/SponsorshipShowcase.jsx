@@ -26,7 +26,7 @@ const motionByTone = {
   },
 }
 
-function ZoneCard({ zone, index }) {
+function ZoneCard({ zone }) {
   const m = motionByTone[zone.tone]
   const list = { show: { transition: { staggerChildren: zone.tone === 'luxury' ? 0.22 : 0.09, delayChildren: 0.8 } } }
   const [tk, tv] = zone.trust
@@ -34,9 +34,7 @@ function ZoneCard({ zone, index }) {
   if (zone.tone === 'energy') {
     return (
       <motion.article key={zone.id} {...m.card} className="glass glow-border relative overflow-hidden rounded-panel p-5 md:p-9">
-        <div aria-hidden className="absolute right-4 top-2 font-sans text-[7rem] font-semibold italic leading-none text-teal-500/10">01</div>
         <motion.div variants={list} initial="hidden" animate="show" className="relative">
-          <motion.p variants={m.item} className="eyebrow mb-4">Zone 0{index + 1} · {zone.category}</motion.p>
           <motion.h3 variants={m.item} className="font-sans text-[2rem] font-semibold italic leading-[1.02] tracking-tight text-ink md:text-5xl">{zone.partner}</motion.h3>
           <motion.div variants={m.item} className="my-6 h-[3px] w-24 origin-left rounded-full bg-gradient-to-r from-teal-500 to-transparent" />
           <motion.p variants={m.item} className="text-lg font-medium leading-7 text-ink md:text-xl md:leading-8">{zone.line}</motion.p>
@@ -52,7 +50,6 @@ function ZoneCard({ zone, index }) {
     return (
       <motion.article key={zone.id} {...m.card} className="glass relative rounded-panel border-hairline p-6 md:p-12">
         <motion.div variants={list} initial="hidden" animate="show">
-          <motion.p variants={m.item} className="eyebrow mb-8 !tracking-[4px] !text-muted">Zone 0{index + 1} · {zone.category}</motion.p>
           <motion.h3 variants={m.item} className="font-serif text-[2rem] font-normal leading-tight text-ink md:text-[3.25rem]">{zone.partner}</motion.h3>
           <motion.p variants={m.item} className="mt-6 font-serif text-xl italic leading-8 text-muted">{zone.line}</motion.p>
           <motion.div variants={m.item} className="my-8 h-px w-full bg-gradient-to-r from-hairline via-teal-500/60 to-hairline" />
@@ -71,7 +68,6 @@ function ZoneCard({ zone, index }) {
           <motion.span variants={m.item} className="inline-flex items-center gap-2 rounded-full border border-teal-500/50 bg-teal-100 px-3 py-1 text-xs font-semibold text-teal-700">
             <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-teal-500" /> Matchday
           </motion.span>
-          <motion.span variants={m.item} className="eyebrow !text-muted">Zone 0{index + 1} · {zone.category}</motion.span>
         </div>
         <motion.h3 variants={m.item} className="font-sans text-[2rem] font-semibold tracking-tight text-ink md:text-5xl">{zone.partner}</motion.h3>
         <motion.p variants={m.item} className="mt-4 text-xl leading-8 text-ink">{zone.line}</motion.p>
@@ -125,7 +121,7 @@ export default function SponsorshipShowcase() {
   return (
     <section id="sponsorships" className="relative">
       <div className="wrap section !pb-16">
-        <SectionHead eyebrow={s.eyebrow} headline={s.headline} line={s.line} />
+        <SectionHead headline={s.headline} line={s.line} />
       </div>
 
       <div ref={stage} className="relative h-[330vh]">
@@ -155,7 +151,7 @@ export default function SponsorshipShowcase() {
 
             <div className={`w-full max-w-[34rem] ${side} transition-[margin] duration-700`}>
               <AnimatePresence mode="wait">
-                <ZoneCard key={zone.id} zone={zone} index={active} />
+                <ZoneCard key={zone.id} zone={zone} />
               </AnimatePresence>
             </div>
 

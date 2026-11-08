@@ -36,10 +36,9 @@ export function SplitText({ text, className = '', delay = 0, stagger = 0.06, as 
   )
 }
 
-export function SectionHead({ eyebrow, headline, line, className = '' }) {
+export function SectionHead({ headline, line, className = '' }) {
   return (
     <div className={`max-w-3xl ${className}`}>
-      <Reveal><p className="eyebrow mb-4">{eyebrow}</p></Reveal>
       <SplitText text={headline} className="font-serif text-h1 font-semibold text-ink" />
       {line && <Reveal delay={0.2}><p className="mt-5 max-w-2xl text-lg leading-7 text-muted">{line}</p></Reveal>}
     </div>

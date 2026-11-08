@@ -24,7 +24,6 @@ export default function Hero() {
       <motion.div style={{ y, opacity: fade }}
         className="wrap relative z-10 grid items-center gap-14 lg:grid-cols-[1.05fr_1fr] lg:gap-16">
         <div>
-          <p className="eyebrow fade-rise mb-6">{hero.eyebrow}</p>
           <h1 aria-label={hero.headline} className="font-serif text-display font-semibold text-ink">
             {hero.headline.split(' ').map((w, i) => (
               <Fragment key={i}>

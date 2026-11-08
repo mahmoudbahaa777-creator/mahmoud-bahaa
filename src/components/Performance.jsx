@@ -41,7 +41,7 @@ function Funnel() {
                   transition={{ duration: 0.9, delay: i * 0.1, ease }}
                   className={`flex h-12 items-center justify-between gap-2 rounded-card px-4 md:h-14 md:px-5 ${last ? 'bg-coral-500 text-[#10221F]' : 'border border-teal-500/40 text-ink'}`}
                   style={last ? undefined : { background: `color-mix(in srgb, var(--teal-500) ${8 + i * 5}%, transparent)` }}>
-                  <span className="font-serif text-sm opacity-70">{pad(i)}</span>
+                  <span className={`font-serif text-sm tabular-nums ${last ? '' : 'text-muted'}`}>{pad(i)}</span>
                   <span className="truncate font-serif text-base font-semibold sm:text-lg md:text-xl">{s}</span>
                   <span className="w-4 shrink-0 md:w-5" />
                 </motion.div>
@@ -86,7 +86,7 @@ export default function Performance() {
   return (
     <section id="performance" className="section">
       <div className="wrap">
-        <SectionHead eyebrow={p.eyebrow} headline={p.headline} line={p.line} />
+        <SectionHead headline={p.headline} line={p.line} />
         <Funnel />
       </div>
     </section>

@@ -19,7 +19,7 @@ export default function Experience() {
               {items.map((s, i) => (
                 <span key={i} className="flex items-center">
                   <span className="flex items-baseline gap-3 whitespace-nowrap">
-                    <span className={`font-serif text-4xl font-semibold md:text-5xl ${s.highlight ? 'text-coral-500' : 'text-ondeep'}`}>{s.value}</span>
+                    <span className={`font-serif text-4xl font-semibold tabular-nums md:text-5xl ${s.highlight ? 'text-coral-500' : 'text-ondeep'}`}>{s.value}</span>
                     <span className="text-sm text-ondeep-muted md:text-base">{s.label}</span>
                   </span>
                   <span className="mx-8 h-1.5 w-1.5 rotate-45 bg-teal-500 md:mx-12" />

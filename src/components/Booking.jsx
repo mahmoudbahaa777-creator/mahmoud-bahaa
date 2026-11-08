@@ -84,9 +84,8 @@ export default function Booking() {
             className="relative flex h-[92svh] w-full max-w-3xl flex-col overflow-hidden rounded-t-panel border border-hairline bg-card sm:h-[min(88vh,760px)] sm:rounded-panel">
             <div className="flex items-start justify-between gap-4 border-b border-hairline px-5 py-4 md:px-7">
               <div>
-                <p className="eyebrow">Free · {contact.callMinutes} minutes</p>
-                <h2 id="booking-title" className="mt-1 font-serif text-2xl font-semibold text-ink">Book a strategy call</h2>
-                <p className="mt-1 text-sm text-muted">Pick a time that suits you. You'll get a calendar invite straight away.</p>
+                <h2 id="booking-title" className="font-serif text-2xl font-semibold text-ink">Book a strategy call</h2>
+                <p className="mt-1 text-sm text-muted">Free, {contact.callMinutes} minutes. Pick a time that suits you and you'll get a calendar invite straight away.</p>
               </div>
               <button ref={closeRef} onClick={() => setOpen(false)} aria-label="Close"
                 className="grid h-10 w-10 shrink-0 place-items-center rounded-full border border-hairline text-muted transition-colors hover:border-teal-500 hover:text-ink">

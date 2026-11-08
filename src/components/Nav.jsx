@@ -26,7 +26,7 @@ export default function Nav() {
 
   return (
     <header
-      className={`nav-in fixed inset-x-0 top-0 z-50 transition-colors duration-500 ${solid || open ? 'glass border-x-0 border-t-0' : 'border-b border-transparent'}`}>
+      className={`nav-in fixed inset-x-0 top-0 z-50 transition-colors duration-500 ${open ? 'glass !bg-card border-x-0 border-t-0' : solid ? 'glass border-x-0 border-t-0' : 'border-b border-transparent'}`}>
       <div className="wrap flex h-16 items-center justify-between">
         <button onClick={() => go('top')} className="flex items-center gap-3" aria-label="Mahmoud Bahaa — back to top">
           <span className="text-left leading-tight">
@@ -61,7 +61,6 @@ export default function Nav() {
               {LINKS.map(([id, l], i) => (
                 <motion.li key={id} initial={{ opacity: 0, x: -12 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.05 + i * 0.04, duration: 0.3 }}>
                   <button onClick={() => go(id)} className="flex w-full items-center gap-4 border-b border-hairline py-4 text-left last:border-0">
-                    <span className="font-serif text-sm text-teal-500">{String(i + 1).padStart(2, '0')}</span>
                     <span className="font-serif text-2xl font-semibold text-ink">{l}</span>
                   </button>
                 </motion.li>

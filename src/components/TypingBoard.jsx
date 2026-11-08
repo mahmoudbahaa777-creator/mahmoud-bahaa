@@ -65,7 +65,7 @@ export default function TypingBoard() {
       onPointerMove={(e) => { const r = e.currentTarget.getBoundingClientRect(); px.set((e.clientX - r.left) / r.width); py.set((e.clientY - r.top) / r.height) }}
       onPointerLeave={() => { px.set(0.5); py.set(0.5) }}>
       <motion.div style={{ rotateX: rx, rotateY: ry, transformStyle: 'preserve-3d' }}
-        className="glass glow-border relative overflow-hidden rounded-panel">
+        className="glow-border relative overflow-hidden rounded-panel border border-hairline bg-card">
         {/* board grid */}
         <div aria-hidden className="pointer-events-none absolute inset-0 opacity-60 [background-image:linear-gradient(var(--hairline)_1px,transparent_1px),linear-gradient(90deg,var(--hairline)_1px,transparent_1px)] [background-size:32px_32px] [mask-image:linear-gradient(180deg,#000,transparent_95%)]" />
 

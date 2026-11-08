@@ -19,9 +19,8 @@ export const contact = {
 }
 
 export const hero = {
-  eyebrow: 'Brand & growth marketing · MENA',
   headline: 'From reach to revenue.',
-  subline: 'I build brands people trust and campaigns that bring qualified leads.',
+  subline: 'Brand and growth marketing across MENA. I build brands people trust and campaigns that bring qualified leads.',
   primaryCta: 'Book a strategy call',
   secondaryCta: 'What I do',
 }
@@ -107,8 +106,8 @@ export const services = {
 }
 
 export const method = {
-  eyebrow: 'The Reach → Revenue method · 5 stages',
   headline: 'I build the path from attention to revenue.',
+  line: 'The Reach → Revenue method, in five stages.',
   stages: [
     ['Position', 'why you, for whom.'],
     ['Reach', 'be where your audience looks.'],
