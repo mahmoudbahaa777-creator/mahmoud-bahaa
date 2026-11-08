@@ -131,9 +131,12 @@ export default function SponsorshipShowcase() {
       <div ref={stage} className="relative h-[330vh]">
         <div className="sticky top-0 h-[100svh] overflow-hidden">
           <div className="absolute inset-0">
-            <Suspense fallback={<div className="h-full w-full bg-ground" />}>
-              {mount && <CarCanvas activeRef={activeRef} scrollRef={scrollRef} running={inView} isMobile={isMobile} low={low} />}
-            </Suspense>
+            {/* No Suspense boundary until it's needed, so it never sits in the pre-rendered HTML mid-hydration */}
+            {mount && (
+              <Suspense fallback={<div className="h-full w-full bg-ground" />}>
+                <CarCanvas activeRef={activeRef} scrollRef={scrollRef} running={inView} isMobile={isMobile} low={low} />
+              </Suspense>
+            )}
             <div className="pointer-events-none absolute inset-x-0 top-0 h-32 bg-gradient-to-b from-ground to-transparent" />
             <div className="pointer-events-none absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-ground to-transparent" />
           </div>

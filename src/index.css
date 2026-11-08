@@ -54,6 +54,32 @@ html.lenis, html.lenis body { height: auto; }
 @keyframes angle-spin { to { --angle: 360deg; } }
 @keyframes pulse { 50% { filter: brightness(1.6); } }
 
+/* Entrance animations for the first screen. Plain CSS so they run from the
+   pre-rendered HTML, before any JavaScript has loaded. */
+@keyframes rise { from { transform: translateY(16px); } }
+@keyframes fade-rise { from { opacity: 0; transform: translateY(16px); } }
+@keyframes word-in { from { transform: translateY(110%) rotate(4deg); } }
+@keyframes board-in { from { opacity: 0; transform: translateY(40px) rotateX(12deg); } }
+@keyframes nav-in { from { transform: translateY(-80px); } }
+.rise { animation: rise .9s cubic-bezier(.22,1,.36,1) both; animation-delay: var(--d, 0s); }
+.fade-rise { animation: fade-rise .9s cubic-bezier(.22,1,.36,1) both; animation-delay: var(--d, 0s); }
+.word-in { display: inline-block; animation: word-in .8s cubic-bezier(.22,1,.36,1) both; animation-delay: var(--d, 0s); }
+.board-in { animation: board-in 1.1s cubic-bezier(.22,1,.36,1) .4s both; }
+.nav-in { animation: nav-in .8s cubic-bezier(.22,1,.36,1) both; }
+
+/* Phones: drop the effects that make every scrolled frame expensive to paint
+   (live background blur, animated gradient borders). Looks nearly identical. */
+@media (max-width: 767px), (hover: none) {
+  .glass {
+    -webkit-backdrop-filter: none; backdrop-filter: none;
+    background: color-mix(in srgb, var(--surface-200) 94%, transparent);
+  }
+  .glow-border::before { animation: none; opacity: .35; }
+}
+
+/* Soft light pools: a radial gradient is far cheaper to paint than filter: blur(). */
+.glow { background: radial-gradient(closest-side, var(--c), transparent); }
+
 @keyframes marquee { to { transform: translateX(-50%); } }
 .marquee { animation: marquee 38s linear infinite; }
 .marquee:hover { animation-play-state: paused; }

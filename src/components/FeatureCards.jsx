@@ -36,7 +36,7 @@ function Spotlight() {
       <div className="contents md:relative md:block">
         <div className="sticky top-[4.5rem] z-10 md:top-28">
           <div className="glass glow-border relative overflow-hidden rounded-panel p-5 [background:color-mix(in_srgb,var(--surface-200)_92%,transparent)] md:p-10 md:[background:color-mix(in_srgb,var(--surface-200)_62%,transparent)]">
-            <div aria-hidden className="absolute -right-10 -top-10 h-40 w-40 rounded-full bg-teal-500/20 blur-[70px] md:h-56 md:w-56 md:blur-[80px]" />
+            <div aria-hidden className="glow absolute -right-24 -top-24 h-72 w-72 [--c:color-mix(in_srgb,var(--teal-500)_20%,transparent)] md:h-96 md:w-96" />
             {/* keyed remount = fresh fade-in per service; no exit wait, so fast scrolling never sticks */}
               <motion.div key={active} initial={{ opacity: 0, y: 14 }} animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.4, ease }} className="relative min-h-[8.5rem] md:min-h-0">
@@ -79,8 +79,8 @@ export default function FeatureCards() {
   const y2 = useTransform(scrollYProgress, [0, 1], [-80, 160])
   return (
     <section id="services" ref={ref} className="section overflow-x-clip">
-      <motion.div aria-hidden style={{ y: y1 }} className="pointer-events-none absolute -left-40 top-20 h-[460px] w-[460px] rounded-full bg-teal-500/20 blur-[120px]" />
-      <motion.div aria-hidden style={{ y: y2 }} className="pointer-events-none absolute -right-32 bottom-10 h-[380px] w-[380px] rounded-full bg-teal-700/25 blur-[110px]" />
+      <motion.div aria-hidden style={{ y: y1 }} className="glow pointer-events-none absolute -left-64 top-0 h-[700px] w-[700px] [--c:color-mix(in_srgb,var(--teal-500)_20%,transparent)]" />
+      <motion.div aria-hidden style={{ y: y2 }} className="glow pointer-events-none absolute -right-56 -bottom-10 h-[600px] w-[600px] [--c:color-mix(in_srgb,var(--teal-700)_25%,transparent)]" />
       <div className="wrap relative">
         <SectionHead eyebrow={services.eyebrow} headline={services.headline} />
         <Spotlight />

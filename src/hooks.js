@@ -1,12 +1,15 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useLayoutEffect, useState } from 'react'
 
+const useIsoLayoutEffect = typeof window === 'undefined' ? useEffect : useLayoutEffect
+
+/* The page is pre-rendered, so the first render must match the server's (no media info).
+ * The real value is applied before the browser paints the hydrated page. */
 export function useMedia(query, initial = false) {
-  const [match, setMatch] = useState(() =>
-    typeof window === 'undefined' ? initial : window.matchMedia(query).matches,
-  )
-  useEffect(() => {
+  const [match, setMatch] = useState(initial)
+  useIsoLayoutEffect(() => {
     const m = window.matchMedia(query)
     const on = () => setMatch(m.matches)
+    on()
     m.addEventListener('change', on)
     return () => m.removeEventListener('change', on)
   }, [query])

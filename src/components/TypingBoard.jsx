@@ -61,9 +61,7 @@ export default function TypingBoard() {
   const ry = useSpring(useTransform(px, [0, 1], [-9, 9]), cfg)
 
   return (
-    <motion.div ref={ref} style={{ perspective: 1200 }}
-      initial={{ opacity: 0, y: 40, rotateX: 12 }} animate={{ opacity: 1, y: 0, rotateX: 0 }}
-      transition={{ duration: 1.1, delay: 0.5, ease }}
+    <div ref={ref} style={{ perspective: 1200 }} className="board-in"
       onPointerMove={(e) => { const r = e.currentTarget.getBoundingClientRect(); px.set((e.clientX - r.left) / r.width); py.set((e.clientY - r.top) / r.height) }}
       onPointerLeave={() => { px.set(0.5); py.set(0.5) }}>
       <motion.div style={{ rotateX: rx, rotateY: ry, transformStyle: 'preserve-3d' }}
@@ -82,7 +80,7 @@ export default function TypingBoard() {
           </span>
         </div>
 
-        <ol className={`relative px-5 py-4 md:px-7 md:py-5 ${isMobile ? 'h-[17.5rem]' : 'h-[25rem]'}`} aria-label={words.map((w) => w.word).join(', ')}>
+        <ol className={`relative px-5 py-4 md:px-7 md:py-5 h-[17.5rem] md:h-[25rem]`} aria-label={words.map((w) => w.word).join(', ')}>
           <AnimatePresence initial={false} mode="popLayout">
             {rows.map((idx) => {
               const w = words[idx]
@@ -126,6 +124,6 @@ export default function TypingBoard() {
           </div>
         </div>
       </motion.div>
-    </motion.div>
+    </div>
   )
 }
