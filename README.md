@@ -10,9 +10,6 @@ Hosted free on **Cloudflare Pages** (project `mahmoud-bahaa`), connected to this
 Every push to `main` rebuilds and publishes automatically — usually live within a minute.
 Build settings: `npm run build` → `dist`, `NODE_VERSION=20`.
 
-Backup copy on GitHub Pages: https://mahmoudbahaa777-creator.github.io/mahmoud-bahaa/
-(updated only by running `npm run deploy`).
-
 ## Run
 ```bash
 npm install
