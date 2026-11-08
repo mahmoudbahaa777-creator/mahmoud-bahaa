@@ -25,8 +25,7 @@ function Card({ it, className = '' }) {
 
 /**
  * Recommendations.
- * Desktop: two rows drifting in opposite directions; hover pauses a row.
- * Phone: one row the visitor swipes at their own pace.
+ * Two rows drifting in opposite directions, on every screen size; hover pauses a row.
  */
 export default function Reviews() {
   const half = Math.ceil(r.items.length / 2)
@@ -37,15 +36,11 @@ export default function Reviews() {
         <SectionHead headline={r.headline} />
       </div>
 
-      <div aria-hidden className="mt-10 flex snap-x snap-mandatory gap-4 overflow-x-auto px-4 pb-4 [scrollbar-width:none] sm:px-8 md:hidden">
-        {r.items.map((it) => <Card key={it.name} it={it} className="w-[85%] snap-center" />)}
-      </div>
-
-      <div aria-hidden className="mt-14 hidden space-y-5 md:block [mask-image:linear-gradient(90deg,transparent,#000_6%,#000_94%,transparent)]">
+      <div aria-hidden className="mt-10 space-y-4 md:mt-14 md:space-y-5 [mask-image:linear-gradient(90deg,transparent,#000_6%,#000_94%,transparent)]">
         {rows.map((row, ri) => (
           <div key={ri} className="overflow-hidden">
-            <div className={`flex w-max gap-5 ${ri ? 'marquee-reverse' : 'marquee'}`} style={{ animationDuration: '70s' }}>
-              {[...row, ...row, ...row, ...row].map((it, i) => <Card key={i} it={it} className="w-[26rem]" />)}
+            <div className={`flex w-max gap-4 md:gap-5 ${ri ? 'marquee-reverse' : 'marquee'}`} style={{ animationDuration: '60s' }}>
+              {[...row, ...row, ...row, ...row].map((it, i) => <Card key={i} it={it} className="w-[18.5rem] sm:w-[22rem] md:w-[26rem]" />)}
             </div>
           </div>
         ))}
@@ -59,7 +54,6 @@ export default function Reviews() {
         <p className="mt-6 flex flex-wrap items-center gap-2 text-xs text-muted md:mt-8">
           <span className="text-teal-700"><Icon name="linkedin" size={16} /></span>
           {r.note}
-          <span className="md:hidden">Swipe for more.</span>
           <a href={contact.linkedin} target="_blank" rel="noreferrer" className="font-semibold text-teal-700 underline-offset-4 hover:underline">See them on LinkedIn</a>
         </p>
       </div>
