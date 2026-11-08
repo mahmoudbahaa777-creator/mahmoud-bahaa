@@ -3,14 +3,15 @@
 Vite + React 18 · Tailwind 3 · React Three Fiber / drei · Framer Motion · Lenis.
 Brand: Ocean Teal dark mode, Fraunces + Inter, Reach → Revenue mark (tokens in `src/tokens.css`).
 
-Live site: https://mahmoudbahaa777-creator.github.io/mahmoud-bahaa/
+Live site: https://mahmoudbahaa.com (also https://www.mahmoudbahaa.com)
 
 ## Deploy
-```bash
-npm run deploy
-```
-Builds the site and publishes it to the `gh-pages` branch, which GitHub Pages serves.
-Live in about a minute. Commit and push your source changes to `main` as usual.
+Hosted free on **Cloudflare Pages** (project `mahmoud-bahaa`), connected to this repo.
+Every push to `main` rebuilds and publishes automatically — usually live within a minute.
+Build settings: `npm run build` → `dist`, `NODE_VERSION=20`.
+
+Backup copy on GitHub Pages: https://mahmoudbahaa777-creator.github.io/mahmoud-bahaa/
+(updated only by running `npm run deploy`).
 
 ## Run
 ```bash
