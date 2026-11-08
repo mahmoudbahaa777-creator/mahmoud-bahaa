@@ -65,19 +65,12 @@ export default function TypingBoard() {
       onPointerMove={(e) => { const r = e.currentTarget.getBoundingClientRect(); px.set((e.clientX - r.left) / r.width); py.set((e.clientY - r.top) / r.height) }}
       onPointerLeave={() => { px.set(0.5); py.set(0.5) }}>
       <motion.div style={{ rotateX: rx, rotateY: ry, transformStyle: 'preserve-3d' }}
-        className="glow-border relative overflow-hidden rounded-panel border border-hairline bg-card">
+        className="relative overflow-hidden rounded-panel border border-hairline bg-card">
         {/* board grid */}
         <div aria-hidden className="pointer-events-none absolute inset-0 opacity-60 [background-image:linear-gradient(var(--hairline)_1px,transparent_1px),linear-gradient(90deg,var(--hairline)_1px,transparent_1px)] [background-size:32px_32px] [mask-image:linear-gradient(180deg,#000,transparent_95%)]" />
 
         <div className="relative flex items-center justify-between border-b border-hairline px-5 py-3.5 md:px-7">
           <p className="eyebrow">{title}</p>
-          <span className="flex items-center gap-2 text-xs text-muted">
-            <span className="relative flex h-2 w-2">
-              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-teal-500 opacity-60" />
-              <span className="relative inline-flex h-2 w-2 rounded-full bg-teal-500" />
-            </span>
-            Live
-          </span>
         </div>
 
         <ol className={`relative px-5 py-4 md:px-7 md:py-5 h-[17.5rem] md:h-[25rem]`} aria-label={words.map((w) => w.word).join(', ')}>

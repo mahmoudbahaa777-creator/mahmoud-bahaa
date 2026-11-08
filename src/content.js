@@ -11,6 +11,8 @@ export const contact = {
   // Booking calendar for every "Book a strategy call" button. Paste your public link
   // (Calendly, Cal.com or a Google Calendar appointment schedule). Empty = buttons open email.
   bookingUrl: 'https://calendly.com/mahmoudbahaa777/15min',
+  // What the call is for, shown in the booking pop-up. Edit freely.
+  callPitch: "Tell me where growth is stuck: brand, leads or scale. We'll look at it together and agree on one clear next step.",
   // Shown in the pop-up; keep in step with the Calendly event length.
   callMinutes: 15,
   // Fallback when bookingUrl is empty (and the "Prefer email?" link in the pop-up).
@@ -20,7 +22,7 @@ export const contact = {
 
 export const hero = {
   headline: 'From reach to revenue.',
-  subline: 'Brand and growth marketing across MENA. I build brands people trust and campaigns that bring qualified leads.',
+  subline: 'Growth strategist and marketing leader, 11+ years across MENA. I build brands people trust and campaigns that bring qualified leads.',
   primaryCta: 'Book a strategy call',
   secondaryCta: 'What I do',
 }
@@ -65,6 +67,7 @@ export const performance = {
   eyebrow: 'Performance campaigns',
   headline: 'Every lead, traced from impression to revenue.',
   line: "Clicks are cheap. Qualified leads aren't. Budget only grows where it earns.",
+  methodLine: 'The Reach → Revenue method, laid over the funnel: position first, then reach, trust, convert and scale.',
   channels: ['Google', 'YouTube', 'Meta', 'LinkedIn', 'X', 'Native', 'Programmatic'],
   // The doc specifies "6 stages, impression to revenue" without naming them.
   // These labels are a working draft — confirm or rename.
@@ -93,27 +96,48 @@ export const performance = {
 export const services = {
   eyebrow: 'What I do',
   headline: 'One partner, from brand to pipeline.',
-  items: [
-    { icon: 'compass', title: 'Brand & positioning', line: 'A clear reason to choose you, said the same everywhere.' },
-    { icon: 'orbit', title: '360° campaigns', line: 'One idea across digital, social, OOH, events and PR.' },
-    { icon: 'target', title: 'Performance & leads', line: 'Paid media that brings qualified leads, not just clicks.' },
-    { icon: 'trend', title: 'Campaign scaling', line: 'More budget behind what works, without losing efficiency.' },
-    { icon: 'flag', title: 'Sponsorships', line: 'Rights turned into trust, content and tracked leads.' },
-    { icon: 'mic', title: 'Influencers', line: 'Arabic-first creators measured on real actions.' },
-    { icon: 'billboard', title: 'OOH & events', line: 'Physical presence that feeds the digital funnel.' },
-    { icon: 'chart', title: 'Tracking & analytics', line: 'One view of what drives revenue.' },
+  // Two halves of the same job: trust first, then the engine that turns it into revenue.
+  groups: [
+    {
+      label: 'Brand',
+      line: 'Reasons to trust you.',
+      items: [
+        { icon: 'compass', title: 'Brand & positioning', line: 'A clear reason to choose you, said the same everywhere.' },
+        { icon: 'orbit', title: '360° campaigns', line: 'One idea across digital, social, OOH, events and PR.' },
+        { icon: 'flag', title: 'Sponsorships', line: 'Rights turned into trust, content and tracked leads.' },
+        { icon: 'billboard', title: 'OOH & events', line: 'Physical presence that feeds the digital funnel.' },
+      ],
+    },
+    {
+      label: 'Performance',
+      line: 'Trust turned into revenue.',
+      items: [
+        { icon: 'target', title: 'Performance & leads', line: 'Paid media that brings qualified leads, not just clicks.' },
+        { icon: 'trend', title: 'Campaign scaling', line: 'More budget behind what works, without losing efficiency.' },
+        { icon: 'mic', title: 'Influencers', line: 'Arabic-first creators measured on real actions.' },
+        { icon: 'chart', title: 'Tracking & analytics', line: 'One view of what drives revenue.' },
+      ],
+    },
   ],
 }
 
+// The Reach → Revenue method, laid over the performance funnel.
 export const method = {
-  headline: 'I build the path from attention to revenue.',
-  line: 'The Reach → Revenue method, in five stages.',
+  name: 'The Reach → Revenue method',
+  foundation: ['Position', 'why you, for whom. Everything below is built on it.'],
   stages: [
     ['Position', 'why you, for whom.'],
     ['Reach', 'be where your audience looks.'],
     ['Trust', 'give them reasons to believe.'],
     ['Convert', 'clear offers, fast pages, clean lead capture.'],
     ['Scale', 'track to revenue, back what works.'],
+  ],
+  // which funnel stages (performance.stages) each method stage drives
+  map: [
+    { stage: 'Reach', note: 'be where your audience looks.', rows: ['Impression', 'Click'] },
+    { stage: 'Trust', note: 'give them reasons to believe.', rows: ['Visit'] },
+    { stage: 'Convert', note: 'clear offers, fast pages, clean lead capture.', rows: ['Lead', 'Qualified lead'] },
+    { stage: 'Scale', note: 'track to revenue, back what works.', rows: ['Revenue'] },
   ],
 }
 
@@ -127,6 +151,7 @@ export const sponsorships = {
     {
       id: 'redbull',
       partner: 'Oracle Red Bull Racing',
+      short: 'Red Bull',
       category: 'F1',
       line: "A winning team's credibility, made local for MENA.",
       trust: ['Association', 'their values become yours.'],
@@ -135,6 +160,7 @@ export const sponsorships = {
     {
       id: 'aston',
       partner: 'Aston Martin F1',
+      short: 'Aston Martin',
       category: 'F1',
       line: 'Premium positioning with a regional connection.',
       trust: ['Presence', 'trusted by top teams = safe to choose.'],
@@ -143,6 +169,7 @@ export const sponsorships = {
     {
       id: 'upl',
       partner: 'UAE Pro League',
+      short: 'Pro League',
       category: 'Football',
       line: 'Mass local reach, every matchday.',
       trust: ['Local voice', 'Arabic-first content and fan moments.'],
@@ -219,8 +246,7 @@ export const closing = {
 export const navSections = [
   { id: 'top', label: 'Start' },
   { id: 'services', label: 'What I do' },
-  { id: 'performance', label: 'Performance' },
-  { id: 'method', label: 'Method' },
+  { id: 'performance', label: 'Performance & method' },
   { id: 'sponsorships', label: 'Sponsorships' },
   { id: 'reviews', label: 'Recommendations' },
   { id: 'contact', label: 'Contact' },

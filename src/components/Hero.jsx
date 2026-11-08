@@ -14,15 +14,13 @@ export default function Hero() {
 
   return (
     <section id="top" ref={ref} className="relative flex min-h-[100svh] items-center overflow-hidden pb-16 pt-28">
-      {/* Static backdrop: soft teal glow + faint grid */}
+      {/* Static backdrop: faint grid */}
       <div aria-hidden className="pointer-events-none absolute inset-0">
-        <div className="glow absolute -right-60 top-[10%] h-[840px] w-[840px] [--c:color-mix(in_srgb,var(--teal-500)_15%,transparent)]" />
-        <div className="glow absolute -left-60 -bottom-40 h-[660px] w-[660px] [--c:color-mix(in_srgb,var(--teal-700)_20%,transparent)]" />
         <div className="absolute inset-0 opacity-40 [background-image:linear-gradient(var(--hairline)_1px,transparent_1px),linear-gradient(90deg,var(--hairline)_1px,transparent_1px)] [background-size:64px_64px] [mask-image:radial-gradient(ellipse_at_60%_45%,#000_10%,transparent_70%)]" />
       </div>
 
       <motion.div style={{ y, opacity: fade }}
-        className="wrap relative z-10 grid items-center gap-14 lg:grid-cols-[1.05fr_1fr] lg:gap-16">
+        className="wrap relative z-10 grid items-center gap-14 md:grid-cols-[1.05fr_1fr] md:gap-10 lg:gap-16">
         <div>
           <h1 aria-label={hero.headline} className="font-serif text-display font-semibold text-ink">
             {hero.headline.split(' ').map((w, i) => (

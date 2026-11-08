@@ -1,11 +1,11 @@
 import { logoStrip } from '../content'
 import { asset } from '../hooks'
 
-// One-colour logos as a slow-moving strip. Sponsor partners carry a teal dot.
+// One-colour logos (white cutouts, shown in ink on cream) as a slow-moving strip. Sponsor partners carry a teal dot.
 function Logo({ l }) {
   return (
     <img src={asset(l.src)} alt={l.name} draggable="false" loading="lazy" decoding="async" style={{ height: l.h }}
-      className="w-auto max-w-none select-none opacity-60 transition-opacity duration-300 hover:opacity-100" />
+      className="w-auto max-w-none select-none opacity-60 brightness-0 transition-opacity duration-300 hover:opacity-90" />
   )
 }
 

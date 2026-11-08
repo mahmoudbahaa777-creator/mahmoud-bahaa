@@ -33,9 +33,9 @@ function ZoneCard({ zone }) {
 
   if (zone.tone === 'energy') {
     return (
-      <motion.article key={zone.id} {...m.card} className="glass glow-border relative overflow-hidden rounded-panel p-5 md:p-9">
+      <motion.article key={zone.id} {...m.card} className="glass relative overflow-hidden rounded-panel p-5 md:p-9">
         <motion.div variants={list} initial="hidden" animate="show" className="relative">
-          <motion.h3 variants={m.item} className="font-sans text-[2rem] font-semibold italic leading-[1.02] tracking-tight text-ink md:text-5xl">{zone.partner}</motion.h3>
+          <motion.h3 variants={m.item} className="font-serif text-[2rem] font-semibold italic leading-[1.05] text-ink md:text-5xl">{zone.partner}</motion.h3>
           <motion.div variants={m.item} className="my-6 h-[3px] w-24 origin-left rounded-full bg-gradient-to-r from-teal-500 to-transparent" />
           <motion.p variants={m.item} className="text-lg font-medium leading-7 text-ink md:text-xl md:leading-8">{zone.line}</motion.p>
           <motion.p variants={m.item} className="mt-6 border-t border-hairline pt-5 text-muted">
@@ -62,14 +62,14 @@ function ZoneCard({ zone }) {
   }
 
   return (
-    <motion.article key={zone.id} {...m.card} className="glass glow-border relative overflow-hidden rounded-panel p-5 md:p-9">
+    <motion.article key={zone.id} {...m.card} className="glass relative overflow-hidden rounded-panel p-5 md:p-9">
       <motion.div variants={list} initial="hidden" animate="show">
         <div className="mb-5 flex items-center gap-3">
           <motion.span variants={m.item} className="inline-flex items-center gap-2 rounded-full border border-teal-500/50 bg-teal-100 px-3 py-1 text-xs font-semibold text-teal-700">
             <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-teal-500" /> Matchday
           </motion.span>
         </div>
-        <motion.h3 variants={m.item} className="font-sans text-[2rem] font-semibold tracking-tight text-ink md:text-5xl">{zone.partner}</motion.h3>
+        <motion.h3 variants={m.item} className="font-serif text-[2rem] font-semibold leading-[1.05] text-ink md:text-5xl">{zone.partner}</motion.h3>
         <motion.p variants={m.item} className="mt-4 text-xl leading-8 text-ink">{zone.line}</motion.p>
         <div className="mt-4 grid grid-cols-2 gap-2 sm:mt-6 sm:gap-3">
           {[['Reach', 'Mass, local'], ['Rhythm', 'Every matchday'], ['Language', 'Arabic-first'], ['Moments', 'Fan-led']].map(([k, v]) => (
@@ -119,12 +119,12 @@ export default function SponsorshipShowcase() {
   const side = active === 1 ? 'md:ml-auto' : ''
 
   return (
-    <section id="sponsorships" className="relative">
+    <section id="sponsorships" className="theme-dark relative bg-ground text-ink">
       <div className="wrap section !pb-16">
         <SectionHead headline={s.headline} line={s.line} />
       </div>
 
-      <div ref={stage} className="relative h-[330vh]">
+      <div ref={stage} className="relative h-[240vh] md:h-[330vh]">
         <div className="sticky top-0 h-[100svh] overflow-hidden">
           <div className="absolute inset-0">
             {/* No Suspense boundary until it's needed, so it never sits in the pre-rendered HTML mid-hydration */}
@@ -144,7 +144,8 @@ export default function SponsorshipShowcase() {
                 <button key={z.id} role="tab" aria-selected={active === i} onClick={() => goTo(i)}
                   className={`relative overflow-hidden rounded-full border px-3 py-2 text-xs font-semibold transition-colors md:px-4 md:text-sm ${active === i ? 'border-teal-500 text-ink' : 'border-hairline text-muted hover:text-ink'}`}>
                   {active === i && <motion.span layoutId="zone-pill" className="absolute inset-0 -z-10 bg-teal-100" transition={{ type: 'spring', stiffness: 300, damping: 30 }} />}
-                  {z.partner}
+                  <span className="md:hidden">{z.short}</span>
+                  <span className="hidden md:inline">{z.partner}</span>
                 </button>
               ))}
             </div>
@@ -168,6 +169,10 @@ export default function SponsorshipShowcase() {
         </div>
       </div>
 
+      {/* The showcase shows one partner at a time; screen readers get all three. */}
+      <ul className="sr-only">
+        {s.zones.map((z) => <li key={z.id}>{z.partner} ({z.category}): {z.line} {z.trust[0]}: {z.trust[1]}</li>)}
+      </ul>
     </section>
   )
 }

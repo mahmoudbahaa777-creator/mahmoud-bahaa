@@ -24,7 +24,7 @@ export default function ScrollProgress() {
       <nav aria-label="Page progress" className="fixed right-6 top-1/2 z-40 hidden -translate-y-1/2 lg:block">
         <div className="relative flex flex-col items-end gap-5 py-2" style={{ perspective: 600 }}>
           <div className="absolute bottom-0 right-[5px] top-0 w-px bg-hairline" />
-          <motion.div style={{ scaleY: fill, originY: 0 }} className="absolute bottom-0 right-[5px] top-0 w-px bg-teal-500 shadow-[0_0_12px_var(--teal-500)]" />
+          <motion.div style={{ scaleY: fill, originY: 0 }} className="absolute bottom-0 right-[5px] top-0 w-px bg-teal-500" />
           {navSections.map(({ id, label }) => {
             const on = active === id
             return (

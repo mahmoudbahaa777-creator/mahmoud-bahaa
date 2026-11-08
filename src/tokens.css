@@ -35,7 +35,7 @@
     color-scheme: dark;
   }
 }
-:root[data-theme="dark"] {
+:root[data-theme="dark"], .theme-dark {
   --surface-100: #0e1817; --surface-200: #152321;
   --ink: #eaf2f0; --ink-muted: #9db2ae; --hairline: #27403c;
   --teal-700: #3fb5ac; --teal-500: #3fb5ac; --teal-100: #17403d;

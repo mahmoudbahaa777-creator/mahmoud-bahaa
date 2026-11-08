@@ -4,29 +4,29 @@ import Icon from './ui/Icon'
 
 const initials = (n) => n.split(' ').filter(Boolean).slice(0, 2).map((w) => w[0]).join('')
 
-function Card({ it }) {
+function Card({ it, className = '' }) {
   return (
-    <figure className="w-[18.5rem] border border-hairline bg-card shrink-0 rounded-panel p-6 transition-colors duration-300 hover:border-teal-500/60 sm:w-[22rem] md:w-[26rem] md:p-7">
+    <figure className={`flex shrink-0 flex-col justify-between rounded-panel border border-hairline bg-card p-6 transition-colors duration-300 hover:border-teal-500/60 md:p-7 ${className}`}>
       <blockquote className="font-serif text-xl font-semibold leading-snug text-ink md:text-2xl">“{it.pull}”</blockquote>
-      <figcaption className="mt-6 flex items-end justify-between gap-4">
-        <div className="flex min-w-0 items-center gap-3">
-          <span className="grid h-11 w-11 shrink-0 place-items-center rounded-full border border-hairline bg-teal-100 font-serif text-sm font-semibold text-teal-700">
-            {initials(it.name)}
-          </span>
-          <div className="min-w-0">
-            <p className="font-serif text-base font-semibold text-ink">{it.name}</p>
-            <p className="truncate text-xs text-muted">{it.role}</p>
-          </div>
+      <figcaption className="mt-6 flex items-start gap-3">
+        <span className="grid h-11 w-11 shrink-0 place-items-center rounded-full bg-teal-100 font-serif text-sm font-semibold text-teal-700">
+          {initials(it.name)}
+        </span>
+        <div className="min-w-0">
+          <p className="font-serif text-base font-semibold text-ink">{it.name}</p>
+          <p className="text-xs leading-5 text-muted">{it.role}</p>
+          {/* how they know Mahmoud: the strongest credibility signal in the recommendation */}
+          <p className="mt-1 text-xs font-semibold leading-5 text-teal-700">{it.relation} · {it.date}</p>
         </div>
-        <span className="shrink-0 text-[11px] font-semibold uppercase tracking-[1.5px] text-teal-700">{it.date}</span>
       </figcaption>
     </figure>
   )
 }
 
 /**
- * Recommendations as two rows of short quotes drifting in opposite directions.
- * Hover pauses a row. Full texts stay in content.js for screen readers below.
+ * Recommendations.
+ * Desktop: two rows drifting in opposite directions; hover pauses a row.
+ * Phone: one row the visitor swipes at their own pace.
  */
 export default function Reviews() {
   const half = Math.ceil(r.items.length / 2)
@@ -37,25 +37,29 @@ export default function Reviews() {
         <SectionHead headline={r.headline} />
       </div>
 
-      <div aria-hidden className="mt-12 space-y-5 md:mt-14 [mask-image:linear-gradient(90deg,transparent,#000_6%,#000_94%,transparent)]">
+      <div aria-hidden className="mt-10 flex snap-x snap-mandatory gap-4 overflow-x-auto px-4 pb-4 [scrollbar-width:none] sm:px-8 md:hidden">
+        {r.items.map((it) => <Card key={it.name} it={it} className="w-[85%] snap-center" />)}
+      </div>
+
+      <div aria-hidden className="mt-14 hidden space-y-5 md:block [mask-image:linear-gradient(90deg,transparent,#000_6%,#000_94%,transparent)]">
         {rows.map((row, ri) => (
           <div key={ri} className="overflow-hidden">
             <div className={`flex w-max gap-5 ${ri ? 'marquee-reverse' : 'marquee'}`} style={{ animationDuration: '70s' }}>
-              {[...row, ...row, ...row, ...row].map((it, i) => <Card key={i} it={it} />)}
+              {[...row, ...row, ...row, ...row].map((it, i) => <Card key={i} it={it} className="w-[26rem]" />)}
             </div>
           </div>
         ))}
       </div>
 
-      {/* The moving rows are decorative duplicates; this list is what assistive tech reads. */}
       <ul className="sr-only">
-        {r.items.map((it) => <li key={it.name}>“{it.text}” — {it.name}, {it.role}, {it.date}</li>)}
+        {r.items.map((it) => <li key={it.name}>“{it.text}” — {it.name}, {it.role}. {it.relation}, {it.date}.</li>)}
       </ul>
 
       <div className="wrap">
-        <p className="mt-8 flex flex-wrap items-center gap-2 text-xs text-muted">
+        <p className="mt-6 flex flex-wrap items-center gap-2 text-xs text-muted md:mt-8">
           <span className="text-teal-700"><Icon name="linkedin" size={16} /></span>
           {r.note}
+          <span className="md:hidden">Swipe for more.</span>
           <a href={contact.linkedin} target="_blank" rel="noreferrer" className="font-semibold text-teal-700 underline-offset-4 hover:underline">See them on LinkedIn</a>
         </p>
       </div>

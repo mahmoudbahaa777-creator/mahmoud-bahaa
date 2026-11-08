@@ -1,11 +1,12 @@
 import { useEffect, useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
-import { contact } from '../content'
+import { contact, navSections } from '../content'
 import { scrollToId } from '../hooks'
 import { onBook } from './Booking'
 
 const ease = [0.22, 1, 0.36, 1]
-const LINKS = [['services', 'What I do'], ['performance', 'Performance'], ['method', 'Method'], ['sponsorships', 'Sponsorships'], ['reviews', 'Recommendations']]
+// Same sections as the side rail, minus the two ends (the logo goes to the top; Book is the contact).
+const LINKS = navSections.filter((n) => n.id !== 'top' && n.id !== 'contact').map((n) => [n.id, n.label])
 
 export default function Nav() {
   const [solid, setSolid] = useState(false)
@@ -55,7 +56,12 @@ export default function Nav() {
 
       <AnimatePresence>
         {open && (
-          <motion.nav id="mobile-menu" initial={{ height: 0, opacity: 0 }} animate={{ height: 'auto', opacity: 1 }} exit={{ height: 0, opacity: 0 }}
+          <motion.button key="backdrop" aria-label="Close menu" onClick={() => setOpen(false)} tabIndex={-1}
+            initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
+            className="absolute inset-x-0 top-full h-screen bg-ink/30 lg:hidden" />
+        )}
+        {open && (
+          <motion.nav key="menu" id="mobile-menu" initial={{ height: 0, opacity: 0 }} animate={{ height: 'auto', opacity: 1 }} exit={{ height: 0, opacity: 0 }}
             transition={{ duration: 0.35, ease }} className="overflow-hidden border-t border-hairline lg:hidden">
             <ol className="wrap py-3">
               {LINKS.map(([id, l], i) => (
@@ -66,6 +72,10 @@ export default function Nav() {
                 </motion.li>
               ))}
             </ol>
+            <div className="wrap flex flex-wrap gap-3 pb-5">
+              <a href={contact.callHref} onClick={(e) => { setOpen(false); onBook(e) }} className="btn-primary">Book a strategy call</a>
+              <a href={`https://wa.me/${contact.whatsapp}?text=${encodeURIComponent(contact.whatsappText)}`} target="_blank" rel="noreferrer" className="btn-ghost">WhatsApp</a>
+            </div>
           </motion.nav>
         )}
       </AnimatePresence>

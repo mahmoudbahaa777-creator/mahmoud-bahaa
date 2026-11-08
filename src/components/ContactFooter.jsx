@@ -33,7 +33,6 @@ export default function ContactFooter() {
     <section id="contact" className="relative overflow-hidden pt-24 md:pt-32">
       <div className="wrap">
         <div className="relative mx-auto max-w-3xl text-center">
-          <div aria-hidden className="glow pointer-events-none absolute left-1/2 -top-24 h-[30rem] w-[30rem] -translate-x-1/2 [--c:color-mix(in_srgb,var(--teal-500)_20%,transparent)]" />
           <SplitText text={closing.headline} className="relative font-serif text-h1 font-semibold md:text-[3.5rem] md:leading-[1.05]" />
           <Reveal delay={0.2} className="relative mt-10"><MagneticCta /></Reveal>
           <Reveal delay={0.3} className="relative mt-8 flex flex-wrap justify-center gap-3">

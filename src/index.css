@@ -4,7 +4,7 @@
 
 /* Page ground is the brand's dark surface (#0E1817), not pure black. */
 /* clip (not hidden) so nothing can widen the page on phones, while sticky still works */
-html { background: var(--surface-100); overflow-x: clip; }
+html { background: var(--surface-100); overflow-x: clip; color-scheme: light; }
 body {
   background: var(--surface-100);
   color: var(--ink);
@@ -13,6 +13,10 @@ body {
   overflow-x: clip;
 }
 ::selection { background: var(--teal-500); color: var(--surface-100); }
+
+/* Headlines break evenly; paragraphs avoid a lone last word */
+h1, h2, h3, blockquote { text-wrap: balance; }
+p, li, figcaption { text-wrap: pretty; }
 
 /* Browser surfaces in the brand palette */
 html { scrollbar-color: var(--hairline) var(--surface-100); accent-color: var(--teal-500); }
@@ -44,22 +48,6 @@ html.lenis, html.lenis body { height: auto; }
   .btn-ghost { @apply btn border border-hairline text-ink hover:border-teal-500 hover:text-teal-700; }
 }
 
-/* Gradient-light border that travels round the card */
-@property --angle { syntax: '<angle>'; initial-value: 0deg; inherits: false; }
-.glow-border { position: relative; isolation: isolate; }
-.glow-border::before {
-  content: '';
-  position: absolute; inset: -1px; border-radius: inherit; padding: 1px;
-  background: conic-gradient(from var(--angle), transparent 0 55%, var(--teal-500) 72%, var(--on-deep-muted) 78%, transparent 92%);
-  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
-  -webkit-mask-composite: xor; mask-composite: exclude;
-  opacity: .28; animation: angle-spin 6s linear infinite, pulse 3.2s ease-in-out infinite;
-  transition: opacity .4s; pointer-events: none; z-index: 1;
-}
-.glow-border:hover::before { opacity: 1; animation-duration: 2.4s, 3.2s; }
-@keyframes angle-spin { to { --angle: 360deg; } }
-@keyframes pulse { 50% { filter: brightness(1.6); } }
-
 /* Entrance animations for the first screen. Plain CSS so they run from the
    pre-rendered HTML, before any JavaScript has loaded. */
 @keyframes rise { from { transform: translateY(16px); } }
@@ -80,11 +68,7 @@ html.lenis, html.lenis body { height: auto; }
     -webkit-backdrop-filter: none; backdrop-filter: none;
     background: color-mix(in srgb, var(--surface-200) 94%, transparent);
   }
-  .glow-border::before { animation: none; opacity: .35; }
 }
-
-/* Soft light pools: a radial gradient is far cheaper to paint than filter: blur(). */
-.glow { background: radial-gradient(closest-side, var(--c), transparent); }
 
 @keyframes marquee { to { transform: translateX(-50%); } }
 .marquee { animation: marquee 38s linear infinite; }

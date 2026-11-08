@@ -5,7 +5,6 @@ import Hero from './components/Hero'
 import LogoStrip from './components/LogoStrip'
 import Performance from './components/Performance'
 import FeatureCards from './components/FeatureCards'
-import Method from './components/Method'
 import SponsorshipShowcase from './components/SponsorshipShowcase'
 import Experience from './components/Experience'
 import ContactFooter from './components/ContactFooter'
@@ -48,7 +47,6 @@ export default function App() {
         <Experience />
         <FeatureCards />
         <Performance />
-        <Method />
         <SponsorshipShowcase />
         <Reviews />
         <LogoStrip />
