@@ -4,7 +4,7 @@ import { asset } from '../hooks'
 // One-colour logos as a slow-moving strip. Sponsor partners carry a teal dot.
 function Logo({ l }) {
   return (
-    <img src={asset(l.src)} alt={l.name} draggable="false" style={{ height: l.h }}
+    <img src={asset(l.src)} alt={l.name} draggable="false" loading="lazy" decoding="async" style={{ height: l.h }}
       className="w-auto max-w-none select-none opacity-60 transition-opacity duration-300 hover:opacity-100" />
   )
 }

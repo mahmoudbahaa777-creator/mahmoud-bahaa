@@ -48,17 +48,17 @@ export const logoStrip = {
   // One-colour logo cutouts in /public/logos (white on transparent; tinted in CSS).
   // h = display height in px, tuned so the logos look equal in weight.
   logos: [
-    { name: 'AvaTrade', src: '/logos/avatrade.png', h: 58 },
-    { name: 'Capex.com', src: '/logos/capex.png', h: 40 },
-    { name: 'CPT Markets', src: '/logos/cpt.png', h: 38 },
-    { name: 'Migaloz', src: '/logos/migaloz.png', h: 34 },
-    { name: 'Dimofinf', src: '/logos/dimofinf.png', h: 44 },
+    { name: 'AvaTrade', src: '/logos/avatrade.webp', h: 58 },
+    { name: 'Capex.com', src: '/logos/capex.webp', h: 40 },
+    { name: 'CPT Markets', src: '/logos/cpt.webp', h: 38 },
+    { name: 'Migaloz', src: '/logos/migaloz.webp', h: 34 },
+    { name: 'Dimofinf', src: '/logos/dimofinf.webp', h: 44 },
   ],
   partnersLabel: 'Partners activated',
   partners: [
-    { name: 'Oracle Red Bull Racing', src: '/logos/redbull-racing.png', h: 50 },
-    { name: 'Aston Martin F1', src: '/logos/aston-martin.png', h: 34 },
-    { name: 'UAE Pro League', src: '/logos/uae-pro-league.png', h: 54 },
+    { name: 'Oracle Red Bull Racing', src: '/logos/redbull-racing.webp', h: 50 },
+    { name: 'Aston Martin F1', src: '/logos/aston-martin.webp', h: 34 },
+    { name: 'UAE Pro League', src: '/logos/uae-pro-league.webp', h: 54 },
   ],
 }
 

@@ -11,12 +11,14 @@ import { asset } from '../../hooks'
  * Swap for a true 3D .glb via assets.js when one is available.
  */
 
+// Background-removed photos (WebP, ~1400px wide). w/h are the ORIGINAL cut-out pixel sizes,
+// kept so the wheel coordinates below stay valid; only the aspect ratio is used.
 // Background-removed photos. Wheels: near-side wheel centre x/y and radius x/y, in image pixels.
 // contact: how far down the image (0–1) the tyres touch the ground.
 export const CARS = {
-  redbull: { src: '/models/redbull-car.png', w: 1320, h: 806, contact: 0.88,
+  redbull: { src: '/models/redbull-car.webp', w: 1320, h: 806, contact: 0.88,
     wheels: [[502, 535, 104, 116], [1172, 362, 78, 88]] },
-  aston: { src: '/models/aston-car.png', w: 2000, h: 1125, contact: 0.9,
+  aston: { src: '/models/aston-car.webp', w: 2000, h: 1125, contact: 0.9,
     wheels: [[722, 842, 142, 140], [1836, 556, 140, 150]] },
 }
 const PLANE_W = 6.4

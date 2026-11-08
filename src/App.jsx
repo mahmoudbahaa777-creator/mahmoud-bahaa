@@ -15,6 +15,18 @@ import ScrollProgress from './components/ScrollProgress'
 
 export default function App() {
   useEffect(() => {
+    // Once the page has fully loaded, quietly fetch the 3D chunk so it's ready when needed.
+    // Skipped on data-saver / slow connections: there it loads only when scrolled near.
+    const c = navigator.connection
+    if (c && (c.saveData || /(^|-)2g|3g/.test(c.effectiveType || ''))) return
+    let t
+    const warm = () => { t = setTimeout(() => import('./components/three/CarCanvas'), 2500) }
+    if (document.readyState === 'complete') warm()
+    else window.addEventListener('load', warm, { once: true })
+    return () => { clearTimeout(t); window.removeEventListener('load', warm) }
+  }, [])
+
+  useEffect(() => {
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
     const lenis = new Lenis({ lerp: 0.09, smoothWheel: true })
     window.__lenis = lenis

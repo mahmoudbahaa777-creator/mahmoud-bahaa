@@ -97,6 +97,10 @@ export default function SponsorshipShowcase() {
   const isMobile = useIsMobile()
   const low = useLowPower()
   const inView = useInView(stage, '300px')
+  // Don't even download the 3D engine until the visitor is ~2 screens away
+  const near = useInView(stage, '1600px')
+  const [mount, setMount] = useState(false)
+  if (near && !mount) setMount(true)
   const { scrollYProgress } = useScroll({ target: stage, offset: ['start start', 'end end'] })
   const zoneProgress = useTransform(scrollYProgress, (v) => (v >= 1 ? 1 : (v * 3) % 1))
 
@@ -128,7 +132,7 @@ export default function SponsorshipShowcase() {
         <div className="sticky top-0 h-[100svh] overflow-hidden">
           <div className="absolute inset-0">
             <Suspense fallback={<div className="h-full w-full bg-ground" />}>
-              <CarCanvas activeRef={activeRef} scrollRef={scrollRef} running={inView} isMobile={isMobile} low={low} />
+              {mount && <CarCanvas activeRef={activeRef} scrollRef={scrollRef} running={inView} isMobile={isMobile} low={low} />}
             </Suspense>
             <div className="pointer-events-none absolute inset-x-0 top-0 h-32 bg-gradient-to-b from-ground to-transparent" />
             <div className="pointer-events-none absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-ground to-transparent" />
