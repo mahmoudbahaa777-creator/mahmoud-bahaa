@@ -50,7 +50,7 @@ Brand and performance in one person. Mahmoud builds the trust (positioning, 360Â
 - Career totals (approved): 11+ years, $50M+ budget managed, 260K+ leads, 4x ROAS, 2B+ brand reach.
 - Seven LinkedIn recommendations, lightly edited for length (`src/content.js`, `reviews`).
 - Sponsorships activated: Oracle Red Bull Racing, Aston Martin F1, UAE Pro League. Their logos and car photos are used by Mahmoud's choice; written permission is not confirmed.
-- Brands worked with: AvaTrade, Capex.com, CPT Markets, Migaloz, Dimofinf (logos in `public/logos`).
+- Brands worked with: AvaTrade, Capex.com, CPT Markets, Migaloz, Dimofinf, 200invest, Quad Solutions (logos in `public/logos`).
 - Absent and not to be invented: per-campaign figures, client case studies, pricing, press.
 
 ## Product Principles

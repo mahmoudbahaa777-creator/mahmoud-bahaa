@@ -31,7 +31,7 @@ export default function LogoStrip() {
         <p className="flex items-center gap-2 text-xs text-muted"><span className="h-1.5 w-1.5 rounded-full bg-teal-500" />marks {logoStrip.partnersLabel.toLowerCase()}</p>
       </div>
       <div className="relative overflow-hidden [mask-image:linear-gradient(90deg,transparent,#000_10%,#000_90%,transparent)]">
-        <div className="marquee flex w-max items-center" style={{ animationDuration: '14s' }}>
+        <div className="marquee flex w-max items-center" style={{ animationDuration: '17s' }}>
           <Row />
           <Row />
         </div>

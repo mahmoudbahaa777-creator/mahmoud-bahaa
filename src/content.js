@@ -54,6 +54,8 @@ export const logoStrip = {
     { name: 'CPT Markets', src: '/logos/cpt.webp', h: 38 },
     { name: 'Migaloz', src: '/logos/migaloz.webp', h: 34 },
     { name: 'Dimofinf', src: '/logos/dimofinf.webp', h: 44 },
+    { name: '200invest', src: '/logos/200invest.webp', h: 30 },
+    { name: 'Quad Solutions', src: '/logos/quad.webp', h: 46 },
   ],
   partnersLabel: 'Partners activated',
   partners: [
