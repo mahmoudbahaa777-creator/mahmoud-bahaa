@@ -36,7 +36,7 @@ function useTyped(text, on, speed = 70) {
 }
 
 const Bar = ({ w = '100%', className = '' }) => <span className={`block h-2 rounded-full bg-[#10221F]/10 ${className}`} style={{ width: w }} />
-const Sponsored = ({ dark }) => <span className={`text-[10px] font-semibold ${dark ? 'text-white/70' : 'text-[#4C5F5C]'}`}>Sponsored</span>
+const Sponsored = ({ dark }) => <span className={`text-[10px] font-semibold ${dark ? 'text-white/90' : 'text-[#4C5F5C]'}`}>Sponsored</span>
 
 /* ---------- Search & video ---------- */
 
@@ -97,7 +97,7 @@ function YouTube({ on }) {
         </div>
         <div className="absolute left-4 top-4 max-w-[70%]">
           <p className="font-serif text-xl font-semibold leading-tight text-white sm:text-2xl">{c.videoAd}</p>
-          <p className="mt-1 text-[11px] text-white/75">Your Brand</p>
+          <p className="mt-1 text-[11px] font-semibold text-white">Your Brand</p>
         </div>
         <span className="absolute bottom-10 left-3 rounded bg-[#F2C744] px-1.5 py-0.5 text-[10px] font-semibold text-[#10221F]">Ad</span>
         <span className="absolute bottom-10 right-0 bg-black/70 px-3 py-1.5 text-[11px] font-semibold text-white">
@@ -129,7 +129,7 @@ function TikTok({ on }) {
   return (
     <Phone>
       <div className={`absolute inset-0 bg-gradient-to-b from-[#0B3B3C] via-[#138A84] to-[#0E1817] ${on ? 'ch-pulse' : ''}`} />
-      <p className="absolute left-0 right-0 top-9 text-center text-[11px] font-semibold text-white/80">Following · <span className="text-white">For You</span></p>
+      <p className="absolute left-0 right-0 top-9 text-center text-[11px] font-semibold text-white/90">Following · <span className="text-white">For You</span></p>
       <div className="absolute bottom-24 right-2.5 flex flex-col items-center gap-3">
         {['heart', 'msg', 'share'].map((k) => <span key={k} className="h-8 w-8 rounded-full bg-white/20" />)}
       </div>
