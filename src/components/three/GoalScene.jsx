@@ -1,6 +1,4 @@
 import { useMemo, useRef } from 'react'
-import { Decal, useTexture } from '@react-three/drei'
-import { asset } from '../../hooks'
 import { useFrame } from '@react-three/fiber'
 import * as THREE from 'three'
 
@@ -9,11 +7,10 @@ import * as THREE from 'three'
  * corner, the net bulges, confetti bursts and the player celebrates, then jogs
  * back and it plays again. Kit is brand teal — no club colours or crests.
  * The loop restarts from the run-up every time the zone comes on stage.
- * The player wears Mahmoud's face (public/brand/me-face.webp).
  */
 
 const { lerp, clamp, damp } = THREE.MathUtils
-const KIT = '#138A84', SHORTS = '#F7F4EE', SKIN = '#C48E76', HAIR = '#2A2A2C', BOOT = '#F2705A'
+const KIT = '#138A84', SHORTS = '#F7F4EE', SKIN = '#B9825C', HAIR = '#1a1210', BOOT = '#F2705A'
 const GOAL = { w: 3.6, h: 1.25, d: 0.9, z: -2.2 }
 const START = new THREE.Vector3(2.7, 0, 2.5)
 const SPOT = new THREE.Vector3(0.5, 0.11, 0.85)
@@ -34,41 +31,6 @@ function Limb({ limbRef, position, len, r, color, children }) {
         <meshStandardMaterial color={color} roughness={0.6} />
       </mesh>
       <group position={[0, -len, 0]}>{children}</group>
-    </group>
-  )
-}
-
-/**
- * Mahmoud's head: a rounded head in his skin tone with short dark hair, and his
- * face (from his photo, edges blended into the skin) wrapped onto the front.
- * It turns with the body, so from the side it reads as a head, not a sticker.
- */
-function Head() {
-  const face = useTexture(asset('/brand/me-face.webp'))
-  face.colorSpace = THREE.SRGBColorSpace
-  face.anisotropy = 4
-  return (
-    // a touch larger than life so his face reads from across the pitch
-    <group position={[0, 0.655, 0]} scale={1.18}>
-      <mesh castShadow scale={[0.94, 1.08, 1]}>
-        <sphereGeometry args={[0.105, 32, 24]} />
-        <meshStandardMaterial color={SKIN} roughness={0.65} />
-        <Decal position={[0, -0.006, 0.098]} rotation={[0, 0, 0]} scale={[0.165, 0.185, 0.14]}>
-          <meshStandardMaterial map={face} transparent polygonOffset polygonOffsetFactor={-4} roughness={0.6} depthWrite={false} />
-        </Decal>
-      </mesh>
-      {/* short hair: a cap over the top and back, leaving the forehead clear */}
-      <mesh position={[0, 0.03, -0.012]} rotation={[-0.35, 0, 0]} scale={[0.97, 0.78, 1.02]}>
-        <sphereGeometry args={[0.108, 32, 16, 0, Math.PI * 2, 0, Math.PI / 2.1]} />
-        <meshStandardMaterial color={HAIR} roughness={0.9} />
-      </mesh>
-      {/* ears */}
-      {[-1, 1].map((x) => (
-        <mesh key={x} position={[x * 0.097, -0.008, -0.004]} scale={[0.35, 0.6, 0.45]}>
-          <sphereGeometry args={[0.04, 12, 10]} />
-          <meshStandardMaterial color={SKIN} roughness={0.65} />
-        </mesh>
-      ))}
     </group>
   )
 }
@@ -97,8 +59,8 @@ function Player({ rig }) {
             <meshStandardMaterial color={KIT} roughness={0.5} />
           </mesh>
           <mesh position={[0, 0.5, 0]}><cylinderGeometry args={[0.04, 0.05, 0.08]} /><meshStandardMaterial color={SKIN} /></mesh>
-          {/* Mahmoud's own face (cut out from his photo), always turned to the camera */}
-          <Head />
+          <mesh position={[0, 0.63, 0]} castShadow><sphereGeometry args={[0.1, 20, 16]} /><meshStandardMaterial color={SKIN} roughness={0.6} /></mesh>
+          <mesh position={[0, 0.67, -0.01]} scale={[1.05, 0.75, 1.08]}><sphereGeometry args={[0.1, 20, 16, 0, Math.PI * 2, 0, Math.PI / 2]} /><meshStandardMaterial color={HAIR} /></mesh>
           {[['L', -0.19], ['R', 0.19]].map(([s, x]) => (
             <Limb key={s} limbRef={rig['sh' + s]} position={[x, 0.44, 0]} len={0.27} r={0.042} color={KIT}>
               <Limb limbRef={rig['el' + s]} position={[0, 0, 0]} len={0.25} r={0.034} color={SKIN} />
