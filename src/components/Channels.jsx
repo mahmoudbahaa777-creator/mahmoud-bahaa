@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { channels as c } from '../content'
 import { SectionHead } from './ui/Reveal'
+import Icon from './ui/Icon'
 
 /*
  * "Where your buyers look": every channel shown in the place it actually runs,
@@ -26,7 +27,7 @@ function useSeen(margin = '-80px') {
 function useTyped(text, on, speed = 70) {
   const [n, setN] = useState(0)
   useEffect(() => {
-    if (!on) return
+    if (!on) { setN(0); return }
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) { setN(text.length); return }
     let i = 0
     const t = setInterval(() => { i += 1; setN(i); if (i >= text.length) clearInterval(t) }, speed)
@@ -44,38 +45,28 @@ function GoogleSearch({ on }) {
   const q = useTyped(c.searchQuery, on)
   const done = q.length === c.searchQuery.length
   return (
-    <div className="mx-auto w-full max-w-[34rem]">
-      {/* laptop lid */}
-      <div className="rounded-t-[14px] border-[7px] border-b-[10px] border-[#10221F] bg-white">
-        {/* browser chrome */}
-        <div className="flex items-center gap-1.5 border-b border-[#D6DEDC] bg-[#F7F4EE] px-3 py-2">
-          <span className="h-2 w-2 rounded-full bg-[#D6DEDC]" /><span className="h-2 w-2 rounded-full bg-[#D6DEDC]" /><span className="h-2 w-2 rounded-full bg-[#D6DEDC]" />
-          <span className="ml-2 flex-1 truncate rounded-full bg-white px-3 py-0.5 text-[10px] text-[#4C5F5C]">google.com/search</span>
+    <Phone dark={false}>
+      <div className="absolute inset-0 px-3 pt-10">
+        <p className="text-center font-sans text-[22px] font-semibold tracking-tight text-[#10221F]">Google</p>
+        <div className="mt-3 flex items-center gap-2 rounded-full border border-[#D6DEDC] px-3 py-2 shadow-[0_1px_6px_rgba(16,34,31,0.08)]">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#4C5F5C" strokeWidth="2.4" strokeLinecap="round"><circle cx="11" cy="11" r="7" /><path d="M20 20l-3.5-3.5" /></svg>
+          <span className="truncate text-[12px] text-[#10221F]">{q}<span className="ch-caret ml-px inline-block h-3 w-px translate-y-0.5 bg-[#10221F]" /></span>
         </div>
-        <div className="h-[15.5rem] overflow-hidden p-4 sm:h-[17rem] sm:p-5">
-          <div className="flex items-center gap-2 rounded-full border border-[#D6DEDC] px-4 py-2 shadow-[0_1px_6px_rgba(16,34,31,0.08)]">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#4C5F5C" strokeWidth="2.4" strokeLinecap="round"><circle cx="11" cy="11" r="7" /><path d="M20 20l-3.5-3.5" /></svg>
-            <span className="text-[13px] text-[#10221F]">{q}<span className="ch-caret ml-px inline-block h-3.5 w-px translate-y-0.5 bg-[#10221F]" /></span>
+        <div className={`mt-4 space-y-4 transition-all duration-700 ${done ? 'translate-y-0 opacity-100' : 'translate-y-2 opacity-0'}`}>
+          <div className="rounded-lg border border-[#D6DEDC] p-2.5">
+            <p className="text-[10px] text-[#10221F]"><span className="font-semibold">Sponsored</span> · yourbrand.com</p>
+            <p className="mt-1 text-[14px] leading-snug text-[#1a4fd6]">{c.searchAd.title}</p>
+            <p className="mt-1 text-[10px] leading-snug text-[#4C5F5C]">{c.searchAd.text}</p>
+            <p className="mt-1.5 flex flex-wrap gap-x-2.5 text-[10px] font-semibold text-[#1a4fd6]">{c.searchAd.links.map((l) => <span key={l}>{l}</span>)}</p>
           </div>
-          <div className={`mt-4 space-y-4 transition-opacity duration-500 ${done ? 'opacity-100' : 'opacity-0'}`}>
-            {/* the sponsored result */}
-            <div className={`transition-transform duration-700 ${done ? 'translate-y-0' : 'translate-y-2'}`}>
-              <p className="text-[10px] text-[#10221F]"><span className="font-semibold">Sponsored</span> · yourbrand.com</p>
-              <p className="mt-0.5 text-[15px] leading-snug text-[#1a4fd6]">{c.searchAd.title}</p>
-              <p className="mt-0.5 text-[11px] leading-snug text-[#4C5F5C]">{c.searchAd.text}</p>
-              <p className="mt-1 flex flex-wrap gap-x-3 text-[11px] text-[#1a4fd6]">{c.searchAd.links.map((l) => <span key={l}>{l}</span>)}</p>
+          {[0, 1, 2].map((i) => (
+            <div key={i} className="space-y-1.5 px-1">
+              <Bar w="40%" className="!h-1.5" /><Bar w="80%" className="!bg-[#1a4fd6]/25" /><Bar w="92%" className="!h-1.5" />
             </div>
-            {[0, 1].map((i) => (
-              <div key={i} className="space-y-1.5">
-                <Bar w="38%" className="!h-1.5" /><Bar w="72%" className="!bg-[#1a4fd6]/25" /><Bar w="88%" className="!h-1.5" />
-              </div>
-            ))}
-          </div>
+          ))}
         </div>
       </div>
-      {/* laptop base */}
-      <div className="mx-[-6%] h-3 rounded-b-[10px] bg-[#33524D]" />
-    </div>
+    </Phone>
   )
 }
 
@@ -95,19 +86,31 @@ function YouTube({ on }) {
           <div className="absolute -left-10 top-6 h-40 w-40 rounded-full bg-[#138A84]/60" />
           <div className="absolute bottom-[-3rem] right-[-2rem] h-48 w-48 rounded-full bg-[#3FB5AC]/40" />
         </div>
-        <div className="absolute left-4 top-4 max-w-[70%]">
-          <p className="font-serif text-xl font-semibold leading-tight text-white sm:text-2xl">{c.videoAd}</p>
+        <div className="absolute left-3 top-3 max-w-[75%]">
+          <p className="font-serif text-[15px] font-semibold leading-tight text-white">{c.videoAd}</p>
           <p className="mt-1 text-[11px] font-semibold text-white">Your Brand</p>
         </div>
-        <span className="absolute bottom-10 left-3 rounded bg-[#F2C744] px-1.5 py-0.5 text-[10px] font-semibold text-[#10221F]">Ad</span>
-        <span className="absolute bottom-10 right-0 bg-black/70 px-3 py-1.5 text-[11px] font-semibold text-white">
+        <span className="absolute bottom-6 left-2 rounded bg-[#F2C744] px-1.5 py-0.5 text-[10px] font-semibold text-[#10221F]">Ad</span>
+        <span className="absolute bottom-6 right-0 bg-black/70 px-2 py-1 text-[10px] font-semibold text-white">
           {left > 0 ? <>Skip in <span className="tabular-nums">{left}</span></> : <>Skip ad ›</>}
         </span>
         {/* playback bar */}
-        <div className="absolute inset-x-3 bottom-4 h-1 rounded-full bg-white/25">
+        <div className="absolute inset-x-2 bottom-2 h-1 rounded-full bg-white/25">
           <div className={`h-full rounded-full bg-[#F2C744] ${on ? 'ch-play' : 'w-0'}`} />
         </div>
       </div>
+      <div className="mt-3 flex items-center gap-2">
+        <span className="h-7 w-7 rounded-full bg-[#0F5E5C]" />
+        <div className="flex-1"><p className="text-[11px] font-semibold text-[#10221F]">Your Brand</p><Sponsored /></div>
+        <span className="rounded-full bg-[#10221F] px-2.5 py-1 text-[10px] font-semibold text-white">Visit site</span>
+      </div>
+      <p className="mt-4 text-[10px] font-semibold text-[#4C5F5C]">Up next</p>
+      {[0, 1, 2].map((i) => (
+        <div key={i} className="mt-2 flex gap-2">
+          <span className="aspect-video w-[45%] rounded bg-[#10221F]/10" />
+          <div className="flex-1 space-y-1.5 pt-1"><Bar /><Bar w="70%" className="!h-1.5" /></div>
+        </div>
+      ))}
     </div>
   )
 }
@@ -116,7 +119,7 @@ function YouTube({ on }) {
 
 function Phone({ children, dark = true }) {
   return (
-    <div className="mx-auto w-[11.5rem] shrink-0 rounded-[2rem] bg-[#10221F] p-[7px] sm:w-[12.5rem]">
+    <div className="mx-auto w-[12.5rem] shrink-0 rounded-[2rem] bg-[#10221F] p-[7px] md:w-[13.5rem]">
       <div className={`relative aspect-[9/19] overflow-hidden rounded-[1.6rem] ${dark ? 'bg-[#0E1817]' : 'bg-white'}`}>
         <span className="absolute left-1/2 top-2 z-20 h-4 w-14 -translate-x-1/2 rounded-full bg-[#10221F]" />
         {children}
@@ -340,33 +343,119 @@ function Semrush({ on }) {
 }
 
 const MOCKS = { GoogleSearch, YouTube, TikTok, Instagram, Facebook, Native, Display, Programmatic, Analytics, CRM, Semrush }
+// these already draw their own phone
+const IS_PHONE = new Set(['GoogleSearch', 'TikTok', 'Instagram', 'Facebook'])
+const APP_TITLE = { YouTube: 'YouTube', Native: 'news site', Display: 'website', Programmatic: 'DSP · live auction', Analytics: 'Analytics', CRM: 'CRM', Semrush: 'Semrush' }
 
-function Tile({ t, on, className = '' }) {
+const slides = c.rows.flatMap((r, ri) => r.items.map((it) => ({ ...it, group: r.label, gi: ri })))
+const firstOf = c.rows.map((_, ri) => slides.findIndex((x) => x.gi === ri))
+const AUTOPLAY_MS = 4500
+
+/** Any mockup, shown on a phone screen. */
+function Slide({ t, on }) {
   const M = MOCKS[t.mock]
+  if (IS_PHONE.has(t.mock)) return <M on={on} />
   return (
-    <figure className={`flex flex-col ${className}`}>
-      <div className="flex flex-1 items-center justify-center rounded-panel border border-hairline bg-teal-100/50 p-5 md:p-7">
-        <M on={on} />
+    <Phone dark={false}>
+      <div className="absolute inset-0 flex flex-col bg-[#F7F4EE] pt-8">
+        <p className="border-b border-[#D6DEDC] px-3 pb-2 text-[12px] font-semibold text-[#10221F]">{APP_TITLE[t.mock]}</p>
+        <div className="flex flex-1 items-start p-2.5"><M on={on} /></div>
       </div>
-      <figcaption className="mt-3 px-1">
-        <p className="font-serif text-lg font-semibold text-ink">{t.name}</p>
-        <p className="text-sm leading-6 text-muted">{t.line}</p>
-      </figcaption>
-    </figure>
+    </Phone>
   )
 }
 
-function Row({ row }) {
-  const [ref, seen] = useSeen()
+/**
+ * Phone carousel: the middle phone is the one in focus, its neighbours sit smaller
+ * and faded on either side. Drifts on by itself while on screen; arrows, swipe/drag,
+ * the dots or the category tabs move it.
+ */
+function Carousel() {
+  const [ref, seen] = useSeen('0px')
+  const [active, setActive] = useState(0)
+  const [hold, setHold] = useState(false) // a visitor took over: stop auto-play
+  const drag = useRef(null)
+  const n = slides.length
+  const go = (i) => setActive((i + n) % n)
+
+  useEffect(() => {
+    if (!seen || hold || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
+    const t = setInterval(() => {
+      const r = ref.current?.getBoundingClientRect()
+      if (!r || document.hidden || r.bottom < 0 || r.top > window.innerHeight) return
+      setActive((a) => (a + 1) % n)
+    }, AUTOPLAY_MS)
+    return () => clearInterval(t)
+  }, [seen, hold, n, ref])
+
+  const take = (i) => { setHold(true); go(i) }
+  const t = slides[active]
+  const arrow = 'grid h-11 w-11 place-items-center rounded-full border border-hairline bg-card text-ink transition-colors hover:border-teal-500 hover:text-teal-700'
+
   return (
-    <div ref={ref} className="mt-14 first:mt-0 md:mt-20">
-      <div className="wrap flex flex-wrap items-baseline gap-x-3 gap-y-1 border-b border-hairline pb-3">
-        <h3 className="font-serif text-xl font-semibold text-teal-700 md:text-2xl">{row.label}</h3>
-        <span className="text-sm text-muted">{row.line}</span>
+    <div ref={ref} onMouseEnter={() => setHold(true)}>
+      {/* category tabs */}
+      <div className="wrap flex flex-wrap justify-center gap-2" role="tablist" aria-label="Channel groups">
+        {c.rows.map((r, ri) => {
+          const on = t.gi === ri
+          return (
+            <button key={r.label} role="tab" aria-selected={on} onClick={() => take(firstOf[ri])}
+              className={`rounded-full border px-3.5 py-1.5 text-sm transition-colors ${on ? 'border-teal-700 bg-teal-700 text-card' : 'border-hairline text-ink hover:border-teal-500'}`}>
+              {r.label}
+            </button>
+          )
+        })}
       </div>
-      {/* phone: swipe through the row; desktop: the row's own grid */}
-      <div className={`mt-6 flex snap-x snap-mandatory gap-4 overflow-x-auto px-4 pb-2 [scrollbar-width:none] sm:px-8 md:mx-auto md:grid md:max-w-[1200px] md:overflow-visible md:px-8 lg:px-16 ${row.grid}`}>
-        {row.items.map((t) => <Tile key={t.name} t={t} on={seen} className="w-[85%] shrink-0 snap-center md:w-auto" />)}
+
+      {/* the stage */}
+      <div className="relative mt-8 h-[28.5rem] select-none overflow-hidden md:mt-10 md:h-[31rem]"
+        onPointerDown={(e) => { drag.current = e.clientX }}
+        onPointerUp={(e) => {
+          if (drag.current == null) return
+          const dx = e.clientX - drag.current
+          drag.current = null
+          if (Math.abs(dx) > 40) take(active + (dx < 0 ? 1 : -1))
+        }}
+        onPointerCancel={() => { drag.current = null }}
+        style={{ touchAction: 'pan-y' }}>
+        {slides.map((s, i) => {
+          // shortest signed distance on the loop, so it wraps both ways
+          let d = i - active
+          if (d > n / 2) d -= n
+          if (d < -n / 2) d += n
+          const far = Math.abs(d) > 2
+          return (
+            <div key={s.name} aria-hidden={d !== 0}
+              onClick={() => d !== 0 && take(i)}
+              className={`absolute left-1/2 top-0 transition-[transform,opacity] duration-700 ease-[cubic-bezier(.22,1,.36,1)] ${d ? 'cursor-pointer' : ''}`}
+              style={{
+                transform: `translateX(calc(-50% + ${d * 72}%)) scale(${d ? 0.8 : 1})`,
+                transformOrigin: 'center',
+                opacity: far ? 0 : Math.abs(d) === 2 ? 0.2 : d ? 0.5 : 1,
+                zIndex: 10 - Math.abs(d),
+                pointerEvents: far ? 'none' : undefined,
+              }}>
+              <Slide t={s} on={seen && d === 0} />
+            </div>
+          )
+        })}
+      </div>
+
+      {/* caption + controls */}
+      <div className="wrap mt-2 flex items-center justify-between gap-4 md:justify-center md:gap-10">
+        <button onClick={() => take(active - 1)} aria-label="Previous channel" className={arrow}><Icon name="arrow" size={18} className="rotate-180" /></button>
+        <div className="min-w-0 text-center md:w-[26rem]" aria-live="polite">
+          <p className="font-serif text-xl font-semibold text-ink md:text-2xl">{t.name}</p>
+          <p className="mt-1 text-sm leading-6 text-muted">{t.line}</p>
+        </div>
+        <button onClick={() => take(active + 1)} aria-label="Next channel" className={arrow}><Icon name="arrow" size={18} /></button>
+      </div>
+      <div className="mt-5 flex justify-center gap-1.5">
+        {slides.map((s, i) => (
+          <button key={s.name} onClick={() => take(i)} aria-label={`Show ${s.name}`} aria-current={i === active} className="grid h-6 place-items-center px-0.5">
+            <span className={`block h-1.5 rounded-full transition-all duration-300 ${i === active ? 'w-6 bg-teal-700' : 'w-1.5 bg-hairline hover:bg-teal-500'}`} />
+          </button>
+        ))}
       </div>
     </div>
   )
@@ -378,10 +467,12 @@ export default function Channels() {
       <div className="wrap">
         <SectionHead headline={c.headline} line={c.line} />
       </div>
-      <div className="mt-12 md:mt-16">
-        {c.rows.map((row) => <Row key={row.label} row={row} />)}
-      </div>
-      <p className="wrap mt-10 text-xs text-muted">{c.note}</p>
+      <div className="mt-10 md:mt-12"><Carousel /></div>
+      {/* screen readers: the full list, not just the phone in focus */}
+      <ul className="sr-only">
+        {slides.map((s) => <li key={s.name}>{s.group}: {s.name}. {s.line}</li>)}
+      </ul>
+      <p className="wrap mt-8 text-center text-xs text-muted">{c.note}</p>
     </section>
   )
 }
