@@ -29,10 +29,11 @@ export default function Nav() {
     <header
       className={`nav-in fixed inset-x-0 top-0 z-50 transition-colors duration-500 ${open ? 'glass !bg-card border-x-0 border-t-0' : solid ? 'glass border-x-0 border-t-0' : 'border-b border-transparent'}`}>
       <div className="wrap flex h-16 items-center justify-between">
-        <button onClick={() => go('top')} className="flex items-center gap-3" aria-label="Mahmoud Bahaa, From reach to revenue. Back to top">
+        <button onClick={() => go('top')} className="flex items-center gap-3">
           <span className="text-left leading-tight">
             <span className="block font-serif text-[17px] font-semibold text-ink">Mahmoud Bahaa</span>
             <span className="block font-serif text-[12px] italic text-muted">From reach to revenue.</span>
+            <span className="sr-only"> (back to top)</span>
           </span>
         </button>
         <nav className="hidden items-center gap-7 text-sm text-muted lg:flex">

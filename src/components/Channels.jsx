@@ -431,11 +431,13 @@ function Carousel() {
               style={{
                 transform: `translateX(calc(-50% + ${d * 72}%)) scale(${d ? 0.8 : 1})`,
                 transformOrigin: 'center',
-                opacity: far ? 0 : Math.abs(d) === 2 ? 0.2 : d ? 0.5 : 1,
+                opacity: far ? 0 : 1,
                 zIndex: 10 - Math.abs(d),
                 pointerEvents: far ? 'none' : undefined,
               }}>
               <Slide t={s} on={seen && d === 0} />
+              {/* neighbours fade back under a veil of the page colour */}
+              <div aria-hidden className={`pointer-events-none absolute inset-0 rounded-[2rem] bg-ground transition-opacity duration-700 ${Math.abs(d) === 2 ? 'opacity-80' : d ? 'opacity-50' : 'opacity-0'}`} />
             </div>
           )
         })}
@@ -450,9 +452,9 @@ function Carousel() {
         </div>
         <button onClick={() => take(active + 1)} aria-label="Next channel" className={arrow}><Icon name="arrow" size={18} /></button>
       </div>
-      <div className="mt-5 flex justify-center gap-1.5">
+      <div className="mt-5 flex flex-wrap justify-center">
         {slides.map((s, i) => (
-          <button key={s.name} onClick={() => take(i)} aria-label={`Show ${s.name}`} aria-current={i === active} className="grid h-6 place-items-center px-0.5">
+          <button key={s.name} onClick={() => take(i)} aria-label={`Show ${s.name}`} aria-current={i === active} className="grid h-6 min-w-6 place-items-center">
             <span className={`block h-1.5 rounded-full transition-all duration-300 ${i === active ? 'w-6 bg-teal-700' : 'w-1.5 bg-hairline hover:bg-teal-500'}`} />
           </button>
         ))}
