@@ -27,7 +27,7 @@ export default function Experience() {
     const run = () => {
       const start = performance.now()
       const tick = (now) => {
-        const p = Math.min(1, (now - start) / DURATION)
+        const p = Math.min(1, Math.max(0, (now - start) / DURATION)) // rAF time can be a hair before `start`
         setT(1 - Math.pow(1 - p, 4)) // ease-out, fast then settling on the number
         if (p < 1) raf = requestAnimationFrame(tick)
       }

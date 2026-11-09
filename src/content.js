@@ -31,14 +31,15 @@ export const hero = {
 export const heroBoard = {
   title: 'Growth board',
   footer: 'From reach to revenue.',
+  // The reach → revenue journey, typed in order: brand first, revenue last.
   words: [
     { word: 'Positioning', tag: 'Brand' },
+    { word: 'Audience insight', tag: 'Research' },
+    { word: 'Brand reach', tag: 'Brand' },
     { word: 'Brand lift', tag: 'Brand' },
-    { word: 'Number of leads', tag: 'Leads' },
-    { word: 'CPC', tag: 'Cost' },
-    { word: 'CPA', tag: 'Cost' },
-    { word: 'CPL', tag: 'Cost' },
-    { word: 'Strategy', tag: 'Plan' },
+    { word: 'Qualified leads', tag: 'Performance' },
+    { word: 'Cost per qualified lead', tag: 'Performance' },
+    { word: 'Conversion rate', tag: 'Sales' },
     { word: 'ROAS', tag: 'Return' },
     { word: 'Revenue', tag: 'Result', key: true },
   ],

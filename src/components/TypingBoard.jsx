@@ -50,7 +50,8 @@ export default function TypingBoard() {
   const isMobile = useIsMobile()
   const { words, title, footer } = heroBoard
   const s = useTyping(words, inView, reduced)
-  const maxRows = isMobile ? 5 : 7
+  // longer lines can wrap to two, so leave room
+  const maxRows = isMobile ? 4 : 6
 
   const rows = [...s.done, ...(s.i < words.length ? [s.i] : [])].slice(-maxRows)
 
@@ -73,7 +74,7 @@ export default function TypingBoard() {
           <p className="eyebrow">{title}</p>
         </div>
 
-        <ol className={`relative px-5 py-4 md:px-7 md:py-5 h-[17.5rem] md:h-[25rem]`} aria-label={words.map((w) => w.word).join(', ')}>
+        <ol className={`relative overflow-hidden px-5 py-4 md:px-7 md:py-5 h-[17.5rem] md:h-[25rem]`} aria-label={words.map((w) => w.word).join(', ')}>
           <AnimatePresence initial={false} mode="popLayout">
             {rows.map((idx) => {
               const w = words[idx]
@@ -83,23 +84,27 @@ export default function TypingBoard() {
                 <motion.li key={`${s.cycle}-${idx}`} layout
                   initial={{ opacity: 0, y: 14 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -18, filter: 'blur(6px)' }}
                   transition={{ duration: 0.5, ease }}
-                  className="flex h-14 items-center gap-4 border-b border-hairline/70" aria-hidden>
+                  className="flex min-h-14 items-center gap-3 border-b border-hairline/70 py-1.5 md:gap-4" aria-hidden>
                   <span className="w-6 shrink-0 font-sans text-xs tabular-nums text-muted">{String(idx + 1).padStart(2, '0')}</span>
                   <span className="relative min-w-0 flex-1">
-                    <span className={`font-serif text-2xl md:text-[1.75rem] ${w.key ? 'font-semibold text-teal-700' : 'text-ink'}`}>{text}</span>
+                    <span className={`font-serif text-[1.35rem] leading-tight md:text-[1.6rem] ${w.key ? 'font-semibold text-teal-700' : 'text-ink'}`}>{text}</span>
                     {typing && !s.holding && (
                       <motion.span className="ml-0.5 inline-block h-6 w-[2px] translate-y-1 bg-teal-500 md:h-7"
                         animate={{ opacity: [1, 1, 0, 0] }} transition={{ duration: 0.9, repeat: Infinity, times: [0, 0.5, 0.5, 1] }} />
                     )}
                     {!typing && (
-                      <motion.span className="absolute -bottom-1 left-0 h-px w-full origin-left bg-gradient-to-r from-teal-500 to-transparent"
+                      <motion.span className="absolute -bottom-1 left-0 h-px w-full origin-left bg-gradient-to-r from-teal-500 to-transparent md:block"
                         initial={{ scaleX: 0 }} animate={{ scaleX: 1 }} transition={{ duration: 0.7, ease }} />
+                    )}
+                    {!typing && (
+                      <motion.span initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.4, delay: 0.1 }}
+                        className="block pb-0.5 pt-0.5 text-[10px] font-semibold uppercase tracking-[1.5px] text-muted md:hidden">{w.tag}</motion.span>
                     )}
                   </span>
                   {!typing && (
                     <motion.span initial={{ opacity: 0, x: 8 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.4, delay: 0.1 }}
                       className="flex shrink-0 items-center gap-2">
-                      <span className="rounded-tag border border-hairline px-2 py-0.5 text-[11px] font-semibold uppercase tracking-[1.5px] text-muted">{w.tag}</span>
+                      <span className="hidden rounded-tag border border-hairline px-2 py-0.5 text-[11px] font-semibold uppercase tracking-[1.5px] text-muted md:inline">{w.tag}</span>
                       <span className="text-teal-500"><Icon name="check" size={16} /></span>
                     </motion.span>
                   )}
