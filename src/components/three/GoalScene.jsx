@@ -1,6 +1,5 @@
 import { useMemo, useRef } from 'react'
-import { Billboard, useTexture } from '@react-three/drei'
-import { uplIntro } from '../../uplIntro'
+import { Decal, useTexture } from '@react-three/drei'
 import { asset } from '../../hooks'
 import { useFrame } from '@react-three/fiber'
 import * as THREE from 'three'
@@ -10,10 +9,11 @@ import * as THREE from 'three'
  * corner, the net bulges, confetti bursts and the player celebrates, then jogs
  * back and it plays again. Kit is brand teal — no club colours or crests.
  * The loop restarts from the run-up every time the zone comes on stage.
+ * The player wears Mahmoud's face (public/brand/me-face.webp).
  */
 
 const { lerp, clamp, damp } = THREE.MathUtils
-const KIT = '#138A84', SHORTS = '#F7F4EE', SKIN = '#B9825C', BOOT = '#F2705A'
+const KIT = '#138A84', SHORTS = '#F7F4EE', SKIN = '#C48E76', HAIR = '#2A2A2C', BOOT = '#F2705A'
 const GOAL = { w: 3.6, h: 1.25, d: 0.9, z: -2.2 }
 const START = new THREE.Vector3(2.7, 0, 2.5)
 const SPOT = new THREE.Vector3(0.5, 0.11, 0.85)
@@ -38,16 +38,38 @@ function Limb({ limbRef, position, len, r, color, children }) {
   )
 }
 
+/**
+ * Mahmoud's head: a rounded head in his skin tone with short dark hair, and his
+ * face (from his photo, edges blended into the skin) wrapped onto the front.
+ * It turns with the body, so from the side it reads as a head, not a sticker.
+ */
 function Head() {
-  const tex = useTexture(asset('/brand/me-head.webp'))
-  tex.colorSpace = THREE.SRGBColorSpace
+  const face = useTexture(asset('/brand/me-face.webp'))
+  face.colorSpace = THREE.SRGBColorSpace
+  face.anisotropy = 4
   return (
-    <Billboard position={[0, 0.66, 0.02]}>
-      <mesh>
-        <planeGeometry args={[0.3, 0.387]} />
-        <meshBasicMaterial map={tex} transparent alphaTest={0.08} toneMapped={false} />
+    // a touch larger than life so his face reads from across the pitch
+    <group position={[0, 0.655, 0]} scale={1.18}>
+      <mesh castShadow scale={[0.94, 1.08, 1]}>
+        <sphereGeometry args={[0.105, 32, 24]} />
+        <meshStandardMaterial color={SKIN} roughness={0.65} />
+        <Decal position={[0, -0.006, 0.098]} rotation={[0, 0, 0]} scale={[0.165, 0.185, 0.14]}>
+          <meshStandardMaterial map={face} transparent polygonOffset polygonOffsetFactor={-4} roughness={0.6} depthWrite={false} />
+        </Decal>
       </mesh>
-    </Billboard>
+      {/* short hair: a cap over the top and back, leaving the forehead clear */}
+      <mesh position={[0, 0.03, -0.012]} rotation={[-0.35, 0, 0]} scale={[0.97, 0.78, 1.02]}>
+        <sphereGeometry args={[0.108, 32, 16, 0, Math.PI * 2, 0, Math.PI / 2.1]} />
+        <meshStandardMaterial color={HAIR} roughness={0.9} />
+      </mesh>
+      {/* ears */}
+      {[-1, 1].map((x) => (
+        <mesh key={x} position={[x * 0.097, -0.008, -0.004]} scale={[0.35, 0.6, 0.45]}>
+          <sphereGeometry args={[0.04, 12, 10]} />
+          <meshStandardMaterial color={SKIN} roughness={0.65} />
+        </mesh>
+      ))}
+    </group>
   )
 }
 
@@ -187,8 +209,6 @@ export default function GoalScene({ activeRef, flashRef, low }) {
     wasActive.current = active
     if (!active) return
     clock.current += Math.min(dt, 1 / 20)
-    // Mahmoud is still knocking on the screen: wait at the start of the run-up
-    if (uplIntro.hold) { clock.current = 0; fx.current.burstDone = false; fx.current.confetti = false }
     if (clock.current > T.back) { clock.current = 0; fx.current.burstDone = false; fx.current.confetti = false }
     const t = clock.current
 
