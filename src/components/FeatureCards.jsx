@@ -78,7 +78,7 @@ function Billboard({ index, slats, reduced }) {
   const night = items[faces[turned ? 1 : 0]].night
   const steel = `transition-colors duration-700 ${night ? 'bg-[#33524D]' : 'bg-[#10221F]'}`
   return (
-    <div className="relative mx-auto w-full max-w-5xl md:max-w-[min(64rem,calc((100svh-21rem)*16/7))]">
+    <div className="relative mx-auto w-full max-w-5xl md:max-w-[min(64rem,calc((100svh-19rem)*16/7))]">
       {/* lamp bar */}
       <div aria-hidden className="mx-[6%] flex justify-between">
         {Array.from({ length: 5 }).map((_, i) => (
@@ -123,39 +123,56 @@ function Billboard({ index, slats, reduced }) {
       </div>
       {/* posts */}
       <div aria-hidden className="flex justify-center gap-[28%]">
-        <span className={`h-10 w-3 md:h-16 md:w-4 ${steel}`} />
-        <span className={`h-10 w-3 md:h-16 md:w-4 ${steel}`} />
+        <span className={`h-12 w-3 md:h-20 md:w-4 ${steel}`} />
+        <span className={`h-12 w-3 md:h-20 md:w-4 ${steel}`} />
       </div>
     </div>
   )
 }
 
-/** The two groups as a schedule under the board; tap or click to put any ad up. */
-function Schedule({ index, onPick }) {
+/**
+ * The billboard's control plate, hung between the posts like a site sign:
+ * what's up now, what's next, arrows, and the eight slots in their two groups.
+ * It tells visitors at a glance that the board has more to show, and lets them pick.
+ */
+function Plate({ index, onPick, night }) {
+  const it = items[index]
+  const next = items[(index + 1) % items.length]
+  const go = (d) => onPick((index + d + items.length) % items.length)
+  const arrow = 'grid h-10 w-10 shrink-0 place-items-center rounded-full border border-[#F7F4EE]/25 text-[#F7F4EE] transition-colors hover:border-[#3FB5AC] hover:text-[#3FB5AC] md:h-11 md:w-11'
   return (
-    <div className="mx-auto mt-6 grid max-w-5xl gap-5 md:mt-6 md:grid-cols-2 md:gap-10">
-      {services.groups.map((g, gi) => (
-        <div key={g.label}>
-          <div className="flex items-baseline gap-3 border-b border-hairline pb-2">
-            <span className="font-serif text-lg font-semibold text-teal-700 md:text-xl">{g.label}</span>
-            <span className="text-sm text-muted">{g.line}</span>
+    <div className="relative z-10 mx-auto -mt-6 w-full max-w-[34rem] md:-mt-10">
+      <div className={`rounded-panel p-3 text-[#F7F4EE] transition-colors duration-700 md:p-4 ${night ? 'bg-[#1d3532]' : 'bg-[#10221F]'}`}>
+        <div className="flex items-center gap-3">
+          <button onClick={() => go(-1)} aria-label="Previous ad" className={arrow}><Icon name="arrow" size={18} className="rotate-180" /></button>
+          <div className="min-w-0 flex-1 text-center" aria-live="polite">
+            <p className="truncate font-serif text-lg font-semibold leading-tight md:text-xl">{it.title}</p>
+            <p className="mt-0.5 truncate text-xs text-[#9FC9C4]">
+              <span className="tabular-nums">{index + 1} of {items.length}</span> · Next: {next.title}
+            </p>
           </div>
-          <ul className="mt-3 flex flex-wrap gap-2">
-            {g.items.map((it, i) => {
-              const idx = groupStart[gi] + i
-              const on = idx === index
-              return (
-                <li key={it.title}>
-                  <button onClick={() => onPick(idx)} aria-pressed={on}
-                    className={`rounded-full border px-3 py-1.5 text-sm transition-colors ${on ? 'border-teal-700 bg-teal-700 text-card' : 'border-hairline text-ink hover:border-teal-500'}`}>
-                    {it.title}
-                  </button>
-                </li>
-              )
-            })}
-          </ul>
+          <button onClick={() => go(1)} aria-label="Next ad" className={arrow}><Icon name="arrow" size={18} /></button>
         </div>
-      ))}
+        {/* the eight slots: Brand (day) then Performance (dusk) */}
+        <div className="mt-3 flex gap-3">
+          {services.groups.map((g, gi) => (
+            <div key={g.label} className="flex-1">
+              <div className="flex gap-1">
+                {g.items.map((x, i) => {
+                  const idx = groupStart[gi] + i
+                  return (
+                    <button key={x.title} onClick={() => onPick(idx)} aria-label={`Show ${x.title}`} aria-current={idx === index}
+                      className="group flex h-6 flex-1 items-center">
+                      <span className={`h-1.5 w-full rounded-full transition-colors duration-300 ${idx === index ? 'bg-[#3FB5AC]' : idx < index ? 'bg-[#F7F4EE]/55' : 'bg-[#F7F4EE]/20 group-hover:bg-[#F7F4EE]/45'}`} />
+                    </button>
+                  )
+                })}
+              </div>
+              <p className={`text-[11px] font-semibold ${it.group === g.label ? 'text-[#F7F4EE]' : 'text-[#9FC9C4]/70'}`}>{g.label}</p>
+            </div>
+          ))}
+        </div>
+      </div>
     </div>
   )
 }
@@ -217,8 +234,8 @@ export default function FeatureCards() {
               onClick={() => isMobile && (setIndex((i) => (i + 1) % items.length), setPaused(true))}>
               <Billboard index={index} slats={isMobile ? 9 : 16} reduced={reduced} />
             </div>
-            <div className={`wrap relative ${night ? 'theme-dark' : ''}`}>
-              <Schedule index={index} onPick={pick} />
+            <div className="wrap relative">
+              <Plate index={index} onPick={pick} night={night} />
             </div>
           </div>
         </div>

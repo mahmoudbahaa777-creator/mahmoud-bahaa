@@ -68,7 +68,6 @@ export const performance = {
   headline: 'Every lead, traced from impression to revenue.',
   line: "Clicks are cheap. Qualified leads aren't. Budget only grows where it earns.",
   methodLine: 'The Reach → Revenue method, laid over the funnel: position first, then reach, trust, convert and scale.',
-  channels: ['Google', 'YouTube', 'Meta', 'LinkedIn', 'X', 'Native', 'Programmatic'],
   // The doc specifies "6 stages, impression to revenue" without naming them.
   // These labels are a working draft — confirm or rename.
   stagesLabel: 'Tracking structure · 6 stages, impression to revenue',
@@ -138,6 +137,73 @@ export const method = {
     { stage: 'Trust', note: 'give them reasons to believe.', rows: ['Visit'] },
     { stage: 'Convert', note: 'clear offers, fast pages, clean lead capture.', rows: ['Lead', 'Qualified lead'] },
     { stage: 'Scale', note: 'track to revenue, back what works.', rows: ['Revenue'] },
+  ],
+}
+
+// Channels section: every platform shown as a mockup of where it runs.
+// Ads say "Your Brand" on purpose: illustrations of the work, not real clients or results.
+export const channels = {
+  headline: 'Every channel your buyers use, run as one system.',
+  line: 'Reach where people search, scroll and read. Then measure what turned into revenue.',
+  note: 'Illustrations of the channels I run. Ads show a placeholder brand, not a client.',
+  searchQuery: 'best trading app in UAE',
+  searchAd: {
+    title: 'Regulated trading app in the UAE | Your Brand',
+    text: 'Open an account in minutes. Licensed, Arabic support, fast funding.',
+    links: ['Open account', 'Fees', 'Why us'],
+  },
+  videoAd: 'Trade with a brand you trust.',
+  tiktok: 'Your first trade, explained in 30 seconds. #UAE',
+  instagram: 'Trade smarter in the UAE.',
+  facebook: 'Join the platform built for MENA traders.',
+  native: 'How UAE investors pick a trading app',
+  display: ['Trade with confidence.', 'Arabic support, 24/5.', 'Open your account today.'],
+  keywords: [
+    ['best trading app uae', 'T', '72%'],
+    ['forex broker dubai', 'T', '81%'],
+    ['how to start trading', 'I', '46%'],
+    ['trading platform uae', 'T', '64%'],
+  ],
+  rows: [
+    {
+      label: 'Search & video',
+      line: 'Catch intent the moment they look.',
+      grid: 'md:grid-cols-[1.35fr_1fr] md:gap-6',
+      items: [
+        { mock: 'GoogleSearch', name: 'Google Search', line: 'High-intent keywords turned into qualified leads.' },
+        { mock: 'YouTube', name: 'YouTube', line: 'Video that builds the brand and still drives action.' },
+      ],
+    },
+    {
+      label: 'Social',
+      line: 'Arabic-first creative made for the feed.',
+      grid: 'md:grid-cols-3 md:gap-6',
+      items: [
+        { mock: 'TikTok', name: 'TikTok', line: 'Short video, native to the platform.' },
+        { mock: 'Instagram', name: 'Instagram', line: 'Stories and Reels that earn the tap.' },
+        { mock: 'Facebook', name: 'Facebook', line: 'Audience and lead ads at scale.' },
+      ],
+    },
+    {
+      label: 'Open web',
+      line: 'Reach beyond the walled gardens.',
+      grid: 'md:grid-cols-3 md:gap-6',
+      items: [
+        { mock: 'Native', name: 'Native ads', line: 'Content that reads like the page it sits on.' },
+        { mock: 'Display', name: 'Display', line: 'Banners that keep the brand in view.' },
+        { mock: 'Programmatic', name: 'Programmatic', line: 'Bids on the right buyer, impression by impression.' },
+      ],
+    },
+    {
+      label: 'Measurement',
+      line: 'Proof of what turned into revenue.',
+      grid: 'md:grid-cols-3 md:gap-6',
+      items: [
+        { mock: 'Analytics', name: 'Google Analytics 4', line: 'Every key event, from first visit to revenue.' },
+        { mock: 'CRM', name: 'CRM', line: 'Lead status sent back to the ad platforms.' },
+        { mock: 'Semrush', name: 'Semrush', line: 'Keyword and competitor research before a cent is spent.' },
+      ],
+    },
   ],
 }
 
@@ -247,6 +313,7 @@ export const navSections = [
   { id: 'top', label: 'Start' },
   { id: 'services', label: 'What I do' },
   { id: 'performance', label: 'Performance & method' },
+  { id: 'channels', label: 'Channels' },
   { id: 'sponsorships', label: 'Sponsorships' },
   { id: 'reviews', label: 'Recommendations' },
   { id: 'contact', label: 'Contact' },

@@ -8,16 +8,6 @@ import { useIsMobile } from '../hooks'
 const ease = [0.22, 1, 0.36, 1]
 const pad = (i) => String(i + 1).padStart(2, '0')
 
-function Channels({ className = '' }) {
-  return (
-    <p className={`flex flex-wrap justify-center gap-x-2 gap-y-1 text-sm leading-7 text-muted lg:justify-start ${className}`}>
-      {p.channels.map((c, i) => (
-        <span key={c} className="whitespace-nowrap">{c}{i < p.channels.length - 1 && <span className="ml-2 text-teal-500">·</span>}</span>
-      ))}
-    </p>
-  )
-}
-
 /* Funnel graphic (6 stages narrowing to Revenue) + two collapsible playbooks. Stacks on phones. */
 function Funnel() {
   const isMobile = useIsMobile()
@@ -65,7 +55,6 @@ function Funnel() {
           ))}
         </ol>
         <p className="mt-5 text-center text-xs text-muted md:pl-[11rem]">{p.stagesLabel}</p>
-        <Channels className="mt-4 text-center md:pl-[11rem]" />
       </div>
       <div className="border-t border-hairline lg:self-center">
         {books.map(([title, items], bi) => (

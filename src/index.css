@@ -70,6 +70,34 @@ html.lenis, html.lenis body { height: auto; }
   }
 }
 
+/* Channels mockups (src/components/Channels.jsx). Each runs only once its row is on screen. */
+@keyframes ch-caret { 50% { opacity: 0; } }
+.ch-caret { animation: ch-caret 1s steps(1) infinite; }
+@keyframes ch-play { from { width: 0; } to { width: 100%; } }
+.ch-play { animation: ch-play 6s linear infinite; }
+@keyframes ch-drift { 50% { transform: translate(-6%, 4%) scale(1.06); } }
+.ch-drift { animation: ch-drift 9s ease-in-out infinite; }
+@keyframes ch-pulse { 50% { filter: brightness(1.15) saturate(1.1); } }
+.ch-pulse { animation: ch-pulse 4s ease-in-out infinite; }
+@keyframes ch-story { from { width: 0; } to { width: 100%; } }
+.ch-story { width: 0; animation: ch-story 3s linear forwards; }
+@keyframes ch-bob { 50% { transform: translateY(-5px); } }
+.ch-bob { animation: ch-bob 1.6s ease-in-out infinite; }
+@keyframes ch-banner { 0%, 28% { transform: translateY(0); } 33%, 61% { transform: translateY(-3.5rem); } 66%, 95% { transform: translateY(-7rem); } 100% { transform: translateY(0); } }
+.ch-banner { animation: ch-banner 7.5s cubic-bezier(.65,0,.35,1) infinite; }
+@keyframes ch-bid { from { width: 0; } to { width: var(--w); } }
+.ch-bid { width: 0; animation: ch-bid 1s cubic-bezier(.22,1,.36,1) forwards; }
+@keyframes ch-draw { from { stroke-dashoffset: 420; } to { stroke-dashoffset: 0; } }
+.ch-draw { animation: ch-draw 2.2s cubic-bezier(.22,1,.36,1) forwards; }
+@keyframes ch-deal {
+  0%, 18% { transform: translateX(0); }
+  25%, 43% { transform: translateX(calc(100% + 0.375rem)); }
+  50%, 68% { transform: translateX(calc(200% + 0.75rem)); }
+  75%, 93% { transform: translateX(calc(300% + 1.125rem)); border-color: var(--teal-700); }
+  100% { transform: translateX(0); }
+}
+.ch-deal { animation: ch-deal 8s cubic-bezier(.65,0,.35,1) infinite; }
+
 @keyframes marquee { to { transform: translateX(-50%); } }
 .marquee { animation: marquee 38s linear infinite; }
 .marquee:hover { animation-play-state: paused; }
