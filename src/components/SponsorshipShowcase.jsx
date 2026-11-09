@@ -3,6 +3,7 @@ import { AnimatePresence, motion, useMotionValueEvent, useScroll, useTransform }
 import { sponsorships as s } from '../content'
 import { useInView, useIsMobile, useLowPower } from '../hooks'
 import { SectionHead } from './ui/Reveal'
+import KnockIntro from './KnockIntro'
 
 const CarCanvas = lazy(() => import('./three/CarCanvas'))
 const ease = [0.22, 1, 0.36, 1]
@@ -134,6 +135,8 @@ export default function SponsorshipShowcase() {
               </Suspense>
             )}
             <div className="pointer-events-none absolute inset-x-0 top-0 h-32 bg-gradient-to-b from-ground to-transparent" />
+            {/* UAE Pro League: Mahmoud knocks on the screen, then scores */}
+            <KnockIntro active={mount && active === 2 && inView} />
             <div className="pointer-events-none absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-ground to-transparent" />
           </div>
 

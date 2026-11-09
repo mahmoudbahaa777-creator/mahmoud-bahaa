@@ -216,6 +216,8 @@ export const sponsorships = {
   eyebrow: 'Sponsorships',
   headline: 'A logo is a promise. The activation is the result.',
   line: "Partnerships I've activated for a regulated financial brand:",
+  // UAE Pro League intro: Mahmoud knocks on the screen, then scores (src/components/KnockIntro.jsx)
+  knock: { bubble: 'Look at me!', sub: 'Watch this.', replay: 'Watch again' },
   zones: [
     {
       id: 'redbull',

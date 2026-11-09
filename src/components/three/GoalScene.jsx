@@ -1,4 +1,7 @@
 import { useMemo, useRef } from 'react'
+import { Billboard, useTexture } from '@react-three/drei'
+import { uplIntro } from '../../uplIntro'
+import { asset } from '../../hooks'
 import { useFrame } from '@react-three/fiber'
 import * as THREE from 'three'
 
@@ -10,7 +13,7 @@ import * as THREE from 'three'
  */
 
 const { lerp, clamp, damp } = THREE.MathUtils
-const KIT = '#138A84', SHORTS = '#F7F4EE', SKIN = '#B9825C', HAIR = '#1a1210', BOOT = '#F2705A'
+const KIT = '#138A84', SHORTS = '#F7F4EE', SKIN = '#B9825C', BOOT = '#F2705A'
 const GOAL = { w: 3.6, h: 1.25, d: 0.9, z: -2.2 }
 const START = new THREE.Vector3(2.7, 0, 2.5)
 const SPOT = new THREE.Vector3(0.5, 0.11, 0.85)
@@ -32,6 +35,19 @@ function Limb({ limbRef, position, len, r, color, children }) {
       </mesh>
       <group position={[0, -len, 0]}>{children}</group>
     </group>
+  )
+}
+
+function Head() {
+  const tex = useTexture(asset('/brand/me-head.webp'))
+  tex.colorSpace = THREE.SRGBColorSpace
+  return (
+    <Billboard position={[0, 0.66, 0.02]}>
+      <mesh>
+        <planeGeometry args={[0.3, 0.387]} />
+        <meshBasicMaterial map={tex} transparent alphaTest={0.08} toneMapped={false} />
+      </mesh>
+    </Billboard>
   )
 }
 
@@ -59,8 +75,8 @@ function Player({ rig }) {
             <meshStandardMaterial color={KIT} roughness={0.5} />
           </mesh>
           <mesh position={[0, 0.5, 0]}><cylinderGeometry args={[0.04, 0.05, 0.08]} /><meshStandardMaterial color={SKIN} /></mesh>
-          <mesh position={[0, 0.63, 0]} castShadow><sphereGeometry args={[0.1, 20, 16]} /><meshStandardMaterial color={SKIN} roughness={0.6} /></mesh>
-          <mesh position={[0, 0.67, -0.01]} scale={[1.05, 0.75, 1.08]}><sphereGeometry args={[0.1, 20, 16, 0, Math.PI * 2, 0, Math.PI / 2]} /><meshStandardMaterial color={HAIR} /></mesh>
+          {/* Mahmoud's own face (cut out from his photo), always turned to the camera */}
+          <Head />
           {[['L', -0.19], ['R', 0.19]].map(([s, x]) => (
             <Limb key={s} limbRef={rig['sh' + s]} position={[x, 0.44, 0]} len={0.27} r={0.042} color={KIT}>
               <Limb limbRef={rig['el' + s]} position={[0, 0, 0]} len={0.25} r={0.034} color={SKIN} />
@@ -171,6 +187,8 @@ export default function GoalScene({ activeRef, flashRef, low }) {
     wasActive.current = active
     if (!active) return
     clock.current += Math.min(dt, 1 / 20)
+    // Mahmoud is still knocking on the screen: wait at the start of the run-up
+    if (uplIntro.hold) { clock.current = 0; fx.current.burstDone = false; fx.current.confetti = false }
     if (clock.current > T.back) { clock.current = 0; fx.current.burstDone = false; fx.current.confetti = false }
     const t = clock.current
 
