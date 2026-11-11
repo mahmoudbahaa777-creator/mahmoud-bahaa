@@ -1,15 +1,16 @@
 import { AnimatePresence, motion } from 'framer-motion'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { method, performance as p } from '../content'
 import { SectionHead } from './ui/Reveal'
 import Icon from './ui/Icon'
 import { useIsMobile } from '../hooks'
+import { PlaybooksA, PlaybooksC } from './Playbooks'
 
 const ease = [0.22, 1, 0.36, 1]
 const pad = (i) => String(i + 1).padStart(2, '0')
 
 /* Funnel graphic (6 stages narrowing to Revenue) + two collapsible playbooks. Stacks on phones. */
-function Funnel() {
+function Funnel({ withBooks = true }) {
   const isMobile = useIsMobile()
   const [open, setOpen] = useState(-1)
   const books = [
@@ -17,7 +18,7 @@ function Funnel() {
     [p.scaling.title, p.scaling.items.map((v) => [null, v])],
   ]
   return (
-    <div data-reveal-stagger className="after-head grid grid-cols-[minmax(0,1fr)] gap-10 lg:grid-cols-[minmax(0,1.35fr)_minmax(0,1fr)] lg:gap-16">
+    <div data-reveal-stagger className={`after-head grid grid-cols-[minmax(0,1fr)] gap-10 lg:gap-16 ${withBooks ? 'lg:grid-cols-[minmax(0,1.35fr)_minmax(0,1fr)]' : 'lg:max-w-[46rem]'}`}>
       <div>
         {/* Foundation of the method: everything in the funnel sits on positioning */}
         <div className="mb-5 rounded-card border border-dashed border-teal-500/50 px-4 py-3 md:px-5">
@@ -56,7 +57,7 @@ function Funnel() {
         </ol>
         <p className="mt-5 text-center text-xs text-muted md:pl-[11rem]">{p.stagesLabel}</p>
       </div>
-      <div className="border-t border-hairline lg:self-center">
+      {withBooks && <div className="border-t border-hairline lg:self-center">
         {books.map(([title, items], bi) => (
           <div key={title} className="border-b border-hairline">
             <button onClick={() => setOpen(open === bi ? -1 : bi)} aria-expanded={open === bi}
@@ -82,12 +83,20 @@ function Funnel() {
             </AnimatePresence>
           </div>
         ))}
-      </div>
+      </div>}
     </div>
   )
 }
 
+/* Playbook design preview: ?playbooks=a or ?playbooks=c (default: the accordions) */
+function usePlaybooksVariant() {
+  const [v, setV] = useState('')
+  useEffect(() => { setV((new URLSearchParams(location.search).get('playbooks') || '').toLowerCase()) }, [])
+  return v === 'a' || v === 'c' ? v : ''
+}
+
 export default function Performance() {
+  const variant = usePlaybooksVariant()
   return (
     <section id="performance" className="section">
       {/* old #method links land here: the method now lives on this funnel */}
@@ -95,7 +104,9 @@ export default function Performance() {
       <div className="wrap">
         <SectionHead headline={p.headline} line={p.line} />
         <p className="mt-3 max-w-2xl text-base leading-7 text-muted">{p.methodLine}</p>
-        <Funnel />
+        <Funnel withBooks={!variant} />
+        {variant === 'a' && <PlaybooksA />}
+        {variant === 'c' && <PlaybooksC />}
       </div>
     </section>
   )

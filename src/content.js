@@ -66,6 +66,8 @@ export const performance = {
   },
   scaling: {
     title: 'Scaling, in 4 moves',
+    // one-word names for each move (used by the playbook graphics)
+    short: ['Test', 'Bid', 'Raise', 'Cut'],
     items: [
       'Test one thing at a time.',
       'Bid for qualified leads, not form fills.',
