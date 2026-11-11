@@ -55,6 +55,9 @@ export const performance = {
   // These labels are a working draft — confirm or rename.
   stagesLabel: 'Tracking structure · 6 stages, impression to revenue',
   stages: ['Impression', 'Click', 'Visit', 'Lead', 'Qualified lead', 'Revenue'],
+  // Own section after the funnel: the two playbooks (src/components/Playbooks.jsx)
+  playbooksHeadline: 'Measure every lead. Then scale what works.',
+  playbooksLine: "Tracking comes first, so budget only grows on proof.",
   tracking: {
     title: 'Tracking, in 4 steps',
     items: [
@@ -298,6 +301,7 @@ export const navSections = [
   { id: 'top', label: 'Start' },
   { id: 'services', label: 'What I do' },
   { id: 'performance', label: 'Performance & method' },
+  { id: 'playbooks', label: 'Tracking & scaling' },
   { id: 'channels', label: 'Channels' },
   { id: 'sponsorships', label: 'Sponsorships' },
   { id: 'reviews', label: 'Recommendations' },

@@ -2,7 +2,6 @@ import { motion } from 'framer-motion'
 import { method, performance as p } from '../content'
 import { SectionHead } from './ui/Reveal'
 import { useIsMobile } from '../hooks'
-import Playbooks from './Playbooks'
 
 const ease = [0.22, 1, 0.36, 1]
 const pad = (i) => String(i + 1).padStart(2, '0')
@@ -63,7 +62,6 @@ export default function Performance() {
         <SectionHead headline={p.headline} line={p.line} />
         <p className="mt-3 max-w-2xl text-base leading-7 text-muted">{p.methodLine}</p>
         <Funnel />
-        <Playbooks />
       </div>
     </section>
   )

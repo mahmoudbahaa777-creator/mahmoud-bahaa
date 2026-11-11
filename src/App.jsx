@@ -6,6 +6,7 @@ import Hero from './components/Hero'
 import LogoStrip from './components/LogoStrip'
 import Performance from './components/Performance'
 import Channels from './components/Channels'
+import Playbooks from './components/Playbooks'
 import FeatureCards from './components/FeatureCards'
 import SponsorshipShowcase from './components/SponsorshipShowcase'
 import Experience from './components/Experience'
@@ -52,6 +53,7 @@ export default function App() {
         <Experience />
         <FeatureCards />
         <Performance />
+        <Playbooks />
         <Channels />
         <SponsorshipShowcase />
         <Reviews />

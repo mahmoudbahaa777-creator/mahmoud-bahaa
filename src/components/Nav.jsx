@@ -36,7 +36,7 @@ export default function Nav() {
             <span className="sr-only"> (back to top)</span>
           </span>
         </button>
-        <nav className="hidden items-center gap-7 text-sm text-muted lg:flex">
+        <nav className="hidden items-center gap-7 text-sm text-muted xl:flex">
           {LINKS.map(([id, l]) => (
             <button key={id} onClick={() => go(id)} className="transition-colors hover:text-ink">{l}</button>
           ))}
@@ -45,7 +45,7 @@ export default function Nav() {
           <a href={contact.callHref} onClick={onBook} className="btn-ghost !px-4 !py-2 text-sm">Book a call</a>
           {/* Phone/tablet: the same section links, in a drop-down */}
           <button onClick={() => setOpen((o) => !o)} aria-expanded={open} aria-controls="mobile-menu" aria-label={open ? 'Close menu' : 'Open menu'}
-            className="grid h-10 w-10 place-items-center rounded-card border border-hairline text-ink lg:hidden">
+            className="grid h-10 w-10 place-items-center rounded-card border border-hairline text-ink xl:hidden">
             <span className="relative block h-3 w-4">
               <motion.span className="absolute left-0 top-0 h-[2px] w-4 rounded bg-current" animate={open ? { y: 5, rotate: 45 } : { y: 0, rotate: 0 }} />
               <motion.span className="absolute left-0 top-[5px] h-[2px] w-4 rounded bg-current" animate={{ opacity: open ? 0 : 1 }} />
@@ -59,11 +59,11 @@ export default function Nav() {
         {open && (
           <motion.button key="backdrop" aria-label="Close menu" onClick={() => setOpen(false)} tabIndex={-1}
             initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
-            className="absolute inset-x-0 top-full h-screen bg-ink/30 lg:hidden" />
+            className="absolute inset-x-0 top-full h-screen bg-ink/30 xl:hidden" />
         )}
         {open && (
           <motion.nav key="menu" id="mobile-menu" initial={{ height: 0, opacity: 0 }} animate={{ height: 'auto', opacity: 1 }} exit={{ height: 0, opacity: 0 }}
-            transition={{ duration: 0.35, ease }} className="overflow-hidden border-t border-hairline lg:hidden">
+            transition={{ duration: 0.35, ease }} className="overflow-hidden border-t border-hairline xl:hidden">
             <ol className="wrap py-3">
               {LINKS.map(([id, l], i) => (
                 <motion.li key={id} initial={{ opacity: 0, x: -12 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.05 + i * 0.04, duration: 0.3 }}>
