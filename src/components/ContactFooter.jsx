@@ -1,5 +1,4 @@
 import { motion, useMotionValue, useSpring } from 'framer-motion'
-import ChapterWord from './ui/ChapterWord'
 import { closing, contact } from '../content'
 import { Reveal, SplitText } from './ui/Reveal'
 import Icon from './ui/Icon'
@@ -31,8 +30,7 @@ function ContactLink({ href, icon, children, external }) {
 
 export default function ContactFooter() {
   return (
-    <section id="contact" className="section-top relative isolate overflow-hidden">
-      <ChapterWord dir="left">Let&apos;s talk</ChapterWord>
+    <section id="contact" className="section-top relative overflow-hidden">
       <div className="wrap">
         <div className="relative mx-auto max-w-3xl text-center">
           <SplitText text={closing.headline} className="relative font-serif text-h1 font-semibold md:text-[3.5rem] md:leading-[1.05]" />

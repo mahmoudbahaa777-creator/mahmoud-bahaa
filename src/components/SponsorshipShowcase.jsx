@@ -1,5 +1,4 @@
 import { lazy, Suspense, useRef, useState } from 'react'
-import ChapterWord from './ui/ChapterWord'
 import { AnimatePresence, motion, useMotionValueEvent, useScroll, useTransform } from 'framer-motion'
 import { sponsorships as s } from '../content'
 import { useInView, useIsMobile, useLowPower } from '../hooks'
@@ -120,8 +119,7 @@ export default function SponsorshipShowcase() {
   const side = active === 1 ? 'md:ml-auto' : ''
 
   return (
-    <section id="sponsorships" className="theme-dark relative isolate bg-ground text-ink">
-      <ChapterWord dir="left">Sponsors</ChapterWord>
+    <section id="sponsorships" className="theme-dark relative bg-ground text-ink">
       <div className="wrap section-top pb-[var(--space-head)]">
         <SectionHead headline={s.headline} line={s.line} />
       </div>

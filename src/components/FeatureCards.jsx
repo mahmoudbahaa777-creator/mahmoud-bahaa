@@ -1,5 +1,4 @@
 import { useMotionValueEvent, useScroll } from 'framer-motion'
-import ChapterWord from './ui/ChapterWord'
 import { useEffect, useLayoutEffect, useRef, useState } from 'react'
 import { services } from '../content'
 import { useIsMobile, useReducedMotion } from '../hooks'
@@ -220,8 +219,7 @@ export default function FeatureCards() {
 
   const night = items[index].night
   return (
-    <section id="services" className="relative isolate">
-      <ChapterWord dir="left">What I do</ChapterWord>
+    <section id="services" className="relative">
       <div className="wrap section-top pb-[var(--space-head)]">
         <SectionHead headline={services.headline} />
       </div>

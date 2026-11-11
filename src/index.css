@@ -113,26 +113,6 @@ html.lenis, html.lenis body { height: auto; }
 .pb-budget { height: 18%; transition: height .5s cubic-bezier(.22,1,.36,1); transition-delay: calc(.8s + var(--i) * 260ms); }
 .pb-c.is-in .pb-budget { height: var(--h); }
 
-/* Chapter words (src/components/ui/ChapterWord.jsx): a huge outlined word behind each
-   section heading, sliding sideways with the scroll. Clipped by its own band, so it never
-   widens the page; z-index -1 inside an isolated section = above the background, behind content. */
-.chapter-word-band {
-  position: absolute; left: 0; right: 0; z-index: -1; pointer-events: none; overflow: hidden;
-  top: calc(var(--space-section) - .8em); font-size: clamp(4.5rem, 2rem + 11vw, 12rem); line-height: 1.1;
-}
-.chapter-word {
-  display: inline-block; white-space: nowrap;
-  font-family: var(--font-serif); font-weight: 600; letter-spacing: -.02em; text-transform: uppercase;
-  color: transparent; -webkit-text-stroke: 1.5px color-mix(in srgb, var(--teal-500) 32%, transparent);
-}
-@supports (animation-timeline: view()) {
-  .chapter-word { animation: chapter-slide linear both; animation-timeline: view(); animation-range: cover 0% cover 100%; }
-  .chapter-right { animation-name: chapter-slide-r; }
-  @keyframes chapter-slide { from { transform: translateX(6%); } to { transform: translateX(-22%); } }
-  @keyframes chapter-slide-r { from { transform: translateX(-16%); } to { transform: translateX(10%); } }
-}
-@media (prefers-reduced-motion: reduce) { .chapter-word { animation: none; } }
-
 @keyframes marquee { to { transform: translateX(-50%); } }
 .marquee { animation: marquee 38s linear infinite; }
 .marquee:hover { animation-play-state: paused; }

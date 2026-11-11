@@ -1,5 +1,4 @@
 import { contact, reviews as r } from '../content'
-import ChapterWord from './ui/ChapterWord'
 import { SectionHead } from './ui/Reveal'
 import Icon from './ui/Icon'
 
@@ -32,8 +31,7 @@ export default function Reviews() {
   const half = Math.ceil(r.items.length / 2)
   const rows = [r.items.slice(0, half), r.items.slice(half)]
   return (
-    <section id="reviews" className="section isolate overflow-x-clip">
-      <ChapterWord dir="right">Proof</ChapterWord>
+    <section id="reviews" className="section overflow-x-clip">
       <div className="wrap">
         <SectionHead headline={r.headline} />
       </div>
