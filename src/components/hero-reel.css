@@ -1,6 +1,6 @@
 /* ============================================================
    HERO REEL — ported from hero-reel.html (tokens v1)
-   18s · design-safe area 1200×800, scaled to fit a 16:10 box.
+   18s · design-safe area 1200×800, scaled to fit the hero box.
    Every rule is scoped to .hero-reel so nothing leaks into the
    site (the original's .grid / .eyebrow are renamed hr-grid / hr-eyebrow).
    ============================================================ */
@@ -12,9 +12,10 @@
   --ondeep:#F7F4EE; --ondeepm:#9FC9C4;
   --serif:"Fraunces", Georgia, "Times New Roman", serif;
   --sans:"Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
-  position:relative;width:100%;aspect-ratio:16/10;overflow:hidden;
-  border-radius:16px;background:var(--surface-100);isolation:isolate;
-  border:1px solid var(--hair); /* frames the reel against the cream hero */
+  /* edge-to-edge: fills whatever box the page gives it (no frame, no corners);
+     the 1200×800 stage is scaled to fit and centred, the paper fills the rest */
+  position:relative;width:100%;height:100%;overflow:hidden;
+  background:var(--surface-100);isolation:isolate;
   font-family:var(--sans);color:var(--ink);text-align:left;
 }
 .hero-reel *{box-sizing:border-box;margin:0;padding:0}
@@ -140,5 +141,5 @@
 .hero-reel #s9line .gap{display:inline-block;width:.24em}
 .hero-reel #w2 em{color:var(--t500)}
 .hero-reel #s9dot{display:inline-block;width:.15em;height:.15em;border-radius:50%;background:var(--coral);margin-left:.05em;transform:scale(0)}
-.hero-reel .hit{position:absolute;inset:0;z-index:30;display:block;border-radius:16px}
-.hero-reel .hit:focus-visible{outline:2px solid var(--t500);outline-offset:3px}
+.hero-reel .hit{position:absolute;inset:0;z-index:30;display:block}
+.hero-reel .hit:focus-visible{outline:2px solid var(--t500);outline-offset:-4px}
