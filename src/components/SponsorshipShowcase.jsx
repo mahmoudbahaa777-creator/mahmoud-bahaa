@@ -119,7 +119,7 @@ export default function SponsorshipShowcase() {
   const side = active === 1 ? 'md:ml-auto' : ''
 
   return (
-    <section id="sponsorships" className="theme-dark relative bg-ground text-ink">
+    <section id="sponsorships" className="sheet theme-dark bg-ground text-ink">
       <div className="wrap section-top pb-[var(--space-head)]">
         <SectionHead headline={s.headline} line={s.line} />
       </div>

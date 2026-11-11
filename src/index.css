@@ -113,6 +113,30 @@ html.lenis, html.lenis body { height: auto; }
 .pb-budget { height: 18%; transition: height .5s cubic-bezier(.22,1,.36,1); transition-delay: calc(.8s + var(--i) * 260ms); }
 .pb-c.is-in .pb-budget { height: var(--h); }
 
+/* Stacked sheets: every section after the hero is a full-width sheet that slides up over
+   the one before it (rounded top, overlap, soft top shadow), alternating cream / white,
+   dark sections staying dark. overflow: clip (not hidden) keeps position: sticky working
+   inside. z-index: 0 makes each sheet its own layer, so later sheets always cover earlier ones. */
+.sheet {
+  position: relative; z-index: 0;
+  margin-top: calc(var(--sheet-r) * -1);
+  border-radius: var(--sheet-r) var(--sheet-r) 0 0;
+  overflow: clip;
+  box-shadow: 0 -14px 34px -20px rgba(16, 34, 31, .38);
+}
+.sheet-cream { background: var(--surface-100); }
+.sheet-white { background: var(--surface-200); }
+/* As the next sheet arrives, the one underneath dims a little (scroll-driven, no JS). */
+@supports (animation-timeline: view()) {
+  .sheet::after {
+    content: ''; position: absolute; inset: 0; z-index: 50; pointer-events: none;
+    background: #0B1A18; opacity: 0;
+    animation: sheet-dim linear both; animation-timeline: view(); animation-range: exit 0% exit 100%;
+  }
+  @keyframes sheet-dim { to { opacity: .12; } }
+}
+@media (prefers-reduced-motion: reduce) { .sheet::after { display: none; } }
+
 @keyframes marquee { to { transform: translateX(-50%); } }
 .marquee { animation: marquee 38s linear infinite; }
 .marquee:hover { animation-play-state: paused; }

@@ -219,7 +219,7 @@ export default function FeatureCards() {
 
   const night = items[index].night
   return (
-    <section id="services" className="relative">
+    <section id="services" className="sheet sheet-white">
       <div className="wrap section-top pb-[var(--space-head)]">
         <SectionHead headline={services.headline} />
       </div>

@@ -31,7 +31,7 @@ export default function Reviews() {
   const half = Math.ceil(r.items.length / 2)
   const rows = [r.items.slice(0, half), r.items.slice(half)]
   return (
-    <section id="reviews" className="section overflow-x-clip">
+    <section id="reviews" className="section sheet sheet-cream">
       <div className="wrap">
         <SectionHead headline={r.headline} />
       </div>

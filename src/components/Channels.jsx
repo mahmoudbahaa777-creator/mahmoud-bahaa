@@ -465,7 +465,7 @@ function Carousel() {
 
 export default function Channels() {
   return (
-    <section id="channels" className="section overflow-x-clip">
+    <section id="channels" className="section sheet sheet-white">
       <div className="wrap">
         <SectionHead headline={c.headline} line={c.line} />
       </div>

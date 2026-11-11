@@ -56,7 +56,7 @@ function Funnel() {
 
 export default function Performance() {
   return (
-    <section id="performance" className="section">
+    <section id="performance" className="section sheet sheet-cream">
       {/* old #method links land here: the method now lives on this funnel */}
       <span id="method" className="absolute top-0" aria-hidden />
       <div className="wrap">

@@ -25,7 +25,7 @@ function Row() {
 
 export default function LogoStrip() {
   return (
-    <section aria-label={logoStrip.label} className="band-y relative border-y border-hairline">
+    <section aria-label={logoStrip.label} className="sheet sheet-white band-y">
       <div className="wrap mb-7 flex flex-wrap items-baseline justify-between gap-2">
         <p className="eyebrow !text-muted">{logoStrip.label}</p>
         <p className="flex items-center gap-2 text-xs text-muted"><span className="h-1.5 w-1.5 rounded-full bg-teal-500" />marks {logoStrip.partnersLabel.toLowerCase()}</p>
