@@ -1,4 +1,5 @@
 import { contact, reviews as r } from '../content'
+import Route from './ui/Route'
 import { SectionHead } from './ui/Reveal'
 import Icon from './ui/Icon'
 
@@ -32,6 +33,7 @@ export default function Reviews() {
   const rows = [r.items.slice(0, half), r.items.slice(half)]
   return (
     <section id="reviews" className="section sheet sheet-cream">
+      <Route id="reviews" />
       <div className="wrap">
         <SectionHead headline={r.headline} />
       </div>

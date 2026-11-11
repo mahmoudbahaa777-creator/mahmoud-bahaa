@@ -1,4 +1,5 @@
 import { lazy, Suspense, useRef, useState } from 'react'
+import Route from './ui/Route'
 import { AnimatePresence, motion, useMotionValueEvent, useScroll, useTransform } from 'framer-motion'
 import { sponsorships as s } from '../content'
 import { useInView, useIsMobile, useLowPower } from '../hooks'
@@ -120,6 +121,7 @@ export default function SponsorshipShowcase() {
 
   return (
     <section id="sponsorships" className="sheet theme-dark bg-ground text-ink">
+      <Route id="sponsorships" />
       <div className="wrap section-top pb-[var(--space-head)]">
         <SectionHead headline={s.headline} line={s.line} />
       </div>
