@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion'
+import ChapterWord from './ui/ChapterWord'
 import { method, performance as p } from '../content'
 import { SectionHead } from './ui/Reveal'
 import { useIsMobile } from '../hooks'
@@ -55,7 +56,8 @@ function Funnel() {
 
 export default function Performance() {
   return (
-    <section id="performance" className="section">
+    <section id="performance" className="section isolate">
+      <ChapterWord dir="right">Performance</ChapterWord>
       {/* old #method links land here: the method now lives on this funnel */}
       <span id="method" className="absolute top-0" aria-hidden />
       <div className="wrap">

@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
+import ChapterWord from './ui/ChapterWord'
 import { performance as p } from '../content'
 import { SectionHead } from './ui/Reveal'
 
@@ -149,7 +150,8 @@ function AdManager() {
 /* Its own section, right after the funnel */
 export default function Playbooks() {
   return (
-    <section id="playbooks" className="section">
+    <section id="playbooks" className="section isolate">
+      <ChapterWord dir="left">Track &amp; scale</ChapterWord>
       <div className="wrap">
         <SectionHead headline={p.playbooksHeadline} line={p.playbooksLine} />
         <div className="after-head grid gap-12 lg:grid-cols-2 lg:gap-10">

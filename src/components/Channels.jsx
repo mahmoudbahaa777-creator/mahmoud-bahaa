@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
+import ChapterWord from './ui/ChapterWord'
 import { channels as c } from '../content'
 import { SectionHead } from './ui/Reveal'
 import Icon from './ui/Icon'
@@ -465,7 +466,8 @@ function Carousel() {
 
 export default function Channels() {
   return (
-    <section id="channels" className="section overflow-x-clip">
+    <section id="channels" className="section isolate overflow-x-clip">
+      <ChapterWord dir="right">Channels</ChapterWord>
       <div className="wrap">
         <SectionHead headline={c.headline} line={c.line} />
       </div>
