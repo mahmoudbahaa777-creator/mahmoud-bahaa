@@ -30,7 +30,6 @@
   --space-head: clamp(2.25rem, 1.6rem + 2.8vw, 4rem);       /* heading → its content: 36 → 64px */
   --space-tight: clamp(1.5rem, 1.15rem + 1.5vw, 2.5rem);    /* small groups / notes: 24 → 40px */
   --space-band: clamp(2rem, 1.6rem + 1.7vw, 3rem);          /* slim full-width bands: 32 → 48px */
-  --sheet-r: clamp(1.5rem, 1.1rem + 1.6vw, 2.25rem);       /* stacked-sheet corner + overlap: 24 → 36px */
 }
 
 @media (prefers-color-scheme: dark) {

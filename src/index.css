@@ -113,65 +113,6 @@ html.lenis, html.lenis body { height: auto; }
 .pb-budget { height: 18%; transition: height .5s cubic-bezier(.22,1,.36,1); transition-delay: calc(.8s + var(--i) * 260ms); }
 .pb-c.is-in .pb-budget { height: var(--h); }
 
-/* Stacked sheets: every section after the hero is a full-width sheet that slides up over
-   the one before it (rounded top, overlap, soft top shadow), alternating cream / white,
-   dark sections staying dark. overflow: clip (not hidden) keeps position: sticky working
-   inside. z-index: 0 makes each sheet its own layer, so later sheets always cover earlier ones. */
-.sheet {
-  position: relative; z-index: 0;
-  margin-top: calc(var(--sheet-r) * -1);
-  border-radius: var(--sheet-r) var(--sheet-r) 0 0;
-  overflow: clip;
-  box-shadow: 0 -14px 34px -20px rgba(16, 34, 31, .38);
-}
-.sheet-cream { background: var(--surface-100); }
-.sheet-white { background: var(--surface-200); }
-/* As the next sheet arrives, the one underneath dims a little (scroll-driven, no JS). */
-@supports (animation-timeline: view()) {
-  .sheet::after {
-    content: ''; position: absolute; inset: 0; z-index: 50; pointer-events: none;
-    background: #0B1A18; opacity: 0;
-    animation: sheet-dim linear both; animation-timeline: view(); animation-range: exit 0% exit 100%;
-  }
-  @keyframes sheet-dim { to { opacity: .12; } }
-}
-@media (prefers-reduced-motion: reduce) { .sheet::after { display: none; } }
-
-/* Route (src/components/ui/Route.jsx): the Reach → Revenue line in the left gutter.
-   x = where the .wrap content starts, minus a small offset, at every breakpoint. */
-.route-line, .route-stop { --wrap-pad: 16px; --route-off: 8px; }
-@media (min-width: 640px)  { .route-line, .route-stop { --wrap-pad: 32px; --route-off: 15px; } }
-@media (min-width: 1024px) { .route-line, .route-stop { --wrap-pad: 64px; --route-off: 30px; } }
-.route-line {
-  --x: calc(max((100% - 1200px) / 2, 0px) + var(--wrap-pad) - var(--route-off));
-  position: absolute; top: 0; bottom: 0; left: var(--x); width: 2px; z-index: 5; pointer-events: none;
-  background: color-mix(in srgb, var(--teal-500) 20%, transparent);
-}
-.route-line::after { content: ''; position: absolute; inset: 0; background: var(--teal-500); transform-origin: top center; }
-/* the closing stretch stops at the Revenue station */
-.route-line-end { bottom: auto; height: calc(var(--space-section) - 2.9rem + 8px); }
-.route-stop {
-  --x: calc(max((100% - 1200px) / 2, 0px) + var(--wrap-pad) - var(--route-off));
-  position: absolute; left: calc(var(--x) - 7px); top: calc(var(--space-section) - 2.9rem); z-index: 6;
-  display: flex; align-items: center; pointer-events: none;
-}
-.route-dot { width: 16px; height: 16px; border-radius: 50%; border: 2px solid var(--teal-500); background: var(--surface-100); flex: none; }
-.route-start .route-dot { background: var(--teal-500); }
-.route-end .route-dot { border-radius: 3px; transform: rotate(45deg) scale(.9); background: var(--teal-700); border-color: var(--teal-700); }
-.route-tick { width: 18px; height: 2px; background: var(--teal-500); margin-left: -1px; flex: none; }
-.route-label { margin-left: 8px; font: 600 .8125rem/1 var(--font-sans); color: var(--teal-700); white-space: nowrap; }
-.route-end .route-label { font: 600 1.05rem/1 var(--font-serif); }
-/* drawn as you scroll (where supported); otherwise the route is simply complete */
-@supports (animation-timeline: view()) {
-  .route-line::after { transform: scaleY(0); animation: route-draw linear both; animation-timeline: view(); animation-range: entry 40% exit 40%; }
-  .route-line-end::after { animation-range: entry 20% entry 70%; }
-  .route-dot { animation: route-arrive linear both; animation-timeline: view(); animation-range: entry 55% entry 70%; }
-  @keyframes route-draw { to { transform: scaleY(1); } }
-  @keyframes route-arrive { from { background: var(--surface-100); } to { background: var(--teal-500); } }
-  .route-end .route-dot { animation: none; }
-}
-@media (prefers-reduced-motion: reduce) { .route-line::after { animation: none; transform: none; } .route-dot { animation: none; } }
-
 @keyframes marquee { to { transform: translateX(-50%); } }
 .marquee { animation: marquee 38s linear infinite; }
 .marquee:hover { animation-play-state: paused; }

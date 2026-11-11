@@ -1,5 +1,4 @@
 import { logoStrip } from '../content'
-import Route from './ui/Route'
 import { asset } from '../hooks'
 
 // One-colour logos (white cutouts, shown in ink on cream) as a slow-moving strip. Sponsor partners carry a teal dot.
@@ -26,8 +25,7 @@ function Row() {
 
 export default function LogoStrip() {
   return (
-    <section aria-label={logoStrip.label} className="sheet sheet-white band-y">
-      <Route kind="pass" />
+    <section aria-label={logoStrip.label} className="band-y relative border-y border-hairline">
       <div className="wrap mb-7 flex flex-wrap items-baseline justify-between gap-2">
         <p className="eyebrow !text-muted">{logoStrip.label}</p>
         <p className="flex items-center gap-2 text-xs text-muted"><span className="h-1.5 w-1.5 rounded-full bg-teal-500" />marks {logoStrip.partnersLabel.toLowerCase()}</p>

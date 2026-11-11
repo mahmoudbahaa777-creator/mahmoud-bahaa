@@ -1,5 +1,4 @@
 import { motion } from 'framer-motion'
-import Route from './ui/Route'
 import { method, performance as p } from '../content'
 import { SectionHead } from './ui/Reveal'
 import { useIsMobile } from '../hooks'
@@ -56,8 +55,7 @@ function Funnel() {
 
 export default function Performance() {
   return (
-    <section id="performance" className="section sheet sheet-cream">
-      <Route id="performance" />
+    <section id="performance" className="section">
       {/* old #method links land here: the method now lives on this funnel */}
       <span id="method" className="absolute top-0" aria-hidden />
       <div className="wrap">

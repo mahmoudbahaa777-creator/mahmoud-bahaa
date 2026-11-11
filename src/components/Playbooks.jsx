@@ -1,5 +1,4 @@
 import { useEffect, useRef, useState } from 'react'
-import Route from './ui/Route'
 import { performance as p } from '../content'
 import { SectionHead } from './ui/Reveal'
 
@@ -147,11 +146,10 @@ function AdManager() {
   )
 }
 
-/* Its own section (and sheet) right after the funnel */
+/* Its own section, right after the funnel */
 export default function Playbooks() {
   return (
-    <section id="playbooks" className="section sheet sheet-white">
-      <Route id="playbooks" />
+    <section id="playbooks" className="section">
       <div className="wrap">
         <SectionHead headline={p.playbooksHeadline} line={p.playbooksLine} />
         <div className="after-head grid gap-12 lg:grid-cols-2 lg:gap-10">

@@ -1,5 +1,4 @@
 import { useEffect, useRef, useState } from 'react'
-import Route from './ui/Route'
 import { channels as c } from '../content'
 import { SectionHead } from './ui/Reveal'
 import Icon from './ui/Icon'
@@ -466,8 +465,7 @@ function Carousel() {
 
 export default function Channels() {
   return (
-    <section id="channels" className="section sheet sheet-cream">
-      <Route id="channels" />
+    <section id="channels" className="section overflow-x-clip">
       <div className="wrap">
         <SectionHead headline={c.headline} line={c.line} />
       </div>

@@ -1,5 +1,4 @@
 import { useMotionValueEvent, useScroll } from 'framer-motion'
-import Route from './ui/Route'
 import { useEffect, useLayoutEffect, useRef, useState } from 'react'
 import { services } from '../content'
 import { useIsMobile, useReducedMotion } from '../hooks'
@@ -220,8 +219,7 @@ export default function FeatureCards() {
 
   const night = items[index].night
   return (
-    <section id="services" className="sheet sheet-white">
-      <Route id="services" kind="start" />
+    <section id="services" className="relative">
       <div className="wrap section-top pb-[var(--space-head)]">
         <SectionHead headline={services.headline} />
       </div>
