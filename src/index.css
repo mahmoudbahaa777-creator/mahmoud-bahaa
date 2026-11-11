@@ -98,6 +98,8 @@ html.lenis, html.lenis body { height: auto; }
 
 /* Scroll reveals (src/reveal.js): content fades and lifts in as it reaches the viewport */
 .reveal-wait { opacity: 0; transform: translate3d(0, 28px, 0); }
+.reveal-wait.reveal-from-left { transform: translate3d(-72px, 0, 0); }
+.reveal-wait.reveal-from-right { transform: translate3d(72px, 0, 0); }
 .reveal-in {
   transition: opacity .9s cubic-bezier(.22,1,.36,1), transform .9s cubic-bezier(.22,1,.36,1);
   transition-delay: calc(var(--reveal-i, 0) * 70ms);
@@ -112,6 +114,20 @@ html.lenis, html.lenis body { height: auto; }
 @keyframes pb-packet-v { 0% { top: 0; opacity: 0; } 15%, 85% { opacity: 1; } 100% { top: 100%; opacity: 0; } }
 .pb-budget { height: 18%; transition: height .5s cubic-bezier(.22,1,.36,1); transition-delay: calc(.8s + var(--i) * 260ms); }
 .pb-c.is-in .pb-budget { height: var(--h); }
+
+/* Text bands (src/components/TextBand.jsx): giant drifting words as section dividers */
+.text-band { overflow: hidden; padding-block: clamp(1.75rem, 1rem + 3vw, 3.5rem); }
+.text-band-track { display: flex; width: max-content; animation: marquee 48s linear infinite; }
+.text-band-reverse { animation-name: marquee-rev; }
+.text-band-run { display: flex; align-items: center; white-space: nowrap; }
+.text-band-run > span {
+  font-family: var(--font-serif); font-weight: 600; letter-spacing: -.03em; line-height: 1;
+  font-size: clamp(3.75rem, 2rem + 9vw, 11rem); color: var(--ink);
+}
+.text-band-mark {
+  display: inline-block; width: .16em; height: .16em; margin: 0 .45em; flex: none;
+  background: var(--teal-500); transform: rotate(45deg); border-radius: .02em;
+}
 
 @keyframes marquee { to { transform: translateX(-50%); } }
 .marquee { animation: marquee 38s linear infinite; }

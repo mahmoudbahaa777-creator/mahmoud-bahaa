@@ -1,3 +1,4 @@
+// Headlines: wrap words in *asterisks* to set them in the accent colour (two-tone headlines).
 // All copy comes from "Portfolio Landing Page — Content" (Nov 8, 2026).
 // Edit text here; components only render it.
 
@@ -48,7 +49,7 @@ export const logoStrip = {
 
 export const performance = {
   eyebrow: 'Performance campaigns',
-  headline: 'Every lead, traced from impression to revenue.',
+  headline: 'Every lead, traced from *impression to revenue.*',
   line: "Clicks are cheap. Qualified leads aren't. Budget only grows where it earns.",
   methodLine: 'The Reach → Revenue method, laid over the funnel: position first, then reach, trust, convert and scale.',
   // The doc specifies "6 stages, impression to revenue" without naming them.
@@ -56,7 +57,7 @@ export const performance = {
   stagesLabel: 'Tracking structure · 6 stages, impression to revenue',
   stages: ['Impression', 'Click', 'Visit', 'Lead', 'Qualified lead', 'Revenue'],
   // Own section after the funnel: the two playbooks (src/components/Playbooks.jsx)
-  playbooksHeadline: 'Measure every lead. Then scale what works.',
+  playbooksHeadline: 'Measure every lead. *Then scale what works.*',
   playbooksLine: "Tracking comes first, so budget only grows on proof.",
   tracking: {
     title: 'Tracking, in 4 steps',
@@ -82,7 +83,7 @@ export const performance = {
 
 export const services = {
   eyebrow: 'What I do',
-  headline: 'One partner, from brand to pipeline.',
+  headline: 'One partner, from *brand to pipeline.*',
   // Two halves of the same job: trust first, then the engine that turns it into revenue.
   groups: [
     {
@@ -131,7 +132,7 @@ export const method = {
 // Channels section: every platform shown as a mockup of where it runs.
 // Ads say "Your Brand" on purpose: illustrations of the work, not real clients or results.
 export const channels = {
-  headline: 'Every channel your buyers use, run as one system.',
+  headline: 'Every channel your buyers use, *run as one system.*',
   line: 'Reach where people search, scroll and read. Then measure what turned into revenue.',
   note: 'Illustrations of the channels I run. Ads show a placeholder brand, not a client.',
   searchQuery: 'best trading app in UAE',
@@ -199,7 +200,7 @@ export const channels = {
 // Each zone carries its partner line plus one of the three "How it builds trust" points.
 export const sponsorships = {
   eyebrow: 'Sponsorships',
-  headline: 'A logo is a promise. The activation is the result.',
+  headline: 'A logo is a promise. *The activation is the result.*',
   line: "Partnerships I've activated for a regulated financial brand:",
   zones: [
     {
@@ -250,7 +251,7 @@ export const experience = {
 // pull = the line shown large; text = the fuller quote underneath.
 export const reviews = {
   eyebrow: 'Recommendations',
-  headline: 'In their words.',
+  headline: 'In *their words.*',
   note: 'From LinkedIn recommendations. Lightly edited for length.',
   items: [
     {
@@ -292,7 +293,7 @@ export const reviews = {
 }
 
 export const closing = {
-  headline: "Let's build growth that pays back.",
+  headline: "Let's build growth that *pays back.*",
   cta: 'Book a strategy call',
   footer: '© 2026 Mahmoud Bahaa El-Din · From reach to revenue.',
 }

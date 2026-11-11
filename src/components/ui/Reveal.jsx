@@ -1,3 +1,4 @@
+import { Fragment } from 'react'
 import { motion } from 'framer-motion'
 
 const ease = [0.22, 1, 0.36, 1]
@@ -16,21 +17,36 @@ export function Reveal({ children, delay = 0, y = 28, className = '', as = 'div'
   )
 }
 
-/** Word-by-word staggered headline reveal. */
+/**
+ * Word-by-word staggered headline reveal. Words wrapped in *asterisks* in the copy
+ * are set in the accent colour (two-tone headlines); the asterisks never show.
+ */
 export function SplitText({ text, className = '', delay = 0, stagger = 0.06, as = 'h2' }) {
   const M = motion[as]
-  const words = text.split(' ')
+  const plain = text.replace(/\*/g, '')
+  let on = false
+  const words = text.split(' ').map((raw) => {
+    const starts = raw.startsWith('*'), ends = raw.endsWith('*') && raw.length > 1
+    if (starts) on = true
+    const w = { word: raw.replace(/\*/g, ''), accent: on }
+    if (ends) on = false
+    return w
+  })
   return (
-    <M className={className} aria-label={text}
+    <M className={className} aria-label={plain}
       initial="hidden" whileInView="show" viewport={{ once: true, margin: '-60px' }}
       variants={{ show: { transition: { staggerChildren: stagger, delayChildren: delay } } }}>
-      {words.map((w, i) => (
-        <span key={i} className="inline-block overflow-hidden pb-[0.12em] align-bottom" aria-hidden="true">
-          <motion.span className="inline-block"
-            variants={{ hidden: { y: '110%', rotate: 4 }, show: { y: '0%', rotate: 0, transition: { duration: 0.9, ease } } }}>
-            {w}{i < words.length - 1 ? ' ' : ''}
-          </motion.span>
-        </span>
+      {words.map(({ word, accent }, i) => (
+        // the space goes between the word boxes: a trailing space inside an inline-block collapses
+        <Fragment key={i}>
+          {i > 0 && ' '}
+          <span className="inline-block overflow-hidden pb-[0.12em] align-bottom" aria-hidden="true">
+            <motion.span className={accent ? 'inline-block text-teal-500' : 'inline-block'}
+              variants={{ hidden: { y: '110%', rotate: 4 }, show: { y: '0%', rotate: 0, transition: { duration: 0.9, ease } } }}>
+              {word}
+            </motion.span>
+          </span>
+        </Fragment>
       ))}
     </M>
   )
