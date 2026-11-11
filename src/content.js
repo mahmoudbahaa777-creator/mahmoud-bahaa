@@ -23,8 +23,6 @@ export const contact = {
 export const hero = {
   headline: 'From reach to revenue.',
   subline: 'Growth strategist and marketing leader, 11+ years across MENA. I build brands people trust and campaigns that bring qualified leads.',
-  primaryCta: 'Book a strategy call',
-  secondaryCta: 'What I do',
 }
 
 export const logoStrip = {

@@ -7,7 +7,7 @@ import './hero-reel.css'
  * Hero reel (ported from hero-reel.html): an 18s brand reel in a 16:10 box.
  * This component renders the static markup (so it ships in the pre-rendered HTML);
  * GSAP + Three.js and the timeline live in ./heroReelEngine.js, which is loaded
- * as its own chunk once the page has painted, so they never delay the first screen.
+ * as its own chunk as soon as the page mounts; Three.js is fetched later, mid-reel.
  * The whole reel is a link to the booking calendar (opens the booking pop-up).
  */
 
@@ -22,13 +22,9 @@ export default function HeroReel() {
     const start = () => import('./heroReelEngine').then(({ default: run }) => {
       if (!cancelled) stop = run(root.current, { ctaHref: contact.bookingUrl || contact.callHref, callMinutes: contact.callMinutes })
     })
-    // after first paint, so the reel never competes with the hero text
-    const idle = window.requestIdleCallback ? requestIdleCallback(start, { timeout: 1200 }) : setTimeout(start, 300)
-    return () => {
-      cancelled = true
-      window.cancelIdleCallback ? cancelIdleCallback(idle) : clearTimeout(idle)
-      stop()
-    }
+    // the reel is the opening view, so start fetching it straight away (Three.js still waits until 5.5s into the reel)
+    start()
+    return () => { cancelled = true; stop() }
   }, [])
 
   return (
