@@ -25,12 +25,12 @@ function Row() {
 
 export default function LogoStrip() {
   return (
-    <section aria-label={logoStrip.label} className="relative border-y border-hairline py-10">
+    <section aria-label={logoStrip.label} className="band-y relative border-y border-hairline">
       <div className="wrap mb-7 flex flex-wrap items-baseline justify-between gap-2">
         <p className="eyebrow !text-muted">{logoStrip.label}</p>
         <p className="flex items-center gap-2 text-xs text-muted"><span className="h-1.5 w-1.5 rounded-full bg-teal-500" />marks {logoStrip.partnersLabel.toLowerCase()}</p>
       </div>
-      <div className="relative overflow-hidden [mask-image:linear-gradient(90deg,transparent,#000_10%,#000_90%,transparent)]">
+      <div data-reveal className="relative overflow-hidden [mask-image:linear-gradient(90deg,transparent,#000_10%,#000_90%,transparent)]">
         <div className="marquee flex w-max items-center" style={{ animationDuration: '17s' }}>
           <Row />
           <Row />

@@ -34,7 +34,11 @@ html.lenis, html.lenis body { height: auto; }
     @apply font-sans text-eyebrow font-semibold uppercase text-teal-700;
   }
   .wrap { @apply mx-auto w-full max-w-[1200px] px-4 sm:px-8 lg:px-16; }
-  .section { @apply relative py-24 md:py-32; }
+  /* every section shares one fluid rhythm (tokens in tokens.css) */
+  .section { position: relative; padding-block: var(--space-section); }
+  .section-top { padding-top: var(--space-section); }
+  .after-head { margin-top: var(--space-head); }
+  .band-y { padding-block: var(--space-band); }
   .glass {
     background: color-mix(in srgb, var(--surface-200) 62%, transparent);
     backdrop-filter: blur(16px) saturate(1.2);
@@ -91,6 +95,13 @@ html.lenis, html.lenis body { height: auto; }
   100% { transform: translateX(0); }
 }
 .ch-deal { animation: ch-deal 8s cubic-bezier(.65,0,.35,1) infinite; }
+
+/* Scroll reveals (src/reveal.js): content fades and lifts in as it reaches the viewport */
+.reveal-wait { opacity: 0; transform: translate3d(0, 28px, 0); }
+.reveal-in {
+  transition: opacity .9s cubic-bezier(.22,1,.36,1), transform .9s cubic-bezier(.22,1,.36,1);
+  transition-delay: calc(var(--reveal-i, 0) * 70ms);
+}
 
 @keyframes marquee { to { transform: translateX(-50%); } }
 .marquee { animation: marquee 38s linear infinite; }

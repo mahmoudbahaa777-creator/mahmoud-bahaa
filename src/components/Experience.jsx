@@ -45,8 +45,8 @@ export default function Experience() {
 
   if (!e.showStats) return null
   return (
-    <section id="experience" ref={ref} aria-label={`${e.eyebrow}: ${e.stats.map((s) => `${s.value} ${s.label}`).join(', ')}`} className="bg-deep py-8 md:py-10">
-      <dl className="wrap grid grid-cols-2 gap-x-6 gap-y-6 sm:grid-cols-3 lg:grid-cols-5" aria-hidden>
+    <section id="experience" ref={ref} aria-label={`${e.eyebrow}: ${e.stats.map((s) => `${s.value} ${s.label}`).join(', ')}`} className="band-y bg-deep">
+      <dl data-reveal-stagger className="wrap grid grid-cols-2 gap-x-6 gap-y-6 sm:grid-cols-3 lg:grid-cols-5" aria-hidden>
         {stats.map((s) => {
           const shown = t === null ? s.num : s.num * t
           return (

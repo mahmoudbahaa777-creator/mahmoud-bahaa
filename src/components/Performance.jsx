@@ -17,7 +17,7 @@ function Funnel() {
     [p.scaling.title, p.scaling.items.map((v) => [null, v])],
   ]
   return (
-    <div className="mt-14 grid grid-cols-[minmax(0,1fr)] gap-10 lg:grid-cols-[minmax(0,1.35fr)_minmax(0,1fr)] lg:gap-16">
+    <div data-reveal-stagger className="after-head grid grid-cols-[minmax(0,1fr)] gap-10 lg:grid-cols-[minmax(0,1.35fr)_minmax(0,1fr)] lg:gap-16">
       <div>
         {/* Foundation of the method: everything in the funnel sits on positioning */}
         <div className="mb-5 rounded-card border border-dashed border-teal-500/50 px-4 py-3 md:px-5">

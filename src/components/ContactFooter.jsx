@@ -30,7 +30,7 @@ function ContactLink({ href, icon, children, external }) {
 
 export default function ContactFooter() {
   return (
-    <section id="contact" className="relative overflow-hidden pt-24 md:pt-32">
+    <section id="contact" className="section-top relative overflow-hidden">
       <div className="wrap">
         <div className="relative mx-auto max-w-3xl text-center">
           <SplitText text={closing.headline} className="relative font-serif text-h1 font-semibold md:text-[3.5rem] md:leading-[1.05]" />
@@ -43,7 +43,7 @@ export default function ContactFooter() {
           </Reveal>
         </div>
       </div>
-      <footer className="mt-24 border-t border-hairline">
+      <footer className="mt-[var(--space-section)] border-t border-hairline">
         <div className="wrap flex flex-col items-start justify-between gap-4 py-8 sm:flex-row sm:items-center">
           <div className="flex items-center gap-3">
             <span className="font-serif text-sm text-muted">{closing.footer}</span>

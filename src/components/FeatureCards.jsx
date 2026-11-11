@@ -78,7 +78,7 @@ function Billboard({ index, slats, reduced }) {
   const night = items[faces[turned ? 1 : 0]].night
   const steel = `transition-colors duration-700 ${night ? 'bg-[#33524D]' : 'bg-[#10221F]'}`
   return (
-    <div className="relative mx-auto w-full max-w-5xl md:max-w-[min(64rem,calc((100svh-19rem)*16/7))]">
+    <div className="relative mx-auto w-full max-w-5xl md:max-w-[min(64rem,calc((100svh-20rem)*16/7))]">
       {/* lamp bar */}
       <div aria-hidden className="mx-[6%] flex justify-between">
         {Array.from({ length: 5 }).map((_, i) => (
@@ -220,21 +220,21 @@ export default function FeatureCards() {
   const night = items[index].night
   return (
     <section id="services" className="relative">
-      <div className="wrap section !pb-10 md:!pb-12">
+      <div className="wrap section-top pb-[var(--space-head)]">
         <SectionHead headline={services.headline} />
       </div>
 
       {/* Desktop: a tall stage with the scene pinned; phone: a normal block */}
       <div ref={stage} className="relative md:h-[240vh]">
         <div ref={box} className="md:sticky md:top-0 md:flex md:h-[100svh] md:items-center md:pt-16">
-          <div className={`relative w-full overflow-hidden py-10 transition-colors duration-700 md:py-14 ${night ? 'bg-[#0E1817]' : 'bg-teal-100'}`}>
+          <div className={`relative w-full overflow-hidden py-[var(--space-head)] transition-colors duration-700 ${night ? 'bg-[#0E1817]' : 'bg-teal-100'}`}>
             {/* horizon */}
             <div aria-hidden className={`absolute inset-x-0 bottom-0 h-16 transition-colors duration-700 md:h-24 ${night ? 'bg-[#152321]' : 'bg-[#E4DFD4]'}`} />
-            <div className="wrap relative" aria-hidden
+            <div data-reveal className="wrap relative" aria-hidden
               onClick={() => isMobile && (setIndex((i) => (i + 1) % items.length), setPaused(true))}>
               <Billboard index={index} slats={isMobile ? 9 : 16} reduced={reduced} />
             </div>
-            <div className="wrap relative">
+            <div data-reveal className="wrap relative" style={{ '--reveal-i': 2 }}>
               <Plate index={index} onPick={pick} night={night} />
             </div>
           </div>

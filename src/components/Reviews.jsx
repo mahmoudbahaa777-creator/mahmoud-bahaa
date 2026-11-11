@@ -36,7 +36,7 @@ export default function Reviews() {
         <SectionHead headline={r.headline} />
       </div>
 
-      <div aria-hidden className="mt-10 space-y-4 md:mt-14 md:space-y-5 [mask-image:linear-gradient(90deg,transparent,#000_6%,#000_94%,transparent)]">
+      <div aria-hidden data-reveal className="after-head space-y-4 md:space-y-5 [mask-image:linear-gradient(90deg,transparent,#000_6%,#000_94%,transparent)]">
         {rows.map((row, ri) => (
           <div key={ri} className="overflow-hidden">
             <div className={`flex w-max gap-4 md:gap-5 ${ri ? 'marquee-reverse' : 'marquee'}`} style={{ animationDuration: '60s' }}>
@@ -51,7 +51,7 @@ export default function Reviews() {
       </ul>
 
       <div className="wrap">
-        <p className="mt-6 flex flex-wrap items-center gap-2 text-xs text-muted md:mt-8">
+        <p className="mt-[var(--space-tight)] flex flex-wrap items-center gap-2 text-xs text-muted">
           <span className="text-teal-700"><Icon name="linkedin" size={16} /></span>
           {r.note}
           <a href={contact.linkedin} target="_blank" rel="noreferrer" className="font-semibold text-teal-700 underline-offset-4 hover:underline">See them on LinkedIn</a>

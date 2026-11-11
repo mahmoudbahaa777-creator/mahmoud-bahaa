@@ -120,7 +120,7 @@ export default function SponsorshipShowcase() {
 
   return (
     <section id="sponsorships" className="theme-dark relative bg-ground text-ink">
-      <div className="wrap section !pb-16">
+      <div className="wrap section-top pb-[var(--space-head)]">
         <SectionHead headline={s.headline} line={s.line} />
       </div>
 

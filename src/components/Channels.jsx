@@ -469,12 +469,12 @@ export default function Channels() {
       <div className="wrap">
         <SectionHead headline={c.headline} line={c.line} />
       </div>
-      <div className="mt-10 md:mt-12"><Carousel /></div>
+      <div data-reveal className="after-head"><Carousel /></div>
       {/* screen readers: the full list, not just the phone in focus */}
       <ul className="sr-only">
         {slides.map((s) => <li key={s.name}>{s.group}: {s.name}. {s.line}</li>)}
       </ul>
-      <p className="wrap mt-8 text-center text-xs text-muted">{c.note}</p>
+      <p className="wrap mt-[var(--space-tight)] text-center text-xs text-muted">{c.note}</p>
     </section>
   )
 }

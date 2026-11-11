@@ -1,4 +1,5 @@
 import { useEffect } from 'react'
+import { initReveal } from './reveal'
 import Lenis from 'lenis'
 import Nav from './components/Nav'
 import Hero from './components/Hero'
@@ -14,6 +15,9 @@ import Booking from './components/Booking'
 import ScrollProgress from './components/ScrollProgress'
 
 export default function App() {
+  // Scroll reveals: run after the first render so every section is in the DOM
+  useEffect(() => initReveal(), [])
+
   useEffect(() => {
     // Desktop: once the page has fully loaded, quietly fetch the 3D chunk so it's ready when needed.
     // Phones, data-saver and slow connections skip this; there it loads only when scrolled near,
