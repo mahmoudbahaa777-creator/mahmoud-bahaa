@@ -6,7 +6,6 @@ import Hero from './components/Hero'
 import LogoStrip from './components/LogoStrip'
 import Performance from './components/Performance'
 import Channels from './components/Channels'
-import TextBand from './components/TextBand'
 import Playbooks from './components/Playbooks'
 import FeatureCards from './components/FeatureCards'
 import SponsorshipShowcase from './components/SponsorshipShowcase'
@@ -56,13 +55,9 @@ export default function App() {
         <Performance />
         <Playbooks />
         <Channels />
-        {/* light band between two dark sections */}
-        <TextBand words={['Brand', 'Performance', 'Sponsorships']} />
         <SponsorshipShowcase />
         <Reviews />
         <LogoStrip />
-        {/* dark band opening the closing section */}
-        <TextBand words={['From reach to revenue']} tone="dark" reverse />
         <ContactFooter />
       </main>
       <Booking />

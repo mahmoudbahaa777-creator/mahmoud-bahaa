@@ -30,7 +30,7 @@ function ContactLink({ href, icon, children, external }) {
 
 export default function ContactFooter() {
   return (
-    <section id="contact" className="section-top theme-dark relative overflow-hidden bg-deep text-ink">
+    <section id="contact" className="section-top relative overflow-hidden">
       <div className="wrap">
         <div className="relative mx-auto max-w-3xl text-center">
           <SplitText text={closing.headline} className="relative font-serif text-h1 font-semibold md:text-[3.5rem] md:leading-[1.05]" />

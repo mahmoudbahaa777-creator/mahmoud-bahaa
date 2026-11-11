@@ -153,8 +153,8 @@ export default function Playbooks() {
       <div className="wrap">
         <SectionHead headline={p.playbooksHeadline} line={p.playbooksLine} />
         <div className="after-head grid gap-12 lg:grid-cols-2 lg:gap-10">
-          <div data-reveal="left"><DataFlow /></div>
-          <div data-reveal="right" style={{ '--reveal-i': 1 }}><AdManager /></div>
+          <DataFlow />
+          <AdManager />
         </div>
       </div>
     </section>

@@ -10,7 +10,7 @@ const pad = (i) => String(i + 1).padStart(2, '0')
 function Funnel() {
   const isMobile = useIsMobile()
   return (
-    <div data-reveal="left" className="after-head grid grid-cols-[minmax(0,1fr)] gap-10 lg:max-w-[60rem]">
+    <div data-reveal-stagger className="after-head grid grid-cols-[minmax(0,1fr)] gap-10 lg:max-w-[60rem]">
       <div>
         {/* Foundation of the method: everything in the funnel sits on positioning */}
         <div className="mb-5 rounded-card border border-dashed border-teal-500/50 px-4 py-3 md:px-5">
@@ -55,7 +55,7 @@ function Funnel() {
 
 export default function Performance() {
   return (
-    <section id="performance" className="section theme-dark bg-deep text-ink">
+    <section id="performance" className="section">
       {/* old #method links land here: the method now lives on this funnel */}
       <span id="method" className="absolute top-0" aria-hidden />
       <div className="wrap">

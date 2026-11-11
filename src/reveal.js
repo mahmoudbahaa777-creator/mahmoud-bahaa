@@ -2,7 +2,6 @@
  * Scroll reveals: one IntersectionObserver for the whole page.
  *
  *   data-reveal            the element fades and lifts in when it reaches the viewport
- *   data-reveal="left"     …or slides in from the left ("right": from the right)
  *   data-reveal-stagger    its children do, one after another
  *
  * Only elements still below the fold when the page loads are hidden first, so nothing
@@ -25,11 +24,7 @@ export function initReveal() {
 
   const fold = window.innerHeight * 0.92
   const pending = targets.filter((el) => el.getBoundingClientRect().top > fold)
-  pending.forEach((el) => {
-    const from = el.getAttribute('data-reveal')
-    if (from === 'left' || from === 'right') el.classList.add(`reveal-from-${from}`)
-    el.classList.add('reveal-wait')
-  })
+  pending.forEach((el) => el.classList.add('reveal-wait'))
 
   const left = new Set(pending)
   const show = (el) => {

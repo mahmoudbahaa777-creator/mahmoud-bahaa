@@ -36,9 +36,9 @@ export default function Reviews() {
         <SectionHead headline={r.headline} />
       </div>
 
-      <div aria-hidden className="after-head space-y-4 md:space-y-5 [mask-image:linear-gradient(90deg,transparent,#000_6%,#000_94%,transparent)]">
+      <div aria-hidden data-reveal className="after-head space-y-4 md:space-y-5 [mask-image:linear-gradient(90deg,transparent,#000_6%,#000_94%,transparent)]">
         {rows.map((row, ri) => (
-          <div key={ri} data-reveal={ri ? 'left' : 'right'} className="overflow-hidden" style={{ '--reveal-i': ri }}>
+          <div key={ri} className="overflow-hidden">
             <div className={`flex w-max gap-4 md:gap-5 ${ri ? 'marquee-reverse' : 'marquee'}`} style={{ animationDuration: '60s' }}>
               {[...row, ...row, ...row, ...row].map((it, i) => <Card key={i} it={it} className="w-[18.5rem] sm:w-[22rem] md:w-[26rem]" />)}
             </div>

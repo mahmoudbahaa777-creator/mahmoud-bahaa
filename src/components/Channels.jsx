@@ -465,7 +465,7 @@ function Carousel() {
 
 export default function Channels() {
   return (
-    <section id="channels" className="section theme-dark bg-deep text-ink overflow-x-clip">
+    <section id="channels" className="section overflow-x-clip">
       <div className="wrap">
         <SectionHead headline={c.headline} line={c.line} />
       </div>
