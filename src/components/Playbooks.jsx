@@ -2,10 +2,9 @@ import { useEffect, useRef, useState } from 'react'
 import { performance as p } from '../content'
 
 /*
- * Two redesigns of the "Tracking, in 4 steps" / "Scaling, in 4 moves" playbooks,
- * previewed with ?playbooks=a or ?playbooks=c (see Performance.jsx).
- *   A · a pipeline a lead travels through + a staircase of moves
- *   C · two product screens: a data-flow diagram + an ad-manager panel
+ * The two playbooks under the funnel, as product screens:
+ *   Tracking, in 4 steps → a data-flow window (each step sits on the stage where it happens)
+ *   Scaling, in 4 moves  → an ad-manager panel (one switchable row per move)
  * Copy comes from content.js; no figures are invented. Motion is CSS (index.css,
  * "Playbooks"), started once the panel is on screen, and off with reduced motion.
  */
@@ -34,73 +33,6 @@ function Title({ children, sub }) {
     <div className="mb-6 flex flex-wrap items-baseline gap-x-3 gap-y-1 md:mb-8">
       <h3 className="font-serif text-2xl font-semibold text-ink md:text-[1.75rem]">{children}</h3>
       {sub && <span className="text-sm text-muted">{sub}</span>}
-    </div>
-  )
-}
-
-/* ========================= A · pipeline + staircase ========================= */
-
-function Pipeline() {
-  const [ref, on] = useIn()
-  return (
-    <div ref={ref} className={`pb-a ${on ? 'is-in' : ''}`}>
-      <Title sub="A lead travels the whole pipe.">{p.tracking.title}</Title>
-      {/* desktop: horizontal pipe; phone: vertical */}
-      <div className="relative">
-        <div aria-hidden className="absolute left-[11px] top-3 bottom-3 w-[3px] rounded-full bg-hairline md:left-3 md:right-3 md:top-[11px] md:bottom-auto md:h-[3px] md:w-auto" />
-        <div aria-hidden className="pb-flow absolute left-[11px] top-3 bottom-3 w-[3px] origin-top rounded-full bg-teal-500 md:left-3 md:right-3 md:top-[11px] md:bottom-auto md:h-[3px] md:w-auto md:origin-left" />
-        <span aria-hidden className="pb-lead pb-lead-v md:hidden" />
-        <span aria-hidden className="pb-lead pb-lead-h hidden md:block" />
-        <ol className="relative grid gap-7 md:grid-cols-4 md:gap-4">
-          {track.map(([name, line], i) => (
-            <li key={name} className="flex gap-4 md:block">
-              <span className="pb-station relative z-10 grid h-[26px] w-[26px] shrink-0 place-items-center rounded-full border-2 border-teal-500 bg-ground" style={{ '--i': i }}>
-                <span className="h-2 w-2 rounded-full bg-teal-500" />
-              </span>
-              <div className="md:mt-4 md:pr-3">
-                <p className="font-serif text-lg font-semibold leading-tight text-ink md:text-xl"><span className="mr-2 text-sm tabular-nums text-teal-700">{pad(i)}</span>{name}</p>
-                <p className="mt-1 text-sm leading-6 text-muted">{cap(line)}</p>
-              </div>
-            </li>
-          ))}
-        </ol>
-      </div>
-      {/* the loop back to the ad platforms */}
-      <div className="mt-6 flex items-center gap-3 rounded-card border border-dashed border-teal-500/50 px-4 py-2.5 text-sm text-teal-700">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden><path d="M3 12a9 9 0 1 0 3-6.7" /><path d="M3 4v5h5" /></svg>
-        Revenue flows back to the ad platforms, so the next bid is smarter.
-      </div>
-    </div>
-  )
-}
-
-function Staircase() {
-  const [ref, on] = useIn()
-  const heights = [34, 54, 76, 100]
-  return (
-    <div ref={ref} className={`pb-a ${on ? 'is-in' : ''}`}>
-      <Title sub="Each step earns the next.">{p.scaling.title}</Title>
-      {/* desktop: rising bars; phone: widening rows */}
-      <ol className="grid gap-3 md:h-[17rem] md:grid-cols-4 md:items-end md:gap-3">
-        {moves.map(([name, line], i) => (
-          <li key={name} className="pb-step relative md:flex md:h-full md:flex-col md:justify-end" style={{ '--i': i, '--h': `${heights[i]}%`, '--w': `${64 + i * 12}%` }}>
-            <div className="pb-bar flex flex-col justify-end rounded-card bg-teal-100 p-3 md:p-4">
-              <p className="font-serif text-lg font-semibold text-teal-700"><span className="mr-1.5 text-sm tabular-nums">{pad(i)}</span>{name}</p>
-              <p className="mt-0.5 text-sm leading-5 text-ink">{line}</p>
-            </div>
-          </li>
-        ))}
-      </ol>
-      <div aria-hidden className="mt-3 hidden h-px bg-teal-500 md:block" />
-    </div>
-  )
-}
-
-export function PlaybooksA() {
-  return (
-    <div className="mt-[var(--space-head)] grid gap-14 border-t border-hairline pt-[var(--space-head)] lg:grid-cols-2 lg:gap-16">
-      <Pipeline />
-      <Staircase />
     </div>
   )
 }
@@ -213,7 +145,7 @@ function AdManager() {
   )
 }
 
-export function PlaybooksC() {
+export default function Playbooks() {
   return (
     <div className="mt-[var(--space-head)] grid gap-12 border-t border-hairline pt-[var(--space-head)] lg:grid-cols-2 lg:gap-10">
       <DataFlow />
